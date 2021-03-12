@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+		Width="1200" Height="400"
         x:Class="Akorin.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Akorin">
@@ -32,6 +33,9 @@
 		</StackPanel>
 		
 		<ListBox DockPanel.Dock="Left" SelectionMode="Single,AlwaysSelected">
+			<ListBoxItem>
+				<TextBlock Text="List item"></TextBlock>
+			</ListBoxItem>
 			<ListBoxItem>
 				<TextBlock Text="List item"></TextBlock>
 			</ListBoxItem>

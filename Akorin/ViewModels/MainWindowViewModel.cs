@@ -15,6 +15,8 @@ namespace Akorin.ViewModels
             _view = view;
         }
 
+        public MainWindowViewModel() { }
+
         public void Exit()
         {
             Environment.Exit(0);
@@ -22,7 +24,7 @@ namespace Akorin.ViewModels
 
         public void OpenSettings(string tab)
         {
-            var settings = new SettingsWindow();
+            var settings = new SettingsWindow(tab);
             settings.ShowDialog((Window)_view);
         }
     }
