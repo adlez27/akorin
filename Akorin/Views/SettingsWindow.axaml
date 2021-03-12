@@ -1,18 +1,24 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Akorin.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
         x:Class="Akorin.Views.SettingsWindow"
         Title="SettingsWindow">
+
+	<Design.DataContext>
+		<vm:SettingsWindowViewModel/>
+	</Design.DataContext>
+	
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
 			<!-- 0.1.1 enable -->
 			<Button IsEnabled="False">Set as default</Button>
 			
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-				<Button>Cancel</Button>
-				<Button>OK</Button>
+				<Button Command="{Binding CloseSettings}">Cancel</Button>
+				<Button Command="{Binding CloseSettings}">OK</Button>
 			</StackPanel>
 		</Grid>
 		<TabControl>
