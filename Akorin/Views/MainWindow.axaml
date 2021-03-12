@@ -64,8 +64,8 @@
 			</ListBoxItem>
 		</ListBox>
 		<StackPanel>
-			<TextBlock Text="Waveform"></TextBlock>
-			<TextBlock Text="Spectrogram"></TextBlock>
+			<!-- 0.1.1 Waveform display -->
+			<!-- 0.1.2 Spectrogram display -->
 		</StackPanel>
 	</DockPanel>
 </Window>
