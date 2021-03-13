@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Akorin.Models
 {
-    class Settings
+    public class Settings
     {
+        public string DestinationFolder { get; set; }
+
         public string AudioDriver { get; set; }
 
         public string AudioInputDevice { get; set; }
