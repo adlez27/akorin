@@ -38,7 +38,10 @@ namespace Akorin.Models
         {
             StopPlayback();
             if (stream != 0)
+            {
+                Bass.ChannelSetAttribute(stream, ChannelAttribute.Volume, (double)settings.AudioOutputLevel / 100.0);
                 Bass.ChannelPlay(stream, true);
+            }
         }
 
         public void StopPlayback()

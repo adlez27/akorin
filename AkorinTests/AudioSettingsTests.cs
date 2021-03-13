@@ -8,16 +8,20 @@ namespace AkorinTests
     {
         Settings settings = new Settings();
 
-        [Fact]
+        //[Fact]
         public void SetAudioInputLevelTest()
         {
-            settings.AudioInputLevel = 100;
+            settings.AudioInputLevel = 50;
+            var expected = 50;
+            Assert.Equal(expected, settings.AudioInputLevel);
         }
 
-        [Fact]
+        //[Fact]
         public void SetAudioOutputLevelTest()
         {
-            settings.AudioOutputLevel = 100;
+            settings.AudioOutputLevel = 50;
+            var expected = 50;
+            Assert.Equal(expected, settings.AudioOutputLevel);
         }
     }
 }
