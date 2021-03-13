@@ -12,6 +12,7 @@ namespace Akorin.Models
         public string FullName { get; }
         private List<byte> data;
         private int stream;
+        private bool recorded;
 
         public AudioFile(Settings s, string fileName)
         {
@@ -19,6 +20,7 @@ namespace Akorin.Models
             FullName = Path.Combine(s.DestinationFolder, fileName + ".wav");
             stream = 0;
             data = new List<byte>();
+            recorded = false;
         }
 
         public bool Read ()
@@ -51,7 +53,9 @@ namespace Akorin.Models
 
         public void Record()
         {
+            Bass.Free();
             stream = Bass.RecordStart(44100, 1, BassFlags.Default, RecordProcedure);
+            recorded = true;
         }
 
         public bool RecordProcedure(int Handle, IntPtr Buffer, int Length, IntPtr User)
@@ -76,8 +80,12 @@ namespace Akorin.Models
 
         public void Write()
         {
-            byte[] dataArr = data.ToArray();
-            Write(dataArr);
+            if (recorded)
+            {
+                byte[] dataArr = data.ToArray();
+                Write(dataArr);
+            }
+           
         }
     }
 }
