@@ -8,6 +8,7 @@ namespace Akorin.Models
         public Settings()
         {
             Bass.Init();
+            Bass.RecordInit();
             DestinationFolder = "voicebank";
             AudioInputLevel = 100;
             AudioOutputLevel = 100;
