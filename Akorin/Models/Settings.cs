@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ManagedBass;
 
 namespace Akorin.Models
 {
     public class Settings
     {
+        public Settings()
+        {
+            Bass.Init();
+        }
+
         public string DestinationFolder { get; set; }
 
         public string AudioDriver { get; set; }
