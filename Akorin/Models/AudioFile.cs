@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace Akorin.Models
 {
@@ -12,6 +10,7 @@ namespace Akorin.Models
     {
         private Settings settings;
         public string FullName { get; }
+        private List<byte> data;
         private int stream;
 
         public AudioFile(Settings s, string fileName)
@@ -19,6 +18,7 @@ namespace Akorin.Models
             settings = s;
             FullName = Path.Combine(s.DestinationFolder, fileName + ".wav");
             stream = 0;
+            data = new List<byte>();
         }
 
         public bool Read ()
@@ -36,7 +36,7 @@ namespace Akorin.Models
 
         public void Play()
         {
-            StopPlayback();
+            Stop();
             if (stream != 0)
             {
                 Bass.ChannelSetAttribute(stream, ChannelAttribute.Volume, (double)settings.AudioOutputLevel / 100.0);
@@ -44,21 +44,40 @@ namespace Akorin.Models
             }
         }
 
-        public void StopPlayback()
+        public void Stop()
         {
             Bass.ChannelStop(stream);
         }
 
-        public void Record() { }
-        public void StopRecording() { }
+        public void Record()
+        {
+            stream = Bass.RecordStart(44100, 1, BassFlags.Default, RecordProcedure);
+        }
 
-        public void Write (string data)
+        public bool RecordProcedure(int Handle, IntPtr Buffer, int Length, IntPtr User)
+        {
+            byte[] temp = new byte[Length];
+            Marshal.Copy(Buffer, temp, 0, Length);
+            data.AddRange(temp);
+            return true;
+        }
+
+        public void Write (byte[] data)
         {
             Directory.CreateDirectory(settings.DestinationFolder);
-            using (StreamWriter sw = File.CreateText(FullName))
+            var format = new WaveFormat(44100,16,1);
+
+            using (FileStream fs = File.Create(FullName))
+            using (WaveFileWriter wfw = new WaveFileWriter(fs, format))
             {
-                sw.WriteLine(data);
+                wfw.Write(data,data.Length);
             }
+        }
+
+        public void Write()
+        {
+            byte[] dataArr = data.ToArray();
+            Write(dataArr);
         }
     }
 }
