@@ -61,7 +61,8 @@
 					</DockPanel>
 				</Grid>
 			</TabItem>
-			<TabItem Header="Audio" IsSelected="{Binding AudioSelected}">
+			<!--<TabItem Header="Audio" IsSelected="{Binding AudioSelected}">-->
+			<TabItem Header="Audio" IsSelected="True">
 				<Grid ColumnDefinitions="100,*,30" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
 					<!-- 0.1.2 enable choice -->
 					<TextBlock Grid.Row="0" Grid.Column="0">Driver</TextBlock>
