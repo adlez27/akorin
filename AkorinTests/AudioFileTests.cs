@@ -6,7 +6,15 @@ namespace AkorinTests
 {
     public class AudioFileTests
     {
-        AudioFile af = new AudioFile(new Settings { DestinationFolder = @"C:\Users\Mark\Desktop\test" }, "scale");
+        AudioFile af;
+        Settings settings; 
+
+        public AudioFileTests()
+        {
+            settings = new Settings();
+            settings.DestinationFolder = @"C:\Users\Mark\Desktop\test";
+            af = new AudioFile(settings, "scale");
+        }
 
         [Fact]
         public void ReadAudioTest()
@@ -17,20 +25,32 @@ namespace AkorinTests
         //[Fact]
         //public async void PlayAudioTest()
         //{
+        //    af.Read();
         //    af.Play();
-
         //    await Task.Delay(4000);
         //}
 
         [Fact]
-        public async void PlayAndStopAudioTest()
+        public async void OutputVolumeTest()
         {
             af.Read();
+            settings.AudioOutputLevel = 100;
             af.Play();
-            await Task.Delay(1000);
-            af.StopPlayback();
-            await Task.Delay(3000);
+            await Task.Delay(4000);
+            settings.AudioOutputLevel = 20;
+            af.Play();
+            await Task.Delay(4000);
         }
+
+        //[Fact]
+        //public async void PlayAndStopAudioTest()
+        //{
+        //    af.Read();
+        //    af.Play();
+        //    await Task.Delay(1000);
+        //    af.StopPlayback();
+        //    await Task.Delay(3000);
+        //}
 
         //[Fact]
         //public async void PlayRepeatedlyTest()
