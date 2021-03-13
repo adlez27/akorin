@@ -14,7 +14,7 @@ namespace AkorinTests
         {
             settings = new Settings();
             settings.DestinationFolder = @"C:\Users\Mark\Desktop\test";
-            af = new AudioFile(settings, "a");
+            af = new AudioFile(settings, "b");
         }
 
         //[Fact]
@@ -33,13 +33,36 @@ namespace AkorinTests
         //}
 
         [Fact]
-        public async void RecordAndSaveAudioTest()
+        public async void ReadAndWriteAudioTest()
         {
-            af.Record();
-            await Task.Delay(3000);
+            af.Read();
+            af.Play();
+            await Task.Delay(4000);
             af.Stop();
             af.Write();
         }
+
+        //[Fact]
+        //public async void OverwriteTest()
+        //{
+        //    af.Read();
+        //    af.Play();
+        //    await Task.Delay(4000);
+        //    af.Stop();
+        //    af.Record();
+        //    await Task.Delay(3000);
+        //    af.Stop();
+        //    af.Write();
+        //}
+
+        //[Fact]
+        //public async void RecordAndSaveAudioTest()
+        //{
+        //    af.Record();
+        //    await Task.Delay(3000);
+        //    af.Stop();
+        //    af.Write();
+        //}
 
         //[Fact]
         //public async void PlayAudioTest()
