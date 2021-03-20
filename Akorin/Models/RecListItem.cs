@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace Akorin.Models
 {
-    class RecListItem
+    public class RecListItem
     {
-        AudioFile Audio { get; }
+        public AudioFile Audio { get; }
+        public string Text { get; }
+        
+        public RecListItem (Settings s, string t)
+        {
+            Text = t;
+            Audio = new AudioFile(s, t);
+        }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }
