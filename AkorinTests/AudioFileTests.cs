@@ -18,12 +18,6 @@ namespace AkorinTests
         }
 
         //[Fact]
-        //public void ReadAudioTest()
-        //{
-        //    Assert.True(af.Read());
-        //}
-
-        //[Fact]
         //public async void WriteAudioTest()
         //{
         //    Random rnd = new Random();
@@ -32,20 +26,18 @@ namespace AkorinTests
         //    af.Write(b);
         //}
 
-        [Fact]
-        public async void ReadAndWriteAudioTest()
-        {
-            af.Read();
-            af.Play();
-            await Task.Delay(4000);
-            af.Stop();
-            af.Write();
-        }
+        //[Fact]
+        //public async void ReadAndWriteAudioTest()
+        //{
+        //    af.Play();
+        //    await Task.Delay(4000);
+        //    af.Stop();
+        //    af.Write();
+        //}
 
         //[Fact]
         //public async void OverwriteTest()
         //{
-        //    af.Read();
         //    af.Play();
         //    await Task.Delay(4000);
         //    af.Stop();
@@ -55,19 +47,18 @@ namespace AkorinTests
         //    af.Write();
         //}
 
-        //[Fact]
-        //public async void RecordAndSaveAudioTest()
-        //{
-        //    af.Record();
-        //    await Task.Delay(3000);
-        //    af.Stop();
-        //    af.Write();
-        //}
+        [Fact]
+        public async void RecordAndSaveAudioTest()
+        {
+            af.Record();
+            await Task.Delay(3000);
+            af.Stop();
+            af.Write();
+        }
 
         //[Fact]
         //public async void PlayAudioTest()
         //{
-        //    af.Read();
         //    af.Play();
         //    await Task.Delay(4000);
         //}
@@ -75,7 +66,6 @@ namespace AkorinTests
         //[Fact]
         //public async void OutputVolumeTest()
         //{
-        //    af.Read();
         //    settings.AudioOutputLevel = 100;
         //    af.Play();
         //    await Task.Delay(4000);
@@ -87,7 +77,6 @@ namespace AkorinTests
         //[Fact]
         //public async void PlayAndStopAudioTest()
         //{
-        //    af.Read();
         //    af.Play();
         //    await Task.Delay(1000);
         //    af.Stop();
