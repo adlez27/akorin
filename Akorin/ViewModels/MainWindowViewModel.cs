@@ -21,6 +21,11 @@ namespace Akorin.ViewModels
             settings = s;
         }
 
+        public int FontSize
+        {
+            get { return settings.FontSize; }
+        }
+
         public ObservableCollection<RecListItem> RecList
         {
             get

@@ -21,5 +21,7 @@ namespace Akorin.Models
         public int AudioInputLevel { get; set; }
         public string AudioOutputDevice { get; set; }
         public int AudioOutputLevel { get; set; }
+
+        public int FontSize { get; set; }
     }
 }

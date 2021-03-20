@@ -28,7 +28,7 @@
 		</Menu>
 
 		<StackPanel DockPanel.Dock="Top" Margin="5">
-			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="24"></TextBlock>
+			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="{Binding FontSize}"></TextBlock>
 			<TextBox Watermark="Currently selected list item note"></TextBox>
 		</StackPanel>
 

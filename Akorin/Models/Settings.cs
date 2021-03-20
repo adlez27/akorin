@@ -26,6 +26,8 @@ namespace Akorin.Models
             AudioOutputDevice = Bass.GetDeviceInfo(Bass.CurrentRecordingDevice).Name;
             AudioOutputLevel = 100;
 
+            FontSize = 24;
+
             init = true;
             LoadRecList();
         }
@@ -107,16 +109,13 @@ namespace Akorin.Models
         private int _audioInputLevel;
         public int AudioInputLevel
         {
-            get
-            {
-                return _audioInputLevel;
-            }
+            get { return _audioInputLevel; }
             set
             {
                 if (value >= 0 && value <= 100)
                     _audioInputLevel = value;
                 else
-                    throw new ArgumentOutOfRangeException("Audio input level");
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -125,17 +124,27 @@ namespace Akorin.Models
         private int _audioOutputLevel;
         public int AudioOutputLevel 
         { 
-            get
-            {
-                return _audioOutputLevel;
-            } 
+            get { return _audioOutputLevel; } 
             set
             {
                 if (value >= 0 && value <= 100)
                     _audioOutputLevel = value;
                 else
-                    throw new ArgumentOutOfRangeException("Audio output level");
+                    throw new ArgumentOutOfRangeException();
             } 
+        }
+
+        private int fontSize;
+        public int FontSize
+        {
+            get { return fontSize; }
+            set
+            {
+                if (value >= 8 && value <= 200)
+                    fontSize = value;
+                else
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
