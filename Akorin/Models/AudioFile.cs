@@ -9,36 +9,40 @@ namespace Akorin.Models
     public class AudioFile
     {
         private Settings settings;
-        public string FullName { get; }
-        private List<byte> data;
+        private string fullName;
         private int stream;
         private bool recorded;
+
+        private List<byte> data;
+        public byte[] Data
+        {
+            get
+            {
+                return data.ToArray();
+            }
+        }
 
         public AudioFile(Settings s, string fileName)
         {
             settings = s;
-            FullName = Path.Combine(s.DestinationFolder, fileName + ".wav");
+            fullName = Path.Combine(s.DestinationFolder, fileName + ".wav");
             stream = 0;
             data = new List<byte>();
             recorded = false;
         }
 
-        public bool Read ()
+        private void Read ()
         {
-            if (File.Exists(FullName))
+            if (File.Exists(fullName))
             {
-                stream = Bass.CreateStream(FullName);
-                return true;
-            }
-            else
-            {
-                return false;
+                stream = Bass.CreateStream(fullName);
             }
         }
 
         public void Play()
         {
             Stop();
+            Read();
             if (stream != 0)
             {
                 Bass.ChannelSetAttribute(stream, ChannelAttribute.Volume, (double)settings.AudioOutputLevel / 100.0);
@@ -71,7 +75,7 @@ namespace Akorin.Models
             Directory.CreateDirectory(settings.DestinationFolder);
             var format = new WaveFormat(44100,16,1);
 
-            using (FileStream fs = File.Create(FullName))
+            using (FileStream fs = File.Create(fullName))
             using (WaveFileWriter wfw = new WaveFileWriter(fs, format))
             {
                 wfw.Write(data,data.Length);
@@ -82,8 +86,7 @@ namespace Akorin.Models
         {
             if (recorded)
             {
-                byte[] dataArr = data.ToArray();
-                Write(dataArr);
+                Write(Data);
             }
            
         }
