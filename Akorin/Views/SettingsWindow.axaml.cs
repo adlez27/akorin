@@ -2,15 +2,25 @@ using Akorin.ViewModels;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using System;
 
 namespace Akorin.Views
 {
-    public class MainWindow : Window, IView
+    public class SettingsWindow : Window
     {
-        public MainWindow()
+        public SettingsWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(this);
+#if DEBUG
+            this.AttachDevTools();
+#endif
+        }
+
+        public SettingsWindow(string tab)
+        {
+            InitializeComponent();
+            DataContext = new SettingsWindowViewModel(this, tab);
+
 #if DEBUG
             this.AttachDevTools();
 #endif
