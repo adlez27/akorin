@@ -3,15 +3,70 @@
         xmlns:vm="using:Akorin.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
+		Width="1200" Height="400"
         x:Class="Akorin.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Akorin">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="_File">
+				<MenuItem Header="_New project"/>
+				<MenuItem Header="_Open project"/>
+				<MenuItem Header="_Exit" Command="{Binding Exit}" />
+			</MenuItem>
+			<MenuItem Header="_Settings">
+				<MenuItem Header="_List and folder" Command="{Binding OpenSettings}" CommandParameter="files"/>
+				<MenuItem Header="_Audio" Command="{Binding OpenSettings}" CommandParameter="audio"/>
+				<MenuItem Header="_Display" Command="{Binding OpenSettings}" CommandParameter="display"/>
+			</MenuItem>
+		</Menu>
 
+		<StackPanel DockPanel.Dock="Top" Margin="5">
+			<TextBlock Text="Currently selected list item" FontSize="24"></TextBlock>
+			<TextBox Watermark="Currently selected list item note"></TextBox>
+		</StackPanel>
+
+		<ListBox DockPanel.Dock="Left" SelectionMode="Single,AlwaysSelected">
+			<ListBoxItem>
+				<TextBlock>List item 1</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 2</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 3</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 4</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 5</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 6</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 7</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 8</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 9</TextBlock>
+			</ListBoxItem>
+			<ListBoxItem>
+				<TextBlock>List item 10</TextBlock>
+			</ListBoxItem>
+		</ListBox>
+		<StackPanel>
+			<!-- 0.1.1 Waveform display -->
+			<!-- 0.1.2 Spectrogram display -->
+		</StackPanel>
+	</DockPanel>
 </Window>
