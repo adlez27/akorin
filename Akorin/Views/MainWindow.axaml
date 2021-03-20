@@ -32,38 +32,10 @@
 			<TextBox Watermark="Currently selected list item note"></TextBox>
 		</StackPanel>
 
-		<ListBox DockPanel.Dock="Left" SelectionMode="Single,AlwaysSelected">
-			<ListBoxItem>
-				<TextBlock>List item 1</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 2</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 3</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 4</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 5</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 6</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 7</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 8</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 9</TextBlock>
-			</ListBoxItem>
-			<ListBoxItem>
-				<TextBlock>List item 10</TextBlock>
-			</ListBoxItem>
+		<ListBox DockPanel.Dock="Left" Width="100"
+				 SelectionMode="Single,AlwaysSelected" Items="{Binding RecList}">
 		</ListBox>
+		
 		<StackPanel>
 			<!-- 0.1.1 Waveform display -->
 			<!-- 0.1.2 Spectrogram display -->

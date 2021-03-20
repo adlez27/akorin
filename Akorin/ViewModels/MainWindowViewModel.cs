@@ -1,21 +1,33 @@
+using Akorin.Models;
 using Akorin.Views;
 using Avalonia.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Akorin.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        // ref: https://stackoverflow.com/questions/47266184/getting-window-from-view-model
         private readonly IView _view;
-        public MainWindowViewModel(IView view)
+        private ISettings settings;
+        public MainWindowViewModel() { }
+
+        public MainWindowViewModel(IView view, ISettings s)
         {
             _view = view;
+            settings = s;
+            //settings.SplitWhitespace = false;
         }
 
-        public MainWindowViewModel() { }
+        public ObservableCollection<RecListItem> RecList
+        {
+            get
+            {
+                return settings.RecList;
+            }
+        }
 
         public void Exit()
         {
@@ -24,8 +36,8 @@ namespace Akorin.ViewModels
 
         public void OpenSettings(string tab)
         {
-            var settings = new SettingsWindow(tab);
-            settings.ShowDialog((Window)_view);
+            var settingsWindow = new SettingsWindow(tab, settings);
+            settingsWindow.ShowDialog((Window)_view);
         }
     }
 }

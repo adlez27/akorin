@@ -1,3 +1,4 @@
+using Akorin.Models;
 using Akorin.ViewModels;
 using Akorin.Views;
 using Avalonia;
@@ -8,8 +9,10 @@ namespace Akorin
 {
     public class App : Application
     {
+        public Settings settings;
         public override void Initialize()
         {
+            settings = new Settings();
             AvaloniaXamlLoader.Load(this);
         }
 
@@ -17,7 +20,7 @@ namespace Akorin
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                desktop.MainWindow = new MainWindow(settings);
             }
 
             base.OnFrameworkInitializationCompleted();

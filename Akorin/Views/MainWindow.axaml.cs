@@ -1,3 +1,4 @@
+using Akorin.Models;
 using Akorin.ViewModels;
 using Avalonia;
 using Avalonia.Controls;
@@ -10,7 +11,16 @@ namespace Akorin.Views
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel(this);
+            DataContext = new MainWindowViewModel();
+#if DEBUG
+            this.AttachDevTools();
+#endif
+        }
+
+        public MainWindow(Settings settings)
+        {
+            InitializeComponent();
+            DataContext = new MainWindowViewModel(this, settings);
 #if DEBUG
             this.AttachDevTools();
 #endif

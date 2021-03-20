@@ -1,4 +1,5 @@
-﻿using Akorin.Views;
+﻿using Akorin.Models;
+using Akorin.Views;
 using Avalonia;
 using Avalonia.Controls;
 using System;
@@ -11,10 +12,13 @@ namespace Akorin.ViewModels
     {
         private Window window;
         private string tab;
-        public SettingsWindowViewModel(Window window, string tab)
+        private ISettings settings;
+
+        public SettingsWindowViewModel(Window window, string tab, ISettings s)
         {
             this.window = window;
             this.tab = tab;
+            settings = s;
         }
 
         public SettingsWindowViewModel() { }
