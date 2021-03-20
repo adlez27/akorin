@@ -11,7 +11,7 @@ namespace Akorin.Models
         public AudioFile Audio { get; }
         public string Text { get; }
         
-        public RecListItem (Settings s, string t)
+        public RecListItem (ISettings s, string t)
         {
             Text = t;
             Audio = new AudioFile(s, t);

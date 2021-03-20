@@ -8,7 +8,7 @@ namespace Akorin.Models
 {
     public class AudioFile
     {
-        private Settings settings;
+        private ISettings settings;
         private string fullName;
         private int stream;
         private bool recorded;
@@ -22,7 +22,7 @@ namespace Akorin.Models
             }
         }
 
-        public AudioFile(Settings s, string fileName)
+        public AudioFile(ISettings s, string fileName)
         {
             settings = s;
             fullName = Path.Combine(s.DestinationFolder, fileName + ".wav");

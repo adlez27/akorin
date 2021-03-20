@@ -7,10 +7,6 @@
 		Width="600" Height="350"
         x:Class="Akorin.Views.SettingsWindow"
         Title="SettingsWindow">
-
-	<Design.DataContext>
-		<vm:SettingsWindowViewModel/>
-	</Design.DataContext>
 	
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">

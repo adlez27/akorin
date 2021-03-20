@@ -6,12 +6,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
 		Width="1200" Height="400"
         x:Class="Akorin.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/mic.ico"
         Title="Akorin">
-
-	<Design.DataContext>
-		<vm:MainWindowViewModel/>
-	</Design.DataContext>
+	<Window.KeyBindings>
+		<KeyBinding Gesture="R" Command="{Binding Record}"/>
+	</Window.KeyBindings>
 
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">

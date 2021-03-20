@@ -11,7 +11,7 @@ namespace AkorinTests
         [Fact]
         public void DefaultRecList()
         {
-            Assert.Equal(@"C:\Users\Mark\source\repos\akorin\Akorin\reclists\default_reclist.txt", settings.RecListFile);
+            Assert.Equal(@"reclists\default_reclist.txt", settings.RecListFile);
         }
 
         [Fact]

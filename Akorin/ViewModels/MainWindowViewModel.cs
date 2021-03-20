@@ -1,6 +1,7 @@
 using Akorin.Models;
 using Akorin.Views;
 using Avalonia.Controls;
+using Avalonia.Input;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,19 @@ namespace Akorin.ViewModels
         {
             _view = view;
             settings = s;
+            recordToggle = false;
+            selectedLineInit = false;
+        }
+
+        public void Exit()
+        {
+            Environment.Exit(0);
+        }
+
+        public void OpenSettings(string tab)
+        {
+            var settingsWindow = new SettingsWindow(tab, settings);
+            settingsWindow.ShowDialog((Window)_view);
         }
 
         public int FontSize
@@ -34,22 +48,31 @@ namespace Akorin.ViewModels
             }
         }
 
+        private bool selectedLineInit;
         private RecListItem selectedLine;
         public RecListItem SelectedLine
         {
             get => selectedLine;
-            set => this.RaiseAndSetIfChanged(ref selectedLine, value);
+            set
+            {
+                if (selectedLineInit)
+                    selectedLine.Audio.Write();
+                else
+                    selectedLineInit = true;
+
+                this.RaiseAndSetIfChanged(ref selectedLine, value);
+            }
         }
 
-        public void Exit()
+        private bool recordToggle;
+        public void Record()
         {
-            Environment.Exit(0);
-        }
+            if (recordToggle)
+                SelectedLine.Audio.Stop();
+            else
+                SelectedLine.Audio.Record();
 
-        public void OpenSettings(string tab)
-        {
-            var settingsWindow = new SettingsWindow(tab, settings);
-            settingsWindow.ShowDialog((Window)_view);
+            recordToggle = !recordToggle;
         }
     }
 }
