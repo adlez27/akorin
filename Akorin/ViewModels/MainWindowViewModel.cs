@@ -1,6 +1,7 @@
 using Akorin.Models;
 using Akorin.Views;
 using Avalonia.Controls;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,6 @@ namespace Akorin.ViewModels
         {
             _view = view;
             settings = s;
-            //settings.SplitWhitespace = false;
         }
 
         public ObservableCollection<RecListItem> RecList
@@ -27,6 +27,13 @@ namespace Akorin.ViewModels
             {
                 return settings.RecList;
             }
+        }
+
+        private RecListItem selectedLine;
+        public RecListItem SelectedLine
+        {
+            get => selectedLine;
+            set => this.RaiseAndSetIfChanged(ref selectedLine, value);
         }
 
         public void Exit()

@@ -28,12 +28,12 @@
 		</Menu>
 
 		<StackPanel DockPanel.Dock="Top" Margin="5">
-			<TextBlock Text="Currently selected list item" FontSize="24"></TextBlock>
+			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="24"></TextBlock>
 			<TextBox Watermark="Currently selected list item note"></TextBox>
 		</StackPanel>
 
-		<ListBox DockPanel.Dock="Left" Width="100"
-				 SelectionMode="Single,AlwaysSelected" Items="{Binding RecList}">
+		<ListBox DockPanel.Dock="Left" Width="100" SelectionMode="Single,AlwaysSelected" 
+				 Items="{Binding RecList}" SelectedItem="{Binding SelectedLine}">
 		</ListBox>
 		
 		<StackPanel>
