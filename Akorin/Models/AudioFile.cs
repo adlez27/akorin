@@ -19,7 +19,15 @@ namespace Akorin.Models
         {
             get
             {
-                return data.ToArray();
+                short[] sdata = new short[data.Count];
+                System.Buffer.BlockCopy(data.ToArray(), 0, sdata, 0, data.Count);
+                for (var i = 0; i < sdata.Length; i++)
+                {
+                    sdata[i] = (short)(sdata[i] * ((double)settings.AudioInputLevel / 100.0));
+                }
+                byte[] temp = new byte[data.Count];
+                System.Buffer.BlockCopy(sdata, 0, temp, 0, sdata.Length);
+                return temp;
             }
         }
 

@@ -98,6 +98,16 @@ namespace AkorinTests
         }
 
         [Fact]
+        public async void InputVolume()
+        {
+            settings.AudioInputLevel = 20;
+            af.Record();
+            await Task.Delay(4000);
+            af.Stop();
+            af.Write();
+        }
+
+        [Fact]
         public async void PlayStop()
         {
             af.Play();
