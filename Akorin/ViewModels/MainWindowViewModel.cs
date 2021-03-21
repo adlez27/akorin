@@ -20,6 +20,7 @@ namespace Akorin.ViewModels
         {
             _view = view;
             settings = s;
+            playToggle = false;
             recordToggle = false;
             selectedLineInit = false;
         }
@@ -66,6 +67,7 @@ namespace Akorin.ViewModels
                 }
 
                 this.RaiseAndSetIfChanged(ref selectedLine, value);
+                playToggle = false;
             }
         }
 
@@ -80,9 +82,15 @@ namespace Akorin.ViewModels
             recordToggle = !recordToggle;
         }
 
+        private bool playToggle;
         public void Play()
         {
-            SelectedLine.Audio.Play();
+            if (playToggle)
+                SelectedLine.Audio.Stop();
+            else
+                SelectedLine.Audio.Play();
+
+            playToggle = !playToggle;
         }
     }
 }
