@@ -56,9 +56,14 @@ namespace Akorin.ViewModels
             set
             {
                 if (selectedLineInit)
+                {
+                    selectedLine.Audio.Stop();
                     selectedLine.Audio.Write();
+                }
                 else
+                {
                     selectedLineInit = true;
+                }
 
                 this.RaiseAndSetIfChanged(ref selectedLine, value);
             }
@@ -73,6 +78,11 @@ namespace Akorin.ViewModels
                 SelectedLine.Audio.Record();
 
             recordToggle = !recordToggle;
+        }
+
+        public void Play()
+        {
+            SelectedLine.Audio.Play();
         }
     }
 }

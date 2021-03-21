@@ -8,20 +8,40 @@ namespace AkorinTests
     public class AudioFileTests
     {
         AudioFile af;
-        Settings settings; 
+        ISettings settings; 
 
         public AudioFileTests()
         {
-            settings = new Settings();
+            settings = new MockSettings();
             settings.DestinationFolder = @"C:\Users\Mark\Desktop\test";
             af = new AudioFile(settings, "b");
         }
 
         //[Fact]
+        //public void ReadAudio()
+        //{
+        //    af.Read();
+        //    Assert.NotEmpty(af.Data);
+        //    //Assert.Equal((byte)127, af.Data[0]);
+        //}
+
+        //[Fact]
+        //public async void RecordAndPlay()
+        //{
+        //    af.Record();
+        //    await Task.Delay(4000);
+        //    af.Stop();
+        //    af.Play();
+        //    await Task.Delay(4000);
+        //    af.Stop();
+        //}
+
+        //[Fact]
         //public async void WriteAudioTest()
         //{
         //    Random rnd = new Random();
-        //    Byte[] b = new Byte[40000];
+        //    byte[] b = new byte[40000];
+        //    //Array.Fill(b, (byte)127);
         //    rnd.NextBytes(b);
         //    af.Write(b);
         //}
@@ -47,21 +67,21 @@ namespace AkorinTests
         //    af.Write();
         //}
 
-        [Fact]
-        public async void RecordAndSaveAudioTest()
-        {
-            af.Record();
-            await Task.Delay(3000);
-            af.Stop();
-            af.Write();
-        }
-
         //[Fact]
-        //public async void PlayAudioTest()
+        //public async void RecordAndSaveAudioTest()
         //{
-        //    af.Play();
-        //    await Task.Delay(4000);
+        //    af.Record();
+        //    await Task.Delay(3000);
+        //    af.Stop();
+        //    af.Write();
         //}
+
+        [Fact]
+        public async void PlayAudioTest()
+        {
+            af.Play();
+            await Task.Delay(4000);
+        }
 
         //[Fact]
         //public async void OutputVolumeTest()

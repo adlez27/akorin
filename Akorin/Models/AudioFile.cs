@@ -29,20 +29,28 @@ namespace Akorin.Models
             stream = 0;
             data = new List<byte>();
             recorded = false;
+            Read();
         }
 
-        private void Read ()
+        public void Read ()
         {
             if (File.Exists(fullName))
             {
                 stream = Bass.CreateStream(fullName);
+
+                byte[] temp = new byte[40000];
+                Bass.ChannelGetData(stream, temp, temp.Length);
+                data.AddRange(temp);
             }
         }
 
         public void Play()
         {
             Stop();
-            Read();
+            if (stream == 0)
+            {
+                Read();
+            }
             if (stream != 0)
             {
                 Bass.ChannelSetAttribute(stream, ChannelAttribute.Volume, (double)settings.AudioOutputLevel / 100.0);
@@ -72,6 +80,7 @@ namespace Akorin.Models
 
         public void Write (byte[] data)
         {
+            Bass.Free();
             Directory.CreateDirectory(settings.DestinationFolder);
             var format = new WaveFormat(44100,16,1);
 
