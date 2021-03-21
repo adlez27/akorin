@@ -32,13 +32,14 @@
 			<TextBox Watermark="Currently selected list item note"/>
 		</StackPanel>
 
+		<TextBlock DockPanel.Dock="Bottom" Margin="5" Text="{Binding RecordPlayStatus}"/>
+
 		<ListBox DockPanel.Dock="Left" Width="100" SelectionMode="Single,AlwaysSelected"
 				 Items="{Binding RecList}" SelectedItem="{Binding SelectedLine}">
 		</ListBox>
 		
 		<StackPanel>
 			<!-- 0.1.0 placeholders -->
-			<TextBlock Margin="20" Text="{Binding RecordPlayStatus}"/>
 			<TextBlock Margin="20" Text="{Binding FileStatus}"/>
 			
 			<!-- 0.1.1 Waveform display -->
