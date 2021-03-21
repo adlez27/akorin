@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace Akorin.Models
@@ -18,7 +19,7 @@ namespace Akorin.Models
         {
             get
             {
-                return data.ToArray();
+                return data.GetRange(46, data.Count - 46).ToArray();
             }
         }
 
@@ -34,23 +35,30 @@ namespace Akorin.Models
 
         public void Read ()
         {
-            if (File.Exists(fullName))
+            if (File.Exists(fullName) && !recorded)
             {
-                stream = Bass.CreateStream(fullName);
-
-                byte[] temp = new byte[40000];
-                Bass.ChannelGetData(stream, temp, temp.Length);
-                data.AddRange(temp);
+                byte[] rawBytes = File.ReadAllBytes(fullName);
+                data = rawBytes.ToList();
+                stream = Bass.CreateStream(rawBytes, 0, rawBytes.Length, BassFlags.Mono);
+            }
+            else if (recorded)
+            {
+                byte[] reRead;
+                var format = new WaveFormat(44100, 16, 1);
+                using (MemoryStream ms = new MemoryStream())
+                using (WaveFileWriter wfw = new WaveFileWriter(ms, format))
+                {
+                    wfw.Write(Data, Data.Length);
+                    reRead = ms.GetBuffer();
+                }
+                stream = Bass.CreateStream(reRead, 0, reRead.Length, BassFlags.Mono);
             }
         }
 
         public void Play()
         {
             Stop();
-            if (stream == 0)
-            {
-                Read();
-            }
+            Read();
             if (stream != 0)
             {
                 Bass.ChannelSetAttribute(stream, ChannelAttribute.Volume, (double)settings.AudioOutputLevel / 100.0);
@@ -65,7 +73,7 @@ namespace Akorin.Models
 
         public void Record()
         {
-            Bass.Free();
+            data = new List<byte>();
             stream = Bass.RecordStart(44100, 1, BassFlags.Default, RecordProcedure);
             recorded = true;
         }
@@ -78,13 +86,10 @@ namespace Akorin.Models
             return true;
         }
 
-        public void Write (byte[] data)
+        public void Write (byte[] data, string destination)
         {
-            Bass.Free();
-            Directory.CreateDirectory(settings.DestinationFolder);
             var format = new WaveFormat(44100,16,1);
-
-            using (FileStream fs = File.Create(fullName))
+            using (FileStream fs = File.Create(destination))
             using (WaveFileWriter wfw = new WaveFileWriter(fs, format))
             {
                 wfw.Write(data,data.Length);
@@ -93,11 +98,11 @@ namespace Akorin.Models
 
         public void Write()
         {
+            Directory.CreateDirectory(settings.DestinationFolder);
             if (recorded)
             {
-                Write(Data);
+                Write(Data, fullName);
             }
-           
         }
     }
 }
