@@ -9,7 +9,7 @@ namespace Akorin
 {
     public class App : Application
     {
-        public Settings settings;
+        public ISettings settings;
         public override void Initialize()
         {
             settings = new Settings();

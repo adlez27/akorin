@@ -19,7 +19,7 @@ namespace Akorin.Models
         {
             get
             {
-                return data.GetRange(46, data.Count - 46).ToArray();
+                return data.ToArray();
             }
         }
 
@@ -38,7 +38,7 @@ namespace Akorin.Models
             if (File.Exists(fullName) && !recorded)
             {
                 byte[] rawBytes = File.ReadAllBytes(fullName);
-                data = rawBytes.ToList();
+                data = new ArraySegment<byte>(rawBytes, 46, rawBytes.Length - 46).ToList();
                 stream = Bass.CreateStream(rawBytes, 0, rawBytes.Length, BassFlags.Mono);
             }
             else if (recorded)

@@ -17,7 +17,7 @@ namespace Akorin.Views
 #endif
         }
 
-        public MainWindow(Settings settings)
+        public MainWindow(ISettings settings)
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel(this, settings);
