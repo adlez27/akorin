@@ -15,7 +15,7 @@ namespace Akorin.Models
         {
             ReadUnicode = true;
             SplitWhitespace = true;
-            RecListFile = @"reclists\default_reclist.txt";
+            RecListFile = Path.Combine("reclists", "default_reclist.txt");
             DestinationFolder = "voicebank";
 
             Bass.Init();
