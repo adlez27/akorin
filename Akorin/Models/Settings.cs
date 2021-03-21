@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using ManagedBass;
+using Newtonsoft.Json;
 
 namespace Akorin.Models
 {
@@ -16,6 +17,7 @@ namespace Akorin.Models
             ReadUnicode = true;
             SplitWhitespace = true;
             RecListFile = Path.Combine("reclists", "default_reclist.txt");
+            NotesFile = Path.Combine("voicebank", "default_notes.json");
             DestinationFolder = "voicebank";
 
             Bass.Init();
@@ -30,6 +32,7 @@ namespace Akorin.Models
 
             init = true;
             LoadRecList();
+            LoadNotes();
         }
 
         private string recListFile;
@@ -98,7 +101,40 @@ namespace Akorin.Models
             }
         }
 
-        public string NotesFile { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private string notesFile;
+        public string NotesFile
+        {
+            get
+            {
+                return notesFile;
+            }
+            set
+            {
+                notesFile = value;
+                LoadNotes();
+            }
+        }
+
+        private Dictionary<string, string> notes;
+        public Dictionary<string, string> Notes
+        {
+            get { return notes; }
+        }
+        public void LoadNotes()
+        {
+            if (init)
+            {
+                var rawText = File.ReadAllText(NotesFile);
+                notes = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawText);
+                foreach (var x in RecList)
+                {
+                    if (!notes.ContainsKey(x.Text))
+                    {
+                        notes.Add(x.Text, "");
+                    }
+                }
+            }
+        }
 
         public string DestinationFolder { get; set; }
 

@@ -15,22 +15,34 @@ namespace AkorinTests
         }
 
         [Fact]
-        public void DefaultFolder()
-        {
-            Assert.Equal("voicebank", settings.DestinationFolder);
-        }
-
-        [Fact]
         public void SplitByWhitespace()
         {
-            Assert.Equal("a", settings.RecList[0].Text);
+            Assert.Equal("‚ ", settings.RecList[0].Text);
         }
 
         [Fact]
         public void SplitByNewline()
         {
             settings.SplitWhitespace = false;
-            Assert.Equal("a i u e o", settings.RecList[0].Text);
+            Assert.Equal("‚  ‚¢ ‚¤ ‚¦ ‚¨", settings.RecList[0].Text);
+        }
+
+        [Fact]
+        public void DefaultNotes()
+        {
+            Assert.Equal(@"voicebank\default_notes.json", settings.NotesFile);
+        }
+
+        [Fact]
+        public void LoadNotes()
+        {
+            Assert.Equal("a", settings.Notes["‚ "]);
+        }
+
+        [Fact]
+        public void DefaultFolder()
+        {
+            Assert.Equal("voicebank", settings.DestinationFolder);
         }
 
         [Fact]

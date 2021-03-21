@@ -55,6 +55,11 @@ namespace Akorin.ViewModels
             }
         }
 
+        public Dictionary<string, string> Notes
+        {
+            get { return settings.Notes; }
+        }
+
         private bool selectedLineInit;
         private RecListItem selectedLine;
         public RecListItem SelectedLine
@@ -79,6 +84,7 @@ namespace Akorin.ViewModels
                 }
 
                 this.RaiseAndSetIfChanged(ref selectedLine, value);
+                SelectedLineNote = Notes[value.Text];
 
                 if (selectedLineInit)
                 {
@@ -90,6 +96,19 @@ namespace Akorin.ViewModels
                 
                 playToggle = false;
                 recordToggle = false;
+            }
+        }
+
+        private string selectedLineNote;
+        public string SelectedLineNote
+        {
+            get
+            {
+                return selectedLineNote;
+            }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref selectedLineNote, value);
             }
         }
 
