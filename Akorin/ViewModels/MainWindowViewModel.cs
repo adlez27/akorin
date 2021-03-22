@@ -123,6 +123,8 @@ namespace Akorin.ViewModels
             {
                 SelectedLine.Audio.Stop();
                 RecordPlayStatus = "Not recording or playing.";
+                if (SelectedLine.Audio.Data.Length > 0)
+                    FileStatus = "Audio available";
             }
             else
             {
