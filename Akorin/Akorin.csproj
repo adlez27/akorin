@@ -43,8 +43,7 @@
 		<CFBundleVersion>0.1.0</CFBundleVersion>
 		<CFBundleShortVersionString>0.1.0</CFBundleShortVersionString>
 		<CFBundlePackageType>AAPL</CFBundlePackageType>
-		<CFBundleExecutable>Akorine</CFBundleExecutable>
-		<CFBundleIconFile>mic.icns</CFBundleIconFile>
+		<CFBundleExecutable>Akorin</CFBundleExecutable>
 		<NSPrincipalClass>NSApplication</NSPrincipalClass>
 		<NSHighResolutionCapable>true</NSHighResolutionCapable>
 	</PropertyGroup>
