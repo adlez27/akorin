@@ -18,4 +18,18 @@
 		<PackageReference Include="Spectrogram" Version="1.3.0" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Update="reclists\default_reclist.txt">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="voicebank\default_notes.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="External\" />
+	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="xcopy /y /d  &quot;$(ProjectDir)External\*&quot; &quot;$(TargetDir)&quot;" />
+	</Target>
 </Project>
