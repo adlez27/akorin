@@ -3,8 +3,8 @@
         xmlns:vm="using:Akorin.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
-		Width="1200" Height="400"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+		Width="600" Height="400"
         x:Class="Akorin.Views.MainWindow"
         Icon="/Assets/mic.ico"
         Title="Akorin">
