@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ManagedBass;
@@ -16,9 +17,10 @@ namespace Akorin.Models
         {
             ReadUnicode = true;
             SplitWhitespace = true;
-            RecListFile = Path.Combine(@"./reclists", @"default_reclist.txt");
-            NotesFile = Path.Combine(@"./voicebank", @"default_notes.json");
-            DestinationFolder = "voicebank";
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            RecListFile = Path.Combine(currentDirectory,"reclists", "default_reclist.txt");
+            NotesFile = Path.Combine(currentDirectory, "voicebank", "default_notes.json");
+            DestinationFolder = Path.Combine(currentDirectory, "voicebank");
 
             Bass.Init();
             Bass.RecordInit();
