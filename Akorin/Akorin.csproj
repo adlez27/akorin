@@ -35,7 +35,4 @@
 	<ItemGroup>
 	  <Folder Include="External\" />
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="xcopy /y /d  &quot;$(ProjectDir)External\*&quot; &quot;$(TargetDir)&quot;" />
-	</Target>
 </Project>
