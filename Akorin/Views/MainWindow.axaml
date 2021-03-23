@@ -16,11 +16,14 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-				<MenuItem Header="_New project"/>
-				<MenuItem Header="_Open project"/>
+				<!-- 0.1.0 temporarily disabled -->
+				<MenuItem Header="_New project" IsEnabled="False"/>
+				<MenuItem Header="_Open project" IsEnabled="False"/>
 				<MenuItem Header="_Exit" Command="{Binding Exit}" />
 			</MenuItem>
-			<MenuItem Header="_Settings">
+			
+			<!-- 0.1.0 temporarily disabled-->
+			<MenuItem Header="_Settings" IsEnabled="False">
 				<MenuItem Header="_List and folder" Command="{Binding OpenSettings}" CommandParameter="files"/>
 				<MenuItem Header="_Audio" Command="{Binding OpenSettings}" CommandParameter="audio"/>
 				<MenuItem Header="_Display" Command="{Binding OpenSettings}" CommandParameter="display"/>
