@@ -1,0 +1,9 @@
+windows
+dotnet publish -c Release -r win-x64 -o ../Release/Windows -p:PublishSingleFile=true --self-contained=true
+
+mac
+dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:UseAppHost=true
+
+Go inside app bundle
+Remove icon and signature from info plist
+move libbass.dylib out of folder
