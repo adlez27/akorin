@@ -19,6 +19,12 @@
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Update="External\bass.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="External\libbass.dylib">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	  <None Update="reclists\default_reclist.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
