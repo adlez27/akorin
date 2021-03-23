@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using ManagedBass;
 using Newtonsoft.Json;
@@ -82,16 +82,17 @@ namespace Akorin.Models
             {
                 string[] textArr;
                 recList = new ObservableCollection<RecListItem>();
+                var e = CodePagesEncodingProvider.Instance.GetEncoding(932);
 
                 if (SplitWhitespace)
                 {
-                    var rawText = File.ReadAllText(RecListFile);
+                    var rawText = File.ReadAllText(RecListFile, e);
                     rawText = Regex.Replace(rawText, @"\s{2,}", " ");
                     textArr = Regex.Split(rawText, @"\s");
                 }
                 else
                 {
-                    textArr = File.ReadAllLines(RecListFile);
+                    textArr = File.ReadAllLines(RecListFile, e);
                 }
 
                 foreach (string line in textArr)

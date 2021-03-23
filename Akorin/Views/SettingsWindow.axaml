@@ -31,8 +31,8 @@
 					<!-- 0.1.1 enable choice -->
 					<TextBlock Grid.Row="1" Grid.Column="0">Encoding</TextBlock>
 					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
-						<RadioButton IsChecked="True">UTF-8</RadioButton>
-						<RadioButton>Shift JIS</RadioButton>
+						<RadioButton>UTF-8</RadioButton>
+						<RadioButton IsChecked="True">Shift JIS</RadioButton>
 					</StackPanel>
 
 					<!-- 0.1.1 enable choice -->
