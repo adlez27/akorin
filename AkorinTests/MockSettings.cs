@@ -62,5 +62,7 @@ namespace AkorinTests
         }
 
         public int FontSize { get; set; }
+
+        Dictionary<string, string> ISettings.Notes => throw new NotImplementedException();
     }
 }
