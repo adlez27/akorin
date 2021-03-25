@@ -12,7 +12,7 @@ namespace Akorin
         public ISettings settings;
         public override void Initialize()
         {
-            settings = new Settings();
+            settings = new PreviewSettings();
             AvaloniaXamlLoader.Load(this);
         }
 
