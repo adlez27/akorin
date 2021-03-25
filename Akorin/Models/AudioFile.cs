@@ -16,19 +16,17 @@ namespace Akorin.Models
         private WaveformGenerator waveform;
 
         private List<byte> data;
-        public byte[] Data
+        public short[] Data
         {
             get
             {
-                short[] sdata = new short[data.Count];
+                short[] sdata = new short[data.Count / 2];
                 System.Buffer.BlockCopy(data.ToArray(), 0, sdata, 0, data.Count);
                 for (var i = 0; i < sdata.Length; i++)
                 {
                     sdata[i] = (short)(sdata[i] * ((double)settings.AudioInputLevel / 100.0));
                 }
-                byte[] temp = new byte[data.Count];
-                System.Buffer.BlockCopy(sdata, 0, temp, 0, sdata.Length);
-                return temp;
+                return sdata;
             }
         }
 
@@ -111,7 +109,10 @@ namespace Akorin.Models
             Directory.CreateDirectory(settings.DestinationFolder);
             if (recorded)
             {
-                Write(Data, fullName);
+                byte[] temp = new byte[Data.Length * 2];
+                System.Buffer.BlockCopy(Data, 0, temp, 0, Data.Length * 2);
+
+                Write(temp, fullName);
             }
         }
     }
