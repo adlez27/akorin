@@ -62,6 +62,7 @@ namespace AkorinTests
         }
 
         public int FontSize { get; set; }
+        public bool WaveformEnabled { get; set; }
 
         Dictionary<string, string> ISettings.Notes => throw new NotImplementedException();
     }

@@ -31,6 +31,7 @@ namespace Akorin.Models
             AudioOutputLevel = 100;
 
             FontSize = 24;
+            WaveformEnabled = true;
 
             init = true;
             LoadRecList();
@@ -183,6 +184,16 @@ namespace Akorin.Models
                     fontSize = value;
                 else
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private bool waveformEnabled;
+        public bool WaveformEnabled
+        {
+            get { return waveformEnabled; }
+            set
+            {
+                waveformEnabled = value;
             }
         }
     }

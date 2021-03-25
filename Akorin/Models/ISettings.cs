@@ -24,5 +24,6 @@ namespace Akorin.Models
         public int AudioOutputLevel { get; set; }
 
         public int FontSize { get; set; }
+        public bool WaveformEnabled { get; set; }
     }
 }

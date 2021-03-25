@@ -22,6 +22,7 @@ namespace Akorin.Models
         public string AudioOutputDevice { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int AudioOutputLevel { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public int FontSize { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool WaveformEnabled { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
     }
 }
