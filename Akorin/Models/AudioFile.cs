@@ -19,7 +19,7 @@ namespace Akorin.Models
         {
             get
             {
-                short[] sdata = new short[data.Count];
+                short[] sdata = new short[data.Count / 2];
                 System.Buffer.BlockCopy(data.ToArray(), 0, sdata, 0, data.Count);
                 for (var i = 0; i < sdata.Length; i++)
                 {
@@ -107,8 +107,8 @@ namespace Akorin.Models
             Directory.CreateDirectory(settings.DestinationFolder);
             if (recorded)
             {
-                byte[] temp = new byte[Data.Length];
-                System.Buffer.BlockCopy(Data, 0, temp, 0, Data.Length);
+                byte[] temp = new byte[Data.Length * 2];
+                System.Buffer.BlockCopy(Data, 0, temp, 0, Data.Length * 2);
 
                 Write(temp, fullName);
             }
