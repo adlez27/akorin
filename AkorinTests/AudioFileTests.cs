@@ -27,7 +27,7 @@ namespace AkorinTests
             af.Write(b,Path.Combine(settings.DestinationFolder, fileName + ".wav"));
             af.Read();
             Assert.NotEmpty(af.Data);
-            Assert.Equal((byte)127, af.Data[0]);
+            Assert.Equal((short)32639, af.Data[0]);
         }
 
         [Fact]

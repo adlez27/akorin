@@ -15,7 +15,7 @@ namespace Akorin.Models
         private bool recorded;
 
         private List<byte> data;
-        public byte[] Data
+        public short[] Data
         {
             get
             {
@@ -25,9 +25,7 @@ namespace Akorin.Models
                 {
                     sdata[i] = (short)(sdata[i] * ((double)settings.AudioInputLevel / 100.0));
                 }
-                byte[] temp = new byte[data.Count];
-                System.Buffer.BlockCopy(sdata, 0, temp, 0, sdata.Length);
-                return temp;
+                return sdata;
             }
         }
 
@@ -109,7 +107,10 @@ namespace Akorin.Models
             Directory.CreateDirectory(settings.DestinationFolder);
             if (recorded)
             {
-                Write(Data, fullName);
+                byte[] temp = new byte[Data.Length];
+                System.Buffer.BlockCopy(Data, 0, temp, 0, Data.Length);
+
+                Write(temp, fullName);
             }
         }
     }
