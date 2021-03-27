@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ManagedBass;
-using Newtonsoft.Json;
 
 namespace Akorin.Models
 {
@@ -19,7 +18,7 @@ namespace Akorin.Models
             SplitWhitespace = true;
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RecListFile = Path.Combine(currentDirectory,"reclists", "default_reclist.txt");
-            NotesFile = Path.Combine(currentDirectory, "voicebank", "default_notes.json");
+            NotesFile = Path.Combine(currentDirectory, "voicebank", "default_notes.yaml");
             DestinationFolder = Path.Combine(currentDirectory, "voicebank");
 
             Bass.Init();
@@ -133,14 +132,8 @@ namespace Akorin.Models
             if (init)
             {
                 var rawText = File.ReadAllText(NotesFile);
-                notes = JsonConvert.DeserializeObject<Dictionary<string, string>>(rawText);
-                foreach (var x in RecList)
-                {
-                    if (!notes.ContainsKey(x.Text))
-                    {
-                        notes.Add(x.Text, "");
-                    }
-                }
+                var deserializer = new YamlDotNet.Serialization.Deserializer();
+                notes = deserializer.Deserialize<Dictionary<string, string>>(rawText);
             }
         }
 
