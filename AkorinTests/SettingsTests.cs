@@ -1,17 +1,20 @@
 using System;
 using Xunit;
 using Akorin.Models;
+using System.IO;
+using System.Reflection;
 
 namespace AkorinTests
 {
     public class SettingsTests
     {
         Settings settings = new Settings();
+        string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         [Fact]
         public void DefaultRecList()
         {
-            Assert.Equal(@"reclists\default_reclist.txt", settings.RecListFile);
+            Assert.Equal(Path.Combine(currentDirectory, "reclists", "default_reclist.txt"), settings.RecListFile);
         }
 
         [Fact]
@@ -30,7 +33,7 @@ namespace AkorinTests
         [Fact]
         public void DefaultNotes()
         {
-            Assert.Equal(@"voicebank\default_notes.json", settings.NotesFile);
+            Assert.Equal(Path.Combine(currentDirectory, "voicebank", "default_notes.yaml"), settings.NotesFile);
         }
 
         [Fact]
@@ -42,7 +45,7 @@ namespace AkorinTests
         [Fact]
         public void DefaultFolder()
         {
-            Assert.Equal("voicebank", settings.DestinationFolder);
+            Assert.Equal(Path.Combine(currentDirectory, "voicebank"), settings.DestinationFolder);
         }
 
         [Fact]
