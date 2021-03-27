@@ -77,6 +77,7 @@ namespace Akorin.Models
         public void Stop()
         {
             Bass.ChannelStop(stream);
+            ShowWaveform();
         }
 
         public void Record()
@@ -114,6 +115,11 @@ namespace Akorin.Models
 
                 Write(temp, fullName);
             }
+        }
+
+        public void ShowWaveform()
+        {
+            waveform.DrawWaveform(Data);
         }
     }
 }
