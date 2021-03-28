@@ -25,7 +25,7 @@ namespace Akorin.ViewModels
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
 
-            ((Window)_view).Closing += OnCloseEventHandler;
+            ((Window)_view).Closing += OnClosingEventHandler;
 
             if (RecList[0].Audio.Data.Length > 0)
                 FileStatus = "Audio available";
@@ -33,7 +33,7 @@ namespace Akorin.ViewModels
                 FileStatus = "No audio";
         }
 
-        public void OnCloseEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
         {
             selectedLine.Audio.Write();
         }
@@ -47,6 +47,7 @@ namespace Akorin.ViewModels
         {
             var settingsWindow = new SettingsWindow(tab, settings);
             settingsWindow.ShowDialog((Window)_view);
+            settingsWindow.Closed += (object sender, System.EventArgs e) => this.RaisePropertyChanged("FontSize");
         }
 
         public int FontSize

@@ -31,7 +31,7 @@
 		</Menu>
 
 		<StackPanel DockPanel.Dock="Top" Margin="5">
-			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="{Binding FontSize}"/>
+			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="{Binding FontSize, Mode=OneWay}"/>
 			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLineNote}"/>
 		</StackPanel>
 
