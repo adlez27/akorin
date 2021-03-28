@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Controls;
 using System;
 using System.Collections.Generic;
-using ReactiveUI;
 using System.Text;
 
 namespace Akorin.ViewModels

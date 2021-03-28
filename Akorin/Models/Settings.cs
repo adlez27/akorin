@@ -97,9 +97,14 @@ namespace Akorin.Models
                     textArr = File.ReadAllLines(RecListFile, e);
                 }
 
+                HashSet<string> uniqueStrings = new HashSet<string>();
                 foreach (string line in textArr)
                 {
-                    recList.Add(new RecListItem(this, line));
+                    if (!uniqueStrings.Contains(line))
+                    {
+                        recList.Add(new RecListItem(this, line));
+                        uniqueStrings.Add(line);
+                    }
                 }
             }
         }
