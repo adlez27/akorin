@@ -1,7 +1,7 @@
-using Akorin.Models;
-using Akorin.Views;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Akorin.Models;
+using Akorin.Views;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -25,10 +25,17 @@ namespace Akorin.ViewModels
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
 
+            ((Window)_view).Closing += OnCloseEventHandler;
+
             if (RecList[0].Audio.Data.Length > 0)
                 FileStatus = "Audio available";
             else
                 FileStatus = "No audio";
+        }
+
+        public void OnCloseEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            selectedLine.Audio.Write();
         }
 
         public void Exit()
