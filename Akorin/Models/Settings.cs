@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ManagedBass;
+using YamlDotNet.Serialization;
 
 namespace Akorin.Models
 {
@@ -24,9 +25,9 @@ namespace Akorin.Models
             Bass.Init();
             Bass.RecordInit();
             AudioDriver = Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
-            AudioInputDevice = Bass.GetDeviceInfo(Bass.CurrentDevice).Name;
+            AudioInputDevice = Bass.GetDeviceInfo(Bass.CurrentRecordingDevice).Name;
             AudioInputLevel = 100;
-            AudioOutputDevice = Bass.GetDeviceInfo(Bass.CurrentRecordingDevice).Name;
+            AudioOutputDevice = Bass.GetDeviceInfo(Bass.CurrentDevice).Name;
             AudioOutputLevel = 100;
 
             FontSize = 24;
@@ -34,6 +35,13 @@ namespace Akorin.Models
             init = true;
             LoadRecList();
             LoadNotes();
+
+            using (StreamWriter file = new(Path.Combine(currentDirectory, "voicebank", "settingstest.yaml")))
+            {
+                var serializer = new YamlDotNet.Serialization.Serializer();
+                serializer.Serialize(file, this);
+            }
+            
         }
 
         private string recListFile;
@@ -73,6 +81,7 @@ namespace Akorin.Models
         }
 
         private ObservableCollection<RecListItem> recList;
+        [YamlIgnore]
         public ObservableCollection<RecListItem> RecList
         {
             get { return recList; }
