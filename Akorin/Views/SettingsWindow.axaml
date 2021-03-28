@@ -25,7 +25,7 @@
 					<TextBlock Grid.Row="0" Grid.Column="0">Recording list</TextBlock>
 					<DockPanel Grid.Row="0" Grid.Column="1" IsEnabled="True">
 						<Button DockPanel.Dock="Right" Command="{Binding SelectRecordingList}">Browse</Button>
-						<TextBox Text="{Binding Settings.RecListFile}"></TextBox>
+						<TextBox Text="{Binding RecListFile}"></TextBox>
 					</DockPanel>
 
 					<!-- 0.1.1 enable choice -->
@@ -46,14 +46,14 @@
 					<TextBlock Grid.Row="3" Grid.Column="0">Notes</TextBlock>
 					<DockPanel Grid.Row="3" Grid.Column="1" IsEnabled="True">
 						<Button DockPanel.Dock="Right" Command="{Binding SelectNotesFile}">Browse</Button>
-						<TextBox Text="{Binding Settings.NotesFile}"></TextBox>
+						<TextBox Text="{Binding NotesFile}"></TextBox>
 					</DockPanel>
 
 					<!-- 0.1.1 enable browsing -->
 					<TextBlock Grid.Row="4" Grid.Column="0">Destination</TextBlock>
 					<DockPanel Grid.Row="4" Grid.Column="1" IsEnabled="True">
 						<Button DockPanel.Dock="Right" Command="{Binding SelectDestinationFolder}">Browse</Button>
-						<TextBox Text="{Binding Settings.DestinationFolder}"></TextBox>
+						<TextBox Text="{Binding DestinationFolder}"></TextBox>
 					</DockPanel>
 				</Grid>
 			</TabItem>

@@ -2,6 +2,7 @@
 using Akorin.Views;
 using Avalonia;
 using Avalonia.Controls;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -60,6 +61,11 @@ namespace Akorin.ViewModels
             }
         }
 
+        public string RecListFile
+        {
+            get => settings.RecListFile;
+        }
+
         public async void SelectRecordingList()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -68,8 +74,15 @@ namespace Akorin.ViewModels
             if (recListFile.Length > 0)
             {
                 settings.RecListFile = recListFile[0];
+                this.RaisePropertyChanged("RecListFile");
             }
         }
+
+        public string NotesFile
+        {
+            get => settings.NotesFile;
+        }
+
         public async void SelectNotesFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -78,8 +91,15 @@ namespace Akorin.ViewModels
             if (notesFile.Length > 0)
             {
                 settings.NotesFile = notesFile[0];
+                this.RaisePropertyChanged("NotesFile");
             }
         }
+
+        public string DestinationFolder
+        {
+            get => settings.DestinationFolder;
+        }
+
         public async void SelectDestinationFolder()
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
@@ -88,6 +108,7 @@ namespace Akorin.ViewModels
             if (destinationFolder.Length > 0)
             {
                 settings.DestinationFolder = destinationFolder;
+                this.RaisePropertyChanged("DestinationFolder");
             }
         }
 
