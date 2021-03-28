@@ -23,9 +23,9 @@
 				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
 					<!-- 0.1.1 enable browsing -->
 					<TextBlock Grid.Row="0" Grid.Column="0">Recording list</TextBlock>
-					<DockPanel Grid.Row="0" Grid.Column="1" IsEnabled="False">
-						<Button DockPanel.Dock="Right">Browse</Button>
-						<TextBox>default_reclist.txt</TextBox>
+					<DockPanel Grid.Row="0" Grid.Column="1" IsEnabled="True">
+						<Button DockPanel.Dock="Right" Command="{Binding SelectRecordingList}">Browse</Button>
+						<TextBox Text="{Binding Settings.RecListFile}"></TextBox>
 					</DockPanel>
 
 					<!-- 0.1.1 enable choice -->
@@ -44,16 +44,16 @@
 
 					<!-- 0.1.1 enable browsing -->
 					<TextBlock Grid.Row="3" Grid.Column="0">Notes</TextBlock>
-					<DockPanel Grid.Row="3" Grid.Column="1" IsEnabled="False">
-						<Button DockPanel.Dock="Right">Browse</Button>
-						<TextBox>default_notes.json</TextBox>
+					<DockPanel Grid.Row="3" Grid.Column="1" IsEnabled="True">
+						<Button DockPanel.Dock="Right" Command="{Binding SelectNotesFile}">Browse</Button>
+						<TextBox Text="{Binding Settings.NotesFile}"></TextBox>
 					</DockPanel>
 
 					<!-- 0.1.1 enable browsing -->
 					<TextBlock Grid.Row="4" Grid.Column="0">Destination</TextBlock>
-					<DockPanel Grid.Row="4" Grid.Column="1" IsEnabled="False">
-						<Button DockPanel.Dock="Right">Browse</Button>
-						<TextBox>voicebank</TextBox>
+					<DockPanel Grid.Row="4" Grid.Column="1" IsEnabled="True">
+						<Button DockPanel.Dock="Right" Command="{Binding SelectDestinationFolder}">Browse</Button>
+						<TextBox Text="{Binding Settings.DestinationFolder}"></TextBox>
 					</DockPanel>
 				</Grid>
 			</TabItem>
