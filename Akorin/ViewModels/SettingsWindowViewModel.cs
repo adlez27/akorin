@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Controls;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Akorin.ViewModels
@@ -62,7 +63,7 @@ namespace Akorin.ViewModels
         public async void SelectRecordingList()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Directory = settings.RecListFile;
+            openFileDialog.Directory = Path.GetDirectoryName(settings.RecListFile);
             var recListFile = await openFileDialog.ShowAsync(window);
             if (recListFile.Length > 0)
             {
@@ -72,7 +73,7 @@ namespace Akorin.ViewModels
         public async void SelectNotesFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Directory = settings.NotesFile;
+            openFileDialog.Directory = Path.GetDirectoryName(settings.NotesFile);
             var notesFile = await openFileDialog.ShowAsync(window);
             if (notesFile.Length > 0)
             {
