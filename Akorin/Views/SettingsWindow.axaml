@@ -36,20 +36,12 @@
 					</StackPanel>
 
 					<!-- 0.1.1 enable choice -->
-					<TextBlock Grid.Row="2" Grid.Column="0">Split by</TextBlock>
+					<TextBlock Grid.Row="2" Grid.Column="0">Split .txt by</TextBlock>
 					<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
 						<RadioButton IsChecked="True">All whitespace</RadioButton>
 						<RadioButton>New line</RadioButton>
 					</StackPanel>
 
-					<!-- 0.1.1 enable browsing -->
-					<TextBlock Grid.Row="3" Grid.Column="0">Notes</TextBlock>
-					<DockPanel Grid.Row="3" Grid.Column="1" IsEnabled="True">
-						<Button DockPanel.Dock="Right" Command="{Binding SelectNotesFile}">Browse</Button>
-						<TextBox Text="{Binding NotesFile}"></TextBox>
-					</DockPanel>
-
-					<!-- 0.1.1 enable browsing -->
 					<TextBlock Grid.Row="4" Grid.Column="0">Destination</TextBlock>
 					<DockPanel Grid.Row="4" Grid.Column="1" IsEnabled="True">
 						<Button DockPanel.Dock="Right" Command="{Binding SelectDestinationFolder}">Browse</Button>

@@ -14,7 +14,6 @@ namespace Akorin.Models
         public bool SplitWhitespace { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public ObservableCollection<RecListItem> RecList => throw new NotImplementedException();
         public string NotesFile { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        Dictionary<string, string> ISettings.Notes => throw new NotImplementedException();
         public string DestinationFolder { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string AudioDriver { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string AudioInputDevice { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

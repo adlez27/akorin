@@ -18,8 +18,7 @@ namespace Akorin.Models
             ReadUnicode = false;
             SplitWhitespace = true;
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            RecListFile = Path.Combine(currentDirectory,"reclists", "default_reclist.txt");
-            NotesFile = Path.Combine(currentDirectory, "voicebank", "default_notes.yaml");
+            RecListFile = Path.Combine(currentDirectory,"reclists", "default_reclist.arl");
             DestinationFolder = Path.Combine(currentDirectory, "voicebank");
 
             Bass.Init();
@@ -34,7 +33,6 @@ namespace Akorin.Models
 
             init = true;
             LoadRecList();
-            LoadNotes();
 
             using (StreamWriter file = new(Path.Combine(currentDirectory, "settingstest.yaml")))
             {
@@ -89,8 +87,8 @@ namespace Akorin.Models
         {
             if (init)
             {
-                string[] textArr;
                 recList = new ObservableCollection<RecListItem>();
+                HashSet<string> uniqueStrings = new HashSet<string>();
 
                 Encoding e;
                 if (ReadUnicode)
@@ -102,57 +100,44 @@ namespace Akorin.Models
                     e = CodePagesEncodingProvider.Instance.GetEncoding(932);
                 }
 
-                if (SplitWhitespace)
+                var ext = Path.GetExtension(RecListFile);
+                if (ext == ".txt")
                 {
-                    var rawText = File.ReadAllText(RecListFile, e);
-                    rawText = Regex.Replace(rawText, @"\s{2,}", " ");
-                    textArr = Regex.Split(rawText, @"\s");
-                }
-                else
-                {
-                    textArr = File.ReadAllLines(RecListFile, e);
-                }
-
-                HashSet<string> uniqueStrings = new HashSet<string>();
-                foreach (string line in textArr)
-                {
-                    if (!uniqueStrings.Contains(line))
+                    string[] textArr;
+                    if (SplitWhitespace)
                     {
-                        recList.Add(new RecListItem(this, line));
-                        uniqueStrings.Add(line);
+                        var rawText = File.ReadAllText(RecListFile, e);
+                        rawText = Regex.Replace(rawText, @"\s{2,}", " ");
+                        textArr = Regex.Split(rawText, @"\s");
+                    }
+                    else
+                    {
+                        textArr = File.ReadAllLines(RecListFile, e);
+                    }
+
+                    foreach (string line in textArr)
+                    {
+                        if (!uniqueStrings.Contains(line))
+                        {
+                            recList.Add(new RecListItem(this, line));
+                            uniqueStrings.Add(line);
+                        }
                     }
                 }
-            }
-        }
-
-        private string notesFile;
-        [YamlIgnore]
-        public string NotesFile
-        {
-            get
-            {
-                return notesFile;
-            }
-            set
-            {
-                notesFile = value;
-                LoadNotes();
-            }
-        }
-
-        private Dictionary<string, string> notes;
-        [YamlIgnore]
-        public Dictionary<string, string> Notes
-        {
-            get { return notes; }
-        }
-        public void LoadNotes()
-        {
-            if (init)
-            {
-                var rawText = File.ReadAllText(NotesFile);
-                var deserializer = new YamlDotNet.Serialization.Deserializer();
-                notes = deserializer.Deserialize<Dictionary<string, string>>(rawText);
+                else if (ext == ".arl")
+                {
+                    var rawText = File.ReadAllText(RecListFile);
+                    var deserializer = new YamlDotNet.Serialization.Deserializer();
+                    var tempDict = deserializer.Deserialize<Dictionary<string, string>>(rawText);
+                    foreach (var item in tempDict)
+                    {
+                        if (!uniqueStrings.Contains(item.Key))
+                        {
+                            recList.Add(new RecListItem(this, item.Key, item.Value));
+                            uniqueStrings.Add(item.Key);
+                        }
+                    }
+                }
             }
         }
 

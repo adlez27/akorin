@@ -78,23 +78,6 @@ namespace Akorin.ViewModels
             }
         }
 
-        public string NotesFile
-        {
-            get => settings.NotesFile;
-        }
-
-        public async void SelectNotesFile()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Directory = Path.GetDirectoryName(settings.NotesFile);
-            var notesFile = await openFileDialog.ShowAsync(window);
-            if (notesFile.Length > 0)
-            {
-                settings.NotesFile = notesFile[0];
-                this.RaisePropertyChanged("NotesFile");
-            }
-        }
-
         public string DestinationFolder
         {
             get => settings.DestinationFolder;

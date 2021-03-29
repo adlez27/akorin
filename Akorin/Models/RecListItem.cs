@@ -20,7 +20,14 @@ namespace Akorin.Models
         {
             Text = t;
             Audio = new AudioFile(s, t);
-            Note = "test";
+            Note = "";
+        }
+
+        public RecListItem (ISettings s, string t, string n)
+        {
+            Text = t;
+            Audio = new AudioFile(s, t);
+            Note = n;
         }
 
         public override string ToString()

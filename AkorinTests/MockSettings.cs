@@ -27,8 +27,6 @@ namespace AkorinTests
         public bool SplitWhitespace { get; set; }
 
         public ObservableCollection<RecListItem> RecList => throw new NotImplementedException();
-
-        public string NotesFile { get; set; }
         public string DestinationFolder { get; set; }
         public string AudioDriver { get; set; }
         public string AudioInputDevice { get; set; }
@@ -62,7 +60,5 @@ namespace AkorinTests
         }
 
         public int FontSize { get; set; }
-
-        Dictionary<string, string> ISettings.Notes => throw new NotImplementedException();
     }
 }

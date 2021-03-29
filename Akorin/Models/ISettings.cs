@@ -13,8 +13,6 @@ namespace Akorin.Models
         public bool ReadUnicode { get; set; }
         public bool SplitWhitespace { get; set; }
         public ObservableCollection<RecListItem> RecList { get; }
-        public string NotesFile { get; set; }
-        public Dictionary<string, string> Notes { get; }
         public string DestinationFolder { get; set; }
 
         public string AudioDriver { get; set; }
