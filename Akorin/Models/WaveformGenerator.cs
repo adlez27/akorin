@@ -10,14 +10,14 @@ namespace Akorin.Models
     public class WaveformGenerator
     {
         private int sampleRate;
-        private List<short> averageSamplesL;
-        private List<short> averageSamplesR;
+        private List<double> averageSamplesL;
+        private List<double> averageSamplesR;
 
         public WaveformGenerator()
         {
             sampleRate = 8820; //0.2s per sample
-            averageSamplesL = new List<short>();
-            averageSamplesR = new List<short>();
+            averageSamplesL = new List<double>();
+            averageSamplesR = new List<double>();
         }
 
         public void DrawWaveform(short[] data)
@@ -45,7 +45,7 @@ namespace Akorin.Models
 
             for (int i = 0; i < Math.Ceiling((double) dataL.Length / halvedSampleRate); i++)
             {
-                if (((i + 1) * sampleRate) > dataL.Length)
+                if (((i + 1) * halvedSampleRate) > dataL.Length)
                 {
                     sampleStart = i * halvedSampleRate;
                     sampleEnd = dataL.Length;
@@ -63,14 +63,13 @@ namespace Akorin.Models
                         tempSum += dataL[j];
                     }
                 }
-                Debug.WriteLine(tempSum);
-                averageSamplesL.Add((short) Math.Round(tempSum / (sampleEnd - sampleStart)));
+                averageSamplesL.Add(Math.Round(tempSum / (sampleEnd - sampleStart)));
                 tempSum = 0;
             }
 
-            for (int i = 0; i < Math.Floor((double) dataR.Length / halvedSampleRate); i++)
+            for (int i = 0; i < Math.Ceiling((double) dataR.Length / halvedSampleRate); i++)
             {
-                if (((i + 1) * sampleRate) > dataR.Length)
+                if (((i + 1) * halvedSampleRate) > dataR.Length)
                 {
                     sampleStart = i * halvedSampleRate;
                     sampleEnd = dataR.Length;
@@ -88,8 +87,7 @@ namespace Akorin.Models
                         tempSum += dataR[j];
                     }
                 }
-                Debug.WriteLine(tempSum);
-                averageSamplesR.Add((short)Math.Round(tempSum / (sampleEnd - sampleStart)));
+                averageSamplesR.Add(Math.Round(tempSum / (sampleEnd - sampleStart)));
                 tempSum = 0;
             }
 
