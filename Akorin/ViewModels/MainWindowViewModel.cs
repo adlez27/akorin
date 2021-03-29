@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Drawing;
 using ScottPlot.Avalonia;
+using ScottPlot;
 
 namespace Akorin.ViewModels
 {
@@ -27,6 +29,10 @@ namespace Akorin.ViewModels
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
             waveform = ((Window)_view).Find<AvaPlot>("Waveform");
+            waveform.Height = 50;
+            waveform.Plot.YAxis.Grid(false);
+            waveform.Plot.XAxis.Ticks(false);
+            waveform.Plot.YAxis.Ticks(false);
 
             if (RecList[0].Audio.Data.Length > 0)
                 FileStatus = "Audio available";
@@ -94,9 +100,9 @@ namespace Akorin.ViewModels
                     if (selectedLine.Audio.Data.Length > 0)
                     {
                         FileStatus = "Audio available";
+                        waveform.Render();
                         waveform.Plot.Clear();
                         waveform.Plot.Add(SelectedLine.Audio.ShowWaveform());
-                        waveform.Render();
                     }
                     else
                     {
@@ -137,9 +143,10 @@ namespace Akorin.ViewModels
                 if (SelectedLine.Audio.Data.Length > 0)
                 {
                     FileStatus = "Audio available";
-                    waveform.Plot.Clear();
-                    waveform.Plot.Add(SelectedLine.Audio.ShowWaveform());
                     waveform.Render();
+                    waveform.Plot.Clear();
+                    ShowWaveform();
+                    waveform.Plot.SaveFig("waveform.png");
                 }
             }
             else
@@ -197,6 +204,12 @@ namespace Akorin.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref fileStatus, value);
             }
+        }
+
+        public void ShowWaveform()
+        {
+            double[] dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double) s);
+            var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, Color.Blue);
         }
     }
 }
