@@ -33,10 +33,11 @@ namespace Akorin.Models
 
             init = true;
             LoadRecList();
-            Save(Path.Combine(currentDirectory, "settings.arp"));
+            SaveSettings(Path.Combine(currentDirectory, "settings.arp"));
         }
 
         private string recListFile;
+        [YamlIgnore]
         public string RecListFile
         {
             get
@@ -51,6 +52,7 @@ namespace Akorin.Models
         }
 
         private bool readUnicode;
+        [YamlIgnore]
         public bool ReadUnicode
         {
             get { return readUnicode; }
@@ -62,6 +64,7 @@ namespace Akorin.Models
         }
 
         private bool splitWhitespace;
+        [YamlIgnore]
         public bool SplitWhitespace
         {
             get { return splitWhitespace; }
@@ -212,12 +215,28 @@ namespace Akorin.Models
             }
         }
 
-        public void Load()
+        public void LoadSettings(string path)
         {
-            // load settings from file
+            var raw = File.ReadAllText(path);
+            var deserializer = new Deserializer();
+            var newSettings = deserializer.Deserialize<Settings>(raw);
+
+            recListFile = "List already loaded.";
+            readUnicode = true;
+            splitWhitespace = true;
+            recList = newSettings.RecList;
+            DestinationFolder = newSettings.DestinationFolder;
+
+            AudioDriver = newSettings.AudioDriver;
+            AudioInputDevice = newSettings.AudioInputDevice;
+            AudioInputLevel = newSettings.AudioInputLevel;
+            AudioOutputDevice = newSettings.AudioOutputDevice;
+            AudioOutputLevel = newSettings.AudioOutputLevel;
+
+            FontSize = newSettings.FontSize;
         }
 
-        public void Save(string path)
+        public void SaveSettings(string path)
         {
             using (StreamWriter file = new(path))
             {

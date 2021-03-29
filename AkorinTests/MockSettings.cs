@@ -16,9 +16,9 @@ namespace AkorinTests
             Bass.Init();
             Bass.RecordInit();
             AudioDriver = Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
-            AudioInputDevice = Bass.GetDeviceInfo(Bass.CurrentDevice).Name;
+            AudioInputDevice = Bass.CurrentDevice;
             AudioInputLevel = 100;
-            AudioOutputDevice = Bass.GetDeviceInfo(Bass.CurrentRecordingDevice).Name;
+            AudioOutputDevice = Bass.CurrentRecordingDevice;
             AudioOutputLevel = 100;
         }
 
@@ -60,5 +60,9 @@ namespace AkorinTests
         }
 
         public int FontSize { get; set; }
+
+        List<string> ISettings.AudioInputDeviceList => throw new NotImplementedException();
+
+        List<string> ISettings.AudioOutputDeviceList => throw new NotImplementedException();
     }
 }

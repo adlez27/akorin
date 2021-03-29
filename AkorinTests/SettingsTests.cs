@@ -58,5 +58,12 @@ namespace AkorinTests
             var expected = 50;
             Assert.Equal(expected, settings.AudioOutputLevel);
         }
+
+        [Fact]
+        public void LoadSettings()
+        {
+            settings.LoadSettings(@"C:\Users\Mark\Desktop\settings.arp");
+            Assert.Equal("foobar", settings.RecList[0].Text);
+        }
     }
 }
