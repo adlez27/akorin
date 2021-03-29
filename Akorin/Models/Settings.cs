@@ -131,11 +131,7 @@ namespace Akorin.Models
                     var tempDict = deserializer.Deserialize<Dictionary<string, string>>(rawText);
                     foreach (var item in tempDict)
                     {
-                        if (!uniqueStrings.Contains(item.Key))
-                        {
-                            recList.Add(new RecListItem(this, item.Key, item.Value));
-                            uniqueStrings.Add(item.Key);
-                        }
+                        recList.Add(new RecListItem(this, item.Key, item.Value));
                     }
                 }
             }
