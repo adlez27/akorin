@@ -14,7 +14,7 @@ namespace AkorinTests
         [Fact]
         public void DefaultRecList()
         {
-            Assert.Equal(Path.Combine(currentDirectory, "reclists", "default_reclist.txt"), settings.RecListFile);
+            Assert.Equal(Path.Combine(currentDirectory, "reclists", "default_reclist.arl"), settings.RecListFile);
         }
 
         [Fact]
@@ -27,19 +27,14 @@ namespace AkorinTests
         public void SplitByNewline()
         {
             settings.SplitWhitespace = false;
+            settings.RecListFile = Path.Combine(currentDirectory, "reclists", "default_reclist.txt");
             Assert.Equal("‚  ‚¢ ‚¤ ‚¦ ‚¨", settings.RecList[0].Text);
         }
 
         [Fact]
-        public void DefaultNotes()
+        public void ReadNotes()
         {
-            Assert.Equal(Path.Combine(currentDirectory, "voicebank", "default_notes.yaml"), settings.NotesFile);
-        }
-
-        [Fact]
-        public void LoadNotes()
-        {
-            Assert.Equal("a", settings.Notes["‚ "]);
+            Assert.Equal("a", settings.RecList[0].Note);
         }
 
         [Fact]
