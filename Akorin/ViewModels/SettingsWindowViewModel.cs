@@ -2,6 +2,7 @@
 using Akorin.Views;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Data.Converters;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -112,9 +113,67 @@ namespace Akorin.ViewModels
             }
         }
 
+        public int FontSize
+        {
+            get => settings.FontSize;
+            set
+            {
+                settings.FontSize = value;
+                this.RaisePropertyChanged("FontSize");
+            }
+        }
+        
+        public bool ReadUnicode
+        {
+            get => settings.ReadUnicode;
+            set
+            {
+                settings.ReadUnicode = value;
+                this.RaisePropertyChanged("ReadUnicode");
+            }
+        }
+
+        public bool SplitWhiteSpace
+        {
+            get => settings.SplitWhitespace;
+            set
+            {
+                settings.SplitWhitespace = value;
+                this.RaisePropertyChanged("SplitWhiteSpace");
+            }
+        }
+
         public void CloseSettings()
         {
             window.Close();
         }
+    }
+
+    public class BoolInverterConverter : IValueConverter
+    {
+        //From https://stackoverflow.com/a/3361553
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            if (value is bool)
+            {
+                return !(bool)value;
+            }
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            if (value is bool)
+            {
+                return !(bool)value;
+            }
+            return value;
+        }
+
+        #endregion
     }
 }

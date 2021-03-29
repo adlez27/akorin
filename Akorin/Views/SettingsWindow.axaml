@@ -7,12 +7,15 @@
 		Width="600" Height="350"
         x:Class="Akorin.Views.SettingsWindow"
         Title="SettingsWindow">
-	
+	<Window.Resources>
+		<vm:BoolInverterConverter x:Key="BoolInverterConverter" />
+	</Window.Resources>
+
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
 			<!-- 0.1.1 enable -->
 			<Button IsEnabled="False">Set as default</Button>
-			
+
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 				<Button Command="{Binding CloseSettings}">Cancel</Button>
 				<Button Command="{Binding CloseSettings}">OK</Button>
@@ -30,16 +33,16 @@
 
 					<!-- 0.1.1 enable choice -->
 					<TextBlock Grid.Row="1" Grid.Column="0">Encoding</TextBlock>
-					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
-						<RadioButton>UTF-8</RadioButton>
-						<RadioButton IsChecked="True">Shift JIS</RadioButton>
+					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" IsEnabled="True">
+						<RadioButton Content="UTF-8" IsChecked="{Binding ReadUnicode}" />
+						<RadioButton Content="Shift JIS" IsChecked="{Binding ReadUnicode, Converter={StaticResource BoolInverterConverter}}" />
 					</StackPanel>
 
 					<!-- 0.1.1 enable choice -->
 					<TextBlock Grid.Row="2" Grid.Column="0">Split by</TextBlock>
-					<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
-						<RadioButton IsChecked="True">All whitespace</RadioButton>
-						<RadioButton>New line</RadioButton>
+					<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" IsEnabled="True">
+						<RadioButton Content="All whitespace" IsChecked="{Binding SplitWhiteSpace}" />
+						<RadioButton Content="New line" IsChecked="{Binding SplitWhiteSpace, Converter={StaticResource BoolInverterConverter}}" />
 					</StackPanel>
 
 					<!-- 0.1.1 enable browsing -->
@@ -99,7 +102,7 @@
 				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 					<TextBlock Grid.Row="0" Grid.Column="0">Line font size</TextBlock>
 					<NumericUpDown Grid.Row="0" Grid.Column="1"
-								   Value="{Binding Settings.FontSize}" Increment="1" Minimum="8" Maximum="200"/>
+								   Value="{Binding FontSize}" Increment="1" Minimum="8" Maximum="200"/>
 					
 					<!-- 0.1.1 enable -->
 					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox"

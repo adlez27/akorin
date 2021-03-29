@@ -15,7 +15,7 @@ namespace Akorin.Models
         private bool init = false;
         public Settings()
         {
-            ReadUnicode = true;
+            ReadUnicode = false;
             SplitWhitespace = true;
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RecListFile = Path.Combine(currentDirectory,"reclists", "default_reclist.txt");
