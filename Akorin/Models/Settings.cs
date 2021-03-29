@@ -15,7 +15,7 @@ namespace Akorin.Models
         private bool init = false;
         public Settings()
         {
-            ReadUnicode = true;
+            ReadUnicode = false;
             SplitWhitespace = true;
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             RecListFile = Path.Combine(currentDirectory,"reclists", "default_reclist.txt");
@@ -91,7 +91,16 @@ namespace Akorin.Models
             {
                 string[] textArr;
                 recList = new ObservableCollection<RecListItem>();
-                var e = CodePagesEncodingProvider.Instance.GetEncoding(932);
+
+                Encoding e;
+                if (ReadUnicode)
+                {
+                    e = Encoding.UTF8;
+                }
+                else
+                {
+                    e = CodePagesEncodingProvider.Instance.GetEncoding(932);
+                }
 
                 if (SplitWhitespace)
                 {
