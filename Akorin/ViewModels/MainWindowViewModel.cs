@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using ScottPlot.Avalonia;
 
 namespace Akorin.ViewModels
 {
@@ -14,6 +15,7 @@ namespace Akorin.ViewModels
     {
         private readonly IView _view;
         private ISettings settings;
+        private AvaPlot waveform;
         public MainWindowViewModel() { }
 
         public MainWindowViewModel(IView view, ISettings s)
@@ -24,6 +26,7 @@ namespace Akorin.ViewModels
             recordToggle = false;
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
+            waveform = ((Window)_view).Find<AvaPlot>("Waveform");
 
             if (RecList[0].Audio.Data.Length > 0)
                 FileStatus = "Audio available";
@@ -89,9 +92,17 @@ namespace Akorin.ViewModels
                 if (selectedLineInit)
                 {
                     if (selectedLine.Audio.Data.Length > 0)
+                    {
                         FileStatus = "Audio available";
+                        waveform.Plot.Clear();
+                        waveform.Plot.Add(SelectedLine.Audio.ShowWaveform());
+                        waveform.Render();
+                    }
                     else
+                    {
                         FileStatus = "No audio";
+                        waveform.Plot.Clear();
+                    }
                 }
                 
                 playToggle = false;
@@ -124,7 +135,12 @@ namespace Akorin.ViewModels
                 SelectedLine.Audio.Stop();
                 RecordPlayStatus = "Not recording or playing.";
                 if (SelectedLine.Audio.Data.Length > 0)
+                {
                     FileStatus = "Audio available";
+                    waveform.Plot.Clear();
+                    waveform.Plot.Add(SelectedLine.Audio.ShowWaveform());
+                    waveform.Render();
+                }
             }
             else
             {

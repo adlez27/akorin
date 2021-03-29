@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using ScottPlot.Plottable;
 
 namespace Akorin.Models
 {
@@ -77,7 +78,6 @@ namespace Akorin.Models
         public void Stop()
         {
             Bass.ChannelStop(stream);
-            ShowWaveform();
         }
 
         public void Record()
@@ -117,9 +117,9 @@ namespace Akorin.Models
             }
         }
 
-        public void ShowWaveform()
+        public SignalPlot ShowWaveform()
         {
-            waveform.DrawWaveform(Data);
+            return waveform.DrawWaveform(Data);
         }
     }
 }

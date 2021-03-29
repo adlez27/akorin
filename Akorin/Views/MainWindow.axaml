@@ -3,6 +3,7 @@
         xmlns:vm="using:Akorin.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="400"
 		Width="800" Height="400"
         x:Class="Akorin.Views.MainWindow"
@@ -46,9 +47,7 @@
 			<TextBlock Margin="20" Text="{Binding FileStatus}"/>
 			
 			<!-- 0.1.1 Waveform display -->
-			<Border BorderBrush="Black" BorderThickness="2">
-				<TextBlock Margin="50" Text="Placeholder"/>
-			</Border>
+			<ScottPlot:AvaPlot Name="Waveform"/>
 			<!-- xavier -->
 			
 			<!-- 0.1.2 Spectrogram display -->
