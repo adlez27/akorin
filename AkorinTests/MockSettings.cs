@@ -29,7 +29,7 @@ namespace AkorinTests
         public ObservableCollection<RecListItem> RecList => throw new NotImplementedException();
         public string DestinationFolder { get; set; }
         public string AudioDriver { get; set; }
-        public string AudioInputDevice { get; set; }
+        public int AudioInputDevice { get; set; }
 
         private int _audioInputLevel;
         public int AudioInputLevel
@@ -44,7 +44,7 @@ namespace AkorinTests
             }
         }
 
-        public string AudioOutputDevice { get; set; }
+        public int AudioOutputDevice { get; set; }
 
         private int _audioOutputLevel;
         public int AudioOutputLevel

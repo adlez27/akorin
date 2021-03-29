@@ -16,9 +16,11 @@ namespace Akorin.Models
         public string DestinationFolder { get; set; }
 
         public string AudioDriver { get; set; }
-        public string AudioInputDevice { get; set; }
+        public List<string> AudioInputDeviceList { get; }
+        public int AudioInputDevice { get; set; }
         public int AudioInputLevel { get; set; }
-        public string AudioOutputDevice { get; set; }
+        public List<string> AudioOutputDeviceList { get; }
+        public int AudioOutputDevice { get; set; }
         public int AudioOutputLevel { get; set; }
 
         public int FontSize { get; set; }

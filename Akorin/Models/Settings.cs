@@ -24,22 +24,16 @@ namespace Akorin.Models
             Bass.Init();
             Bass.RecordInit();
             AudioDriver = Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
-            AudioInputDevice = Bass.GetDeviceInfo(Bass.CurrentRecordingDevice).Name;
+            AudioInputDevice = Bass.CurrentRecordingDevice;
             AudioInputLevel = 100;
-            AudioOutputDevice = Bass.GetDeviceInfo(Bass.CurrentDevice).Name;
+            AudioOutputDevice = Bass.CurrentDevice;
             AudioOutputLevel = 100;
 
             FontSize = 24;
 
             init = true;
             LoadRecList();
-
-            using (StreamWriter file = new(Path.Combine(currentDirectory, "settingstest.yaml")))
-            {
-                var serializer = new YamlDotNet.Serialization.Serializer();
-                serializer.Serialize(file, this);
-            }
-            
+            Save(Path.Combine(currentDirectory, "settings.arp"));
         }
 
         private string recListFile;
@@ -141,7 +135,24 @@ namespace Akorin.Models
 
         public string AudioDriver { get; set; }
 
-        public string AudioInputDevice { get; set; }
+        [YamlIgnore]
+        public List<string> AudioInputDeviceList
+        {
+            get
+            {
+                var temp = new List<string>();
+                if (init)
+                {
+                    for (var i = 0; i < Bass.RecordingDeviceCount; i++)
+                    {
+                        temp.Add(Bass.RecordGetDeviceInfo(i).Name);
+                    }
+                }
+                return temp;
+            }
+        }
+
+        public int AudioInputDevice { get; set; }
 
         private int _audioInputLevel;
         public int AudioInputLevel
@@ -156,7 +167,24 @@ namespace Akorin.Models
             }
         }
 
-        public string AudioOutputDevice { get; set; }
+        [YamlIgnore]
+        public List<string> AudioOutputDeviceList
+        {
+            get
+            {
+                var temp = new List<string>();
+                if (init)
+                {
+                    for (var i = 0; i < Bass.DeviceCount; i++)
+                    {
+                        temp.Add(Bass.GetDeviceInfo(i).Name);
+                    }
+                }
+                return temp;
+            }
+        }
+
+        public int AudioOutputDevice { get; set; }
 
         private int _audioOutputLevel;
         public int AudioOutputLevel 
@@ -181,6 +209,20 @@ namespace Akorin.Models
                     fontSize = value;
                 else
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        public void Load()
+        {
+            // load settings from file
+        }
+
+        public void Save(string path)
+        {
+            using (StreamWriter file = new(path))
+            {
+                var serializer = new YamlDotNet.Serialization.Serializer();
+                serializer.Serialize(file, this);
             }
         }
     }
