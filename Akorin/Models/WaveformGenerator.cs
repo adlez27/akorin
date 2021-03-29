@@ -12,6 +12,7 @@ namespace Akorin.Models
 
         public WaveformGenerator()
         {
+
         }
 
         public void DrawWaveform(short[] data)
