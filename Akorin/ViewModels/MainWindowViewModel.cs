@@ -28,6 +28,7 @@ namespace Akorin.ViewModels
             recordToggle = false;
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
+
             waveform = ((Window)_view).Find<AvaPlot>("Waveform");
             waveform.Height = 50;
             waveform.Plot.YAxis.Grid(false);
@@ -99,15 +100,10 @@ namespace Akorin.ViewModels
                 {
                     if (selectedLine.Audio.Data.Length > 0)
                     {
-                        FileStatus = "Audio available";
-                        waveform.Render();
-                        waveform.Plot.Clear();
-                        waveform.Plot.Add(SelectedLine.Audio.ShowWaveform());
-                    }
+                        FileStatus = "Audio available";                    }
                     else
                     {
                         FileStatus = "No audio";
-                        waveform.Plot.Clear();
                     }
                 }
                 
@@ -143,10 +139,6 @@ namespace Akorin.ViewModels
                 if (SelectedLine.Audio.Data.Length > 0)
                 {
                     FileStatus = "Audio available";
-                    waveform.Render();
-                    waveform.Plot.Clear();
-                    ShowWaveform();
-                    waveform.Plot.SaveFig("waveform.png");
                 }
             }
             else
@@ -202,6 +194,16 @@ namespace Akorin.ViewModels
             }
             set
             {
+                if (selectedLineInit)
+                {
+                    waveform.Render();
+                    waveform.Plot.Clear();
+                    if (value == "Audio available")
+                    {
+                        ShowWaveform();
+                        waveform.Plot.SaveFig("waveform.png");
+                    }
+                }
                 this.RaiseAndSetIfChanged(ref fileStatus, value);
             }
         }

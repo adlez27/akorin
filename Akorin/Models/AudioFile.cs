@@ -14,7 +14,6 @@ namespace Akorin.Models
         private string fullName;
         private int stream;
         private bool recorded;
-        private WaveformGenerator waveform;
 
         private List<byte> data;
         public short[] Data
@@ -38,7 +37,6 @@ namespace Akorin.Models
             stream = 0;
             data = new List<byte>();
             recorded = false;
-            waveform = new WaveformGenerator();
             Read();
         }
 
@@ -115,11 +113,6 @@ namespace Akorin.Models
 
                 Write(temp, fullName);
             }
-        }
-
-        public SignalPlot ShowWaveform()
-        {
-            return waveform.DrawWaveform(Data);
         }
     }
 }
