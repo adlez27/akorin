@@ -16,13 +16,11 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-				<!-- 0.1.0 temporarily disabled -->
 				<MenuItem Header="_New project" IsEnabled="True"/>
 				<MenuItem Header="_Open project" IsEnabled="True"/>
 				<MenuItem Header="_Exit" Command="{Binding Exit}" />
 			</MenuItem>
 			
-			<!-- 0.1.0 temporarily disabled-->
 			<MenuItem Header="_Settings" IsEnabled="True">
 				<MenuItem Header="_List and folder" Command="{Binding OpenSettings}" CommandParameter="files"/>
 				<MenuItem Header="_Audio" Command="{Binding OpenSettings}" CommandParameter="audio"/>
@@ -32,7 +30,7 @@
 
 		<StackPanel DockPanel.Dock="Top" Margin="5">
 			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="{Binding FontSize}"/>
-			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLineNote}"/>
+			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLine.Note}"/>
 		</StackPanel>
 
 		<TextBlock DockPanel.Dock="Bottom" Margin="5" Text="{Binding RecordPlayStatus}"/>

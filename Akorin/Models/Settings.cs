@@ -36,7 +36,7 @@ namespace Akorin.Models
             LoadRecList();
             LoadNotes();
 
-            using (StreamWriter file = new(Path.Combine(currentDirectory, "voicebank", "settingstest.yaml")))
+            using (StreamWriter file = new(Path.Combine(currentDirectory, "settingstest.yaml")))
             {
                 var serializer = new YamlDotNet.Serialization.Serializer();
                 serializer.Serialize(file, this);
@@ -81,7 +81,6 @@ namespace Akorin.Models
         }
 
         private ObservableCollection<RecListItem> recList;
-        [YamlIgnore]
         public ObservableCollection<RecListItem> RecList
         {
             get { return recList; }
@@ -118,6 +117,7 @@ namespace Akorin.Models
         }
 
         private string notesFile;
+        [YamlIgnore]
         public string NotesFile
         {
             get
@@ -132,6 +132,7 @@ namespace Akorin.Models
         }
 
         private Dictionary<string, string> notes;
+        [YamlIgnore]
         public Dictionary<string, string> Notes
         {
             get { return notes; }

@@ -63,10 +63,10 @@ namespace Akorin.ViewModels
             }
         }
 
-        public Dictionary<string, string> Notes
-        {
-            get { return settings.Notes; }
-        }
+        //public Dictionary<string, string> Notes
+        //{
+        //    get { return settings.Notes; }
+        //}
 
         private bool selectedLineInit;
         private RecListItem selectedLine;
@@ -92,7 +92,7 @@ namespace Akorin.ViewModels
                 }
 
                 this.RaiseAndSetIfChanged(ref selectedLine, value);
-                SelectedLineNote = Notes[value.Text];
+                //SelectedLineNote = Notes[value.Text];
 
                 if (selectedLineInit)
                 {
@@ -107,18 +107,18 @@ namespace Akorin.ViewModels
             }
         }
 
-        private string selectedLineNote;
-        public string SelectedLineNote
-        {
-            get
-            {
-                return selectedLineNote;
-            }
-            set
-            {
-                this.RaiseAndSetIfChanged(ref selectedLineNote, value);
-            }
-        }
+        //private string selectedLineNote;
+        //public string SelectedLineNote
+        //{
+        //    get
+        //    {
+        //        return selectedLineNote;
+        //    }
+        //    set
+        //    {
+        //        this.RaiseAndSetIfChanged(ref selectedLineNote, value);
+        //    }
+        //}
 
         private bool recordToggle;
         public void Record()

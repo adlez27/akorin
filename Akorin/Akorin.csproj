@@ -38,9 +38,6 @@
 	  <Folder Include="External\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Reference Include="Bass.Net">
-	    <HintPath>..\Bass24.Net\v4.5\Bass.Net.dll</HintPath>
-	  </Reference>
 	  <Reference Include="ManagedBass">
 	    <HintPath>bin\Debug\net5.0\ManagedBass.dll</HintPath>
 	  </Reference>
