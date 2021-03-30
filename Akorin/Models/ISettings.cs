@@ -9,6 +9,7 @@ namespace Akorin.Models
 {
     public interface ISettings
     {
+        public void LoadDefault();
         public string RecListFile { get; set; }
         public bool ReadUnicode { get; set; }
         public bool SplitWhitespace { get; set; }

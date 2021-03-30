@@ -28,6 +28,11 @@ namespace Akorin.Models
 
         ObservableCollection<RecListItem> ISettings.RecList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        void ISettings.LoadDefault()
+        {
+            throw new NotImplementedException();
+        }
+
         void ISettings.LoadSettings(string path)
         {
             throw new NotImplementedException();

@@ -16,7 +16,7 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-				<MenuItem Header="_New project"/>
+				<MenuItem Header="_New project" Command="{Binding NewProject}"/>
 				<MenuItem Header="_Open project" Command="{Binding OpenProject}"/>
 				<MenuItem Header="_Exit" Command="{Binding Exit}" />
 			</MenuItem>

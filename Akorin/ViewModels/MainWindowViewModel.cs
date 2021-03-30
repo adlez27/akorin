@@ -43,6 +43,13 @@ namespace Akorin.ViewModels
         {
             Environment.Exit(0);
         }
+
+        public void NewProject()
+        {
+            settings.LoadDefault();
+            OpenSettings("files");
+        }
+
         public async void OpenProject()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

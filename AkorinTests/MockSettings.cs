@@ -76,5 +76,10 @@ namespace AkorinTests
         {
             throw new NotImplementedException();
         }
+
+        void ISettings.LoadDefault()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
