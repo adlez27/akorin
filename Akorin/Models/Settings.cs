@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ManagedBass;
+using ReactiveUI;
 using YamlDotNet.Serialization;
 
 namespace Akorin.Models
@@ -225,11 +226,6 @@ namespace Akorin.Models
             recListFile = "List loaded from project file.";
             readUnicode = true;
             splitWhitespace = true;
-            recList = newSettings.RecList;
-            foreach (RecListItem item in recList)
-            {
-                item.CreateAudio(this);
-            }
             DestinationFolder = newSettings.DestinationFolder;
 
             AudioDriver = newSettings.AudioDriver;
@@ -239,6 +235,13 @@ namespace Akorin.Models
             AudioOutputLevel = newSettings.AudioOutputLevel;
 
             FontSize = newSettings.FontSize;
+
+            recList.Clear();
+            foreach (RecListItem item in newSettings.RecList)
+            {
+                item.CreateAudio(this);
+                recList.Add(item);
+            }
         }
 
         public void SaveSettings(string path)

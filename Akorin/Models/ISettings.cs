@@ -12,7 +12,7 @@ namespace Akorin.Models
         public string RecListFile { get; set; }
         public bool ReadUnicode { get; set; }
         public bool SplitWhitespace { get; set; }
-        public ObservableCollection<RecListItem> RecList { get; }
+        public ObservableCollection<RecListItem> RecList { get; set; }
         public string DestinationFolder { get; set; }
 
         public string AudioDriver { get; set; }
@@ -24,5 +24,8 @@ namespace Akorin.Models
         public int AudioOutputLevel { get; set; }
 
         public int FontSize { get; set; }
+
+        public void LoadSettings(string path);
+        public void SaveSettings(string path);
     }
 }

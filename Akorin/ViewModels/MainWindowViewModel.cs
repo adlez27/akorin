@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.IO;
 
 namespace Akorin.ViewModels
 {
@@ -42,11 +43,30 @@ namespace Akorin.ViewModels
         {
             Environment.Exit(0);
         }
+        public async void OpenProject()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.AllowMultiple = false;
+
+            var filter = new FileDialogFilter();
+            filter.Name = "Akorin recording project";
+            filter.Extensions = new List<string>() { "arp" };
+            openFileDialog.Filters = new List<FileDialogFilter>() { filter };
+
+            openFileDialog.Directory = Path.GetDirectoryName(settings.DestinationFolder);
+            var projectFile = await openFileDialog.ShowAsync((Window)_view);
+            if (projectFile.Length > 0)
+            {
+                settings.LoadSettings(projectFile[0]);
+            }
+        }
 
         public void OpenSettings(string tab)
         {
             var settingsWindow = new SettingsWindow(tab, settings);
             settingsWindow.ShowDialog((Window)_view);
+
+            // Temporary fix
             settingsWindow.Closed += (object sender, System.EventArgs e) => this.RaisePropertyChanged("FontSize");
         }
 
@@ -63,11 +83,6 @@ namespace Akorin.ViewModels
             }
         }
 
-        //public Dictionary<string, string> Notes
-        //{
-        //    get { return settings.Notes; }
-        //}
-
         private bool selectedLineInit;
         private RecListItem selectedLine;
         public RecListItem SelectedLine
@@ -75,50 +90,39 @@ namespace Akorin.ViewModels
             get => selectedLine;
             set
             {
-                if (selectedLineInit)
+                if (RecList.Count > 0)
                 {
-                    if (playToggle || recordToggle)
+                    if (selectedLineInit)
                     {
-                        selectedLine.Audio.Stop();
-                        playToggle = false;
-                        recordToggle = false;
-                        RecordPlayStatus = "Not recording or playing.";
+                        if (playToggle || recordToggle)
+                        {
+                            selectedLine.Audio.Stop();
+                            playToggle = false;
+                            recordToggle = false;
+                            RecordPlayStatus = "Not recording or playing.";
+                        }
+                        selectedLine.Audio.Write();
                     }
-                    selectedLine.Audio.Write();
-                }
-                else
-                {
-                    selectedLineInit = true;
-                }
 
-                this.RaiseAndSetIfChanged(ref selectedLine, value);
-                //SelectedLineNote = Notes[value.Text];
+                    this.RaiseAndSetIfChanged(ref selectedLine, value);
 
-                if (selectedLineInit)
-                {
-                    if (selectedLine.Audio.Data.Length > 0)
-                        FileStatus = "Audio available";
+                    if (selectedLineInit)
+                    {
+                        if (selectedLine.Audio.Data.Length > 0)
+                            FileStatus = "Audio available";
+                        else
+                            FileStatus = "No audio";
+                    }
                     else
-                        FileStatus = "No audio";
+                    {
+                        selectedLineInit = true;
+                    }
+
+                    playToggle = false;
+                    recordToggle = false;
                 }
-                
-                playToggle = false;
-                recordToggle = false;
             }
         }
-
-        //private string selectedLineNote;
-        //public string SelectedLineNote
-        //{
-        //    get
-        //    {
-        //        return selectedLineNote;
-        //    }
-        //    set
-        //    {
-        //        this.RaiseAndSetIfChanged(ref selectedLineNote, value);
-        //    }
-        //}
 
         private bool recordToggle;
         public void Record()
