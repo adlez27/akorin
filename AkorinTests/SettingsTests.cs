@@ -62,8 +62,10 @@ namespace AkorinTests
         [Fact]
         public void LoadSettings()
         {
-            settings.LoadSettings(@"C:\Users\Mark\Desktop\settings.arp");
-            Assert.Equal("foobar", settings.RecList[0].Text);
+            settings.LoadSettings(@"C:\Users\Mark\Desktop\project.arp");
+            Assert.Equal("foo", settings.RecList[0].Text);
+            Assert.Equal("bar", settings.RecList[0].Note);
+            Assert.NotNull(settings.RecList[0].Audio);
         }
     }
 }

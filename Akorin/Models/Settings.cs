@@ -79,6 +79,7 @@ namespace Akorin.Models
         public ObservableCollection<RecListItem> RecList
         {
             get { return recList; }
+            set { recList = value; }
         }
         public void LoadRecList()
         {
@@ -221,10 +222,14 @@ namespace Akorin.Models
             var deserializer = new Deserializer();
             var newSettings = deserializer.Deserialize<Settings>(raw);
 
-            recListFile = "List already loaded.";
+            recListFile = "List loaded from project file.";
             readUnicode = true;
             splitWhitespace = true;
             recList = newSettings.RecList;
+            foreach (RecListItem item in recList)
+            {
+                item.CreateAudio(this);
+            }
             DestinationFolder = newSettings.DestinationFolder;
 
             AudioDriver = newSettings.AudioDriver;
