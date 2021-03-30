@@ -39,6 +39,14 @@
 
 		<ListBox DockPanel.Dock="Left" Width="100" SelectionMode="Single,AlwaysSelected"
 				 Items="{Binding RecList}" SelectedItem="{Binding SelectedLine}">
+			<ListBox.Resources>
+				<vm:AudioToColorConverter x:Key="AudioToColorConverter" />
+			</ListBox.Resources>
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+						<Setter Property="Background" Value="{Binding Audio, Converter={StaticResource AudioToColorConverter}}"/>
+				</Style>
+			</ListBox.Styles>
 		</ListBox>
 		
 		<StackPanel>

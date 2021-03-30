@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ReactiveUI;
 
 namespace Akorin.Models
 {
-    public class RecListItem
+    public class RecListItem: ReactiveObject
     {
         public AudioFile Audio { get; }
         public string Text { get; }

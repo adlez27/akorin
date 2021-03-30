@@ -1,5 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.Data.Converters;
 using Avalonia.Input;
+using Avalonia.Media;
 using Akorin.Models;
 using Akorin.Views;
 using ReactiveUI;
@@ -132,7 +134,10 @@ namespace Akorin.ViewModels
                 SelectedLine.Audio.Stop();
                 RecordPlayStatus = "Not recording or playing.";
                 if (SelectedLine.Audio.Data.Length > 0)
+                {
                     FileStatus = "Audio available";
+                    selectedLine.RaisePropertyChanged("Audio");
+                }
             }
             else
             {
@@ -189,6 +194,47 @@ namespace Akorin.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref fileStatus, value);
             }
+        }
+    }
+
+    public class AudioToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            if (value is AudioFile)
+            {
+                if(((AudioFile)value).Data.Length > 0)
+                {
+                    //The Color here is the color of the highlight of recorded lines.
+                    return new SolidColorBrush(Color.FromRgb(255, 255, 0));
+                }
+                else
+                {
+                    //The Color here is the color of the highlight of unrecorded lines.
+                    return new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                }
+            }
+
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            if (value is AudioFile)
+            {
+                if(((AudioFile)value).Data.Length > 0)
+                {
+                    return new SolidColorBrush(Color.FromRgb(255, 255, 0));
+                }
+                else
+                {
+                    return new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                }
+            }
+            
+            return value;
         }
     }
 }
