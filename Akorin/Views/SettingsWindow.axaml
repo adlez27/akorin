@@ -10,39 +10,41 @@
 	
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
-			<!-- 0.1.1 enable -->
-			<Button IsEnabled="False">Set as default</Button>
+			<Button IsEnabled="{Binding Valid}">Set as default</Button>
 			
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 				<Button Command="{Binding CloseSettings}">Cancel</Button>
-				<Button Command="{Binding CloseSettings}">OK</Button>
+				<Button IsEnabled="{Binding Valid}" Command="{Binding CloseSettings}">OK</Button>
 			</StackPanel>
 		</Grid>
 		<TabControl>
 			<TabItem Header="Files" IsSelected="{Binding FilesSelected}">
-				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 					<TextBlock Grid.Row="0" Grid.Column="0">Recording list</TextBlock>
 					<DockPanel Grid.Row="0" Grid.Column="1" IsEnabled="True">
 						<Button DockPanel.Dock="Right" Command="{Binding SelectRecordingList}">Browse</Button>
 						<TextBox Text="{Binding RecListFile}"></TextBox>
 					</DockPanel>
 
+					<TextBlock Grid.Row="1" Grid.Column="1" Foreground="Red"
+							   Text="{Binding ReclistContentValid}"/>
+
 					<!-- 0.1.1 enable choice -->
-					<TextBlock Grid.Row="1" Grid.Column="0">Encoding</TextBlock>
-					<StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
+					<TextBlock Grid.Row="2" Grid.Column="0">Encoding</TextBlock>
+					<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
 						<RadioButton>UTF-8</RadioButton>
 						<RadioButton IsChecked="True">Shift JIS</RadioButton>
 					</StackPanel>
 
 					<!-- 0.1.1 enable choice -->
-					<TextBlock Grid.Row="2" Grid.Column="0">Split .txt by</TextBlock>
-					<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
+					<TextBlock Grid.Row="3" Grid.Column="0">Split .txt by</TextBlock>
+					<StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
 						<RadioButton IsChecked="True">All whitespace</RadioButton>
 						<RadioButton>New line</RadioButton>
 					</StackPanel>
 
-					<TextBlock Grid.Row="4" Grid.Column="0">Destination</TextBlock>
-					<DockPanel Grid.Row="4" Grid.Column="1" IsEnabled="True">
+					<TextBlock Grid.Row="5" Grid.Column="0">Destination</TextBlock>
+					<DockPanel Grid.Row="5" Grid.Column="1" IsEnabled="True">
 						<Button DockPanel.Dock="Right" Command="{Binding SelectDestinationFolder}">Browse</Button>
 						<TextBox Text="{Binding DestinationFolder}"></TextBox>
 					</DockPanel>
