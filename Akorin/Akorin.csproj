@@ -27,19 +27,9 @@
 	  <None Update="External\libbass.dylib">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="reclists\default_reclist.arl">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="reclists\default_reclist.txt">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="voicebank\default_notes.yaml">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="External\" />
-		<Folder Include="reclists\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="ManagedBass">
