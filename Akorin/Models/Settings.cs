@@ -478,6 +478,7 @@ namespace Akorin.Models
                 SaveSettings(defaultSettings);
             }
 
+            ProjectFile = "";
             recListFile = "List loaded from default.";
         }
 
@@ -661,8 +662,13 @@ namespace Akorin.Models
             }
         }
 
+        [YamlIgnore]
+        public string ProjectFile { get; set; }
+
         public void LoadSettings(string path)
         {
+            ProjectFile = path;
+
             var raw = File.ReadAllText(path);
             var deserializer = new Deserializer();
             var newSettings = deserializer.Deserialize<Settings>(raw);

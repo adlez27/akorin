@@ -66,6 +66,7 @@ namespace AkorinTests
         List<string> ISettings.AudioOutputDeviceList => throw new NotImplementedException();
 
         ObservableCollection<RecListItem> ISettings.RecList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string ISettings.ProjectFile { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         void ISettings.LoadSettings(string path)
         {

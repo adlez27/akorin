@@ -10,11 +10,11 @@
 	
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
-			<Button IsEnabled="{Binding Valid}">Set as default</Button>
+			<Button IsEnabled="{Binding Valid}" Command="{Binding SetDefault}">Set as default</Button>
 			
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 				<Button Command="{Binding CloseSettings}">Cancel</Button>
-				<Button IsEnabled="{Binding Valid}" Command="{Binding CloseSettings}">OK</Button>
+				<Button IsEnabled="{Binding Valid}" Command="{Binding OKSettings}">OK</Button>
 			</StackPanel>
 		</Grid>
 		<TabControl>

@@ -60,7 +60,7 @@ namespace Akorin.ViewModels
             filter.Extensions = new List<string>() { "arp" };
             openFileDialog.Filters = new List<FileDialogFilter>() { filter };
 
-            openFileDialog.Directory = Path.GetDirectoryName(settings.DestinationFolder);
+            openFileDialog.Directory = Path.GetDirectoryName(settings.ProjectFile);
             var projectFile = await openFileDialog.ShowAsync((Window)_view);
             if (projectFile.Length > 0)
             {

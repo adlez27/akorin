@@ -26,6 +26,7 @@ namespace Akorin.Models
 
         public int FontSize { get; set; }
 
+        public string ProjectFile { get; set; }
         public void LoadSettings(string path);
         public void SaveSettings(string path);
     }

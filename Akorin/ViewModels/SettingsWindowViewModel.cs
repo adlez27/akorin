@@ -6,6 +6,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace Akorin.ViewModels
@@ -35,7 +36,18 @@ namespace Akorin.ViewModels
             settings = s;
             recListFile = settings.RecListFile;
             reclistContentValid = "";
-            valid = false;
+            destinationFolder = settings.DestinationFolder;
+
+            validDict = new Dictionary<string, bool>();
+            validDict.Add("RecListFile", true);
+            //validDict.Add("ReadUnicode", false);
+            //validDict.Add("SplitWhitespace", false);
+            validDict.Add("DestinationFolder", true);
+            //validDict.Add("AudioInputDevice", false);
+            //validDict.Add("AudioInputLevel", false);
+            //validDict.Add("AudioOutputDevice", false);
+            //validDict.Add("AudioOutputLevel", false);
+            //validDict.Add("FontSize", false);
         }
 
         public SettingsWindowViewModel() { }
@@ -114,6 +126,7 @@ namespace Akorin.ViewModels
                 if (validContent)
                 {
                     ReclistContentValid = "";
+                    validDict["RecListFile"] = true;
                     RecListFile = recListFile[0];
                 }
                 else
@@ -122,7 +135,9 @@ namespace Akorin.ViewModels
                     settings.RecListFile = oldFile;
                     settings.RecList = oldList;
                     ReclistContentValid = "Reclist contains invalid characters.";
+                    validDict["RecListFile"] = false;
                 }
+                this.RaisePropertyChanged("Valid");
             }
         }
 
@@ -133,31 +148,73 @@ namespace Akorin.ViewModels
             set { this.RaiseAndSetIfChanged(ref reclistContentValid, value); }
         }
 
+        private string destinationFolder;
         public string DestinationFolder
         {
-            get => settings.DestinationFolder;
+            get => destinationFolder;
         }
 
         public async void SelectDestinationFolder()
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
             openFolderDialog.Directory = settings.DestinationFolder;
-            var destinationFolder = await openFolderDialog.ShowAsync(window);
-            if (destinationFolder.Length > 0)
+            var selectedFolder = await openFolderDialog.ShowAsync(window);
+            if (selectedFolder.Length > 0)
             {
-                settings.DestinationFolder = destinationFolder;
+                destinationFolder = selectedFolder;
+                validDict["DestinationFolder"] = true;
                 this.RaisePropertyChanged("DestinationFolder");
             }
         }
 
-        private bool valid;
+        private Dictionary<string, bool> validDict;
         public bool Valid
         {
-            get { return valid; }
-            set
+            get
             {
-                this.RaiseAndSetIfChanged(ref valid, value);
+                return !validDict.ContainsValue(false);
             }
+        }
+
+        public void SetDefault()
+        {
+            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var defaultSettings = Path.Combine(currentDirectory, "default.arp");
+            SaveSettings(defaultSettings);
+        }
+
+        public async void OKSettings()
+        {
+            if (settings.ProjectFile == "")
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Directory = settings.DestinationFolder;
+                saveFileDialog.DefaultExtension = "arp";
+
+                var arp = new FileDialogFilter();
+                arp.Name = "Akorin recording project";
+                arp.Extensions = new List<string>() { "arp" };
+                saveFileDialog.Filters = new List<FileDialogFilter>() { arp };
+
+                settings.ProjectFile = await saveFileDialog.ShowAsync(window);
+            }
+            SaveSettings(settings.ProjectFile);
+            window.Close();
+        }
+
+        public void SaveSettings(string path)
+        {
+            // set reclistfile
+            // set readunicode
+            // set splitwhitespace
+            settings.DestinationFolder = destinationFolder;
+            // set input device
+            // set input level
+            // set output device
+            // set output level
+            // set font size
+
+            settings.SaveSettings(path);
         }
 
         public void CloseSettings()
