@@ -212,6 +212,7 @@ namespace Akorin.ViewModels
         {
             double[] dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double) s);
             var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, Color.Blue);
+            waveform.Plot.Add(signalGraph);
         }
     }
 }
