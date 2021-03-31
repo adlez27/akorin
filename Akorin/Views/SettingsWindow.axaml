@@ -78,7 +78,7 @@
 
 					<TextBlock Grid.Row="2" Grid.Column="0">Input level</TextBlock>
 					<Slider Grid.Row="2" Grid.Column="1"
-							Minimum="0" Maximum="100" Value="100" x:Name="InputSlider"
+							Minimum="0" Maximum="100" Value="{Binding Settings.AudioInputLevel}" x:Name="InputSlider"
 							IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
 					<TextBlock Grid.Row="2" Grid.Column="2" 
 							   Text="{Binding ElementName=InputSlider, Path=Value}"></TextBlock>
@@ -92,7 +92,7 @@
 					
 					<TextBlock Grid.Row="4" Grid.Column="0">Output level</TextBlock>
 					<Slider Grid.Row="4" Grid.Column="1"
-							Minimum="0" Maximum="100" Value="100" x:Name="OutputSlider"
+							Minimum="0" Maximum="100" Value="{Binding Settings.AudioOutputLevel}" x:Name="OutputSlider"
 							IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
 					<TextBlock Grid.Row="4" Grid.Column="2"
 							   Text="{Binding ElementName=OutputSlider, Path=Value}"></TextBlock>
