@@ -16,7 +16,6 @@ namespace Akorin.ViewModels
         private Window window;
         private string tab;
         private ISettings settings;
-
         public ISettings Settings
         {
             get
@@ -28,26 +27,32 @@ namespace Akorin.ViewModels
                 settings = value;
             }
         }
+        private MainWindowViewModel main;
 
-        public SettingsWindowViewModel(Window window, string tab, ISettings s)
+        public SettingsWindowViewModel(Window window, string tab, ISettings s, MainWindowViewModel m)
         {
             this.window = window;
             this.tab = tab;
             settings = s;
-            recListFile = settings.RecListFile;
-            reclistContentValid = "";
-            destinationFolder = settings.DestinationFolder;
+            main = m;
 
             validDict = new Dictionary<string, bool>();
+
             validDict.Add("RecListFile", true);
-            //validDict.Add("ReadUnicode", false);
-            //validDict.Add("SplitWhitespace", false);
+            recListFile = settings.RecListFile;
+            reclistContentValid = "";
+            //validDict.Add("ReadUnicode", true);
+            //validDict.Add("SplitWhitespace", true);
             validDict.Add("DestinationFolder", true);
-            //validDict.Add("AudioInputDevice", false);
-            //validDict.Add("AudioInputLevel", false);
-            //validDict.Add("AudioOutputDevice", false);
-            //validDict.Add("AudioOutputLevel", false);
-            //validDict.Add("FontSize", false);
+            destinationFolder = settings.DestinationFolder;
+
+            //validDict.Add("AudioInputDevice", true);
+            //validDict.Add("AudioInputLevel", true);
+            //validDict.Add("AudioOutputDevice", true);
+            //validDict.Add("AudioOutputLevel", true);
+
+            fontSize = settings.FontSize;
+            validDict.Add("FontSize", true);
         }
 
         public SettingsWindowViewModel() { }
@@ -80,7 +85,10 @@ namespace Akorin.ViewModels
         public string RecListFile
         {
             get => recListFile;
-            set { this.RaiseAndSetIfChanged(ref recListFile, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref recListFile, value);
+            }
         }
 
         public async void SelectRecordingList()
@@ -106,19 +114,31 @@ namespace Akorin.ViewModels
             var recListFile = await openFileDialog.ShowAsync(window);
             if (recListFile.Length > 0)
             {
-                var oldFile = settings.RecListFile;
-                var oldList = settings.RecList;
-                settings.RecListFile = recListFile[0];
-
+                Settings temp = new Settings(true);
+                temp.ReadUnicode = settings.ReadUnicode; // use value from settings window
+                temp.SplitWhitespace = settings.SplitWhitespace; // use value from settings window
+                
                 bool validContent = true;
-                foreach (RecListItem item in settings.RecList)
+                try
                 {
-                    foreach (char c in Path.GetInvalidFileNameChars())
+                    temp.RecListFile = recListFile[0];
+                }
+                catch (Exception e)
+                {
+                    validContent = false;
+                }
+
+                if (validContent)
+                {
+                    foreach (RecListItem item in temp.RecList)
                     {
-                        if (item.Text.Contains(c))
+                        foreach (char c in Path.GetInvalidFileNameChars())
                         {
-                            validContent = false;
-                            break;
+                            if (item.Text.Contains(c))
+                            {
+                                validContent = false;
+                                break;
+                            }
                         }
                     }
                 }
@@ -131,9 +151,6 @@ namespace Akorin.ViewModels
                 }
                 else
                 {
-                    RecListFile = oldFile;
-                    settings.RecListFile = oldFile;
-                    settings.RecList = oldList;
                     ReclistContentValid = "Reclist contains invalid characters.";
                     validDict["RecListFile"] = false;
                 }
@@ -164,6 +181,17 @@ namespace Akorin.ViewModels
                 destinationFolder = selectedFolder;
                 validDict["DestinationFolder"] = true;
                 this.RaisePropertyChanged("DestinationFolder");
+            }
+        }
+
+        private int fontSize;
+        public int FontSize
+        {
+            get => fontSize;
+            set
+            { 
+                this.RaiseAndSetIfChanged(ref fontSize, value);
+                main.RaisePropertyChanged("FontSize");
             }
         }
 
@@ -204,16 +232,17 @@ namespace Akorin.ViewModels
 
         public void SaveSettings(string path)
         {
-            // set reclistfile
+            settings.RecList.Clear();
+            settings.RecListFile = RecListFile;
+            main.SelectedLine = settings.RecList[0];
             // set readunicode
             // set splitwhitespace
-            settings.DestinationFolder = destinationFolder;
+            settings.DestinationFolder = DestinationFolder;
             // set input device
             // set input level
             // set output device
             // set output level
-            // set font size
-
+            settings.FontSize = FontSize;
             settings.SaveSettings(path);
         }
 

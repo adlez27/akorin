@@ -451,6 +451,9 @@ namespace Akorin.Models
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             var defaultSettings = Path.Combine(currentDirectory, "default.arp");
 
+            readUnicode = false; //TEMPORARY
+            splitWhitespace = true; //TEMPORARY
+
             if (File.Exists(defaultSettings))
             {
                 LoadSettings(defaultSettings);
@@ -472,7 +475,7 @@ namespace Akorin.Models
                 foreach (RecListItem item in defaultRecList)
                 {
                     item.CreateAudio(this);
-                    recList.Add(item);
+                    RecList.Add(item);
                 }
 
                 SaveSettings(defaultSettings);
@@ -531,7 +534,7 @@ namespace Akorin.Models
         {
             if (init)
             {
-                recList = new ObservableCollection<RecListItem>();
+                //recList = new ObservableCollection<RecListItem>();
                 HashSet<string> uniqueStrings = new HashSet<string>();
 
                 Encoding e;
@@ -563,7 +566,7 @@ namespace Akorin.Models
                     {
                         if (!uniqueStrings.Contains(line))
                         {
-                            recList.Add(new RecListItem(this, line));
+                            RecList.Add(new RecListItem(this, line));
                             uniqueStrings.Add(line);
                         }
                     }
@@ -575,7 +578,7 @@ namespace Akorin.Models
                     var tempDict = deserializer.Deserialize<Dictionary<string, string>>(rawText);
                     foreach (var item in tempDict)
                     {
-                        recList.Add(new RecListItem(this, item.Key, item.Value));
+                        RecList.Add(new RecListItem(this, item.Key, item.Value));
                     }
                 }
             }
@@ -688,7 +691,7 @@ namespace Akorin.Models
             foreach (RecListItem item in newSettings.RecList)
             {
                 item.CreateAudio(this);
-                recList.Add(item);
+                RecList.Add(item);
             }
         }
 

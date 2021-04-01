@@ -70,11 +70,11 @@ namespace Akorin.ViewModels
 
         public void OpenSettings(string tab)
         {
-            var settingsWindow = new SettingsWindow(tab, settings);
+            var settingsWindow = new SettingsWindow(tab, settings, this);
             settingsWindow.ShowDialog((Window)_view);
 
             // Temporary fix
-            settingsWindow.Closed += (object sender, System.EventArgs e) => this.RaisePropertyChanged("FontSize");
+            //settingsWindow.Closed += (object sender, System.EventArgs e) => this.RaisePropertyChanged("FontSize");
         }
 
         public int FontSize
