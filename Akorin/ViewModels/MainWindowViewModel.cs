@@ -25,6 +25,7 @@ namespace Akorin.ViewModels
             recordToggle = false;
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
+            fontSize = settings.FontSize;
 
             ((Window)_view).Closing += OnClosingEventHandler;
 
@@ -72,14 +73,13 @@ namespace Akorin.ViewModels
         {
             var settingsWindow = new SettingsWindow(tab, settings, this);
             settingsWindow.ShowDialog((Window)_view);
-
-            // Temporary fix
-            //settingsWindow.Closed += (object sender, System.EventArgs e) => this.RaisePropertyChanged("FontSize");
         }
 
+        private int fontSize;
         public int FontSize
         {
-            get { return settings.FontSize; }
+            get { return fontSize; }
+            set { this.RaiseAndSetIfChanged(ref fontSize, value); }
         }
 
         public ObservableCollection<RecListItem> RecList

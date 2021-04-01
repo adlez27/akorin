@@ -85,7 +85,7 @@
 				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 					<TextBlock Grid.Row="0" Grid.Column="0">Line font size</TextBlock>
 					<NumericUpDown Grid.Row="0" Grid.Column="1"
-								   Value="{Binding Settings.FontSize}" Increment="1" Minimum="8" Maximum="200"/>
+								   Value="{Binding FontSize}" Increment="1" Minimum="8" Maximum="200"/>
 					
 					<!-- 0.1.1 enable -->
 					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox"

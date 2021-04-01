@@ -91,6 +91,7 @@ namespace Akorin.ViewModels
             }
         }
 
+        private bool newRecList;
         public async void SelectRecordingList()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -148,6 +149,7 @@ namespace Akorin.ViewModels
                     ReclistContentValid = "";
                     validDict["RecListFile"] = true;
                     RecListFile = recListFile[0];
+                    newRecList = true;
                 }
                 else
                 {
@@ -191,7 +193,6 @@ namespace Akorin.ViewModels
             set
             { 
                 this.RaiseAndSetIfChanged(ref fontSize, value);
-                main.RaisePropertyChanged("FontSize");
             }
         }
 
@@ -232,9 +233,12 @@ namespace Akorin.ViewModels
 
         public void SaveSettings(string path)
         {
-            settings.RecList.Clear();
-            settings.RecListFile = RecListFile;
-            main.SelectedLine = settings.RecList[0];
+            if (newRecList)
+            {
+                settings.RecList.Clear();
+                settings.RecListFile = RecListFile;
+                main.SelectedLine = settings.RecList[0];
+            }
             // set readunicode
             // set splitwhitespace
             settings.DestinationFolder = DestinationFolder;
@@ -243,6 +247,7 @@ namespace Akorin.ViewModels
             // set output device
             // set output level
             settings.FontSize = FontSize;
+            main.FontSize = FontSize;
             settings.SaveSettings(path);
         }
 
