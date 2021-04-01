@@ -21,15 +21,12 @@
 		<PackageReference Include="YamlDotNet" Version="9.1.4" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="External\bass.dll">
+	  <None Update="bass.dll">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="External\libbass.dylib">
+	  <None Update="libbass.dylib">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="External\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Reference Include="ManagedBass">
