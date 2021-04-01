@@ -357,7 +357,7 @@ namespace Akorin.Models
                 }
                 else if (ext == ".arl")
                 {
-                    var rawText = File.ReadAllText(RecListFile);
+                    var rawText = File.ReadAllText(RecListFile, e);
                     var deserializer = new YamlDotNet.Serialization.Deserializer();
                     var tempDict = deserializer.Deserialize<Dictionary<string, string>>(rawText);
                     foreach (var item in tempDict)

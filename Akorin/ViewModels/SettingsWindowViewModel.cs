@@ -41,15 +41,23 @@ namespace Akorin.ViewModels
             validDict.Add("RecListFile", true);
             recListFile = settings.RecListFile;
             reclistContentValid = "";
-            //validDict.Add("ReadUnicode", true);
-            //validDict.Add("SplitWhitespace", true);
+
+            validDict.Add("ReadUnicode", true);
+            readUnicode = settings.ReadUnicode;
+
+            validDict.Add("SplitWhitespace", true);
+            splitWhitespace = settings.SplitWhitespace;
+
             validDict.Add("DestinationFolder", true);
             destinationFolder = settings.DestinationFolder;
 
             //validDict.Add("AudioInputDevice", true);
+
             validDict.Add("AudioInputLevel", true);
             audioInputLevel = settings.AudioInputLevel;
+
             //validDict.Add("AudioOutputDevice", true);
+
             validDict.Add("AudioOutputLevel", true);
             audioOutputLevel = settings.AudioOutputLevel;
 
@@ -169,6 +177,20 @@ namespace Akorin.ViewModels
             set { this.RaiseAndSetIfChanged(ref reclistContentValid, value); }
         }
 
+        private bool readUnicode;
+        public bool ReadUnicode
+        {
+            get => readUnicode;
+            set { this.RaiseAndSetIfChanged(ref readUnicode, value); }
+        }
+
+        private bool splitWhitespace;
+        public bool SplitWhitespace
+        {
+            get => splitWhitespace;
+            set { this.RaiseAndSetIfChanged(ref splitWhitespace, value); }
+        }
+
         private string destinationFolder;
         public string DestinationFolder
         {
@@ -253,8 +275,8 @@ namespace Akorin.ViewModels
                 settings.RecListFile = RecListFile;
                 main.SelectedLine = settings.RecList[0];
             }
-            // set readunicode
-            // set splitwhitespace
+            settings.ReadUnicode = ReadUnicode;
+            settings.SplitWhitespace = SplitWhitespace;
             settings.DestinationFolder = DestinationFolder;
             // set input device
             settings.AudioInputLevel = AudioInputLevel;
