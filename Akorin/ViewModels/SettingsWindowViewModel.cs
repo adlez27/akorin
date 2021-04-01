@@ -47,9 +47,11 @@ namespace Akorin.ViewModels
             destinationFolder = settings.DestinationFolder;
 
             //validDict.Add("AudioInputDevice", true);
-            //validDict.Add("AudioInputLevel", true);
+            validDict.Add("AudioInputLevel", true);
+            audioInputLevel = settings.AudioInputLevel;
             //validDict.Add("AudioOutputDevice", true);
-            //validDict.Add("AudioOutputLevel", true);
+            validDict.Add("AudioOutputLevel", true);
+            audioOutputLevel = settings.AudioOutputLevel;
 
             fontSize = settings.FontSize;
             validDict.Add("FontSize", true);
@@ -186,14 +188,26 @@ namespace Akorin.ViewModels
             }
         }
 
+        private int audioInputLevel;
+        public int AudioInputLevel
+        {
+            get => audioInputLevel;
+            set { this.RaiseAndSetIfChanged(ref audioInputLevel, value); }
+        }
+
+        private int audioOutputLevel;
+        public int AudioOutputLevel
+        {
+            get => audioOutputLevel;
+            set { this.RaiseAndSetIfChanged(ref audioOutputLevel, value); }
+        }
+
         private int fontSize;
         public int FontSize
         {
             get => fontSize;
             set
-            { 
-                this.RaiseAndSetIfChanged(ref fontSize, value);
-            }
+            { this.RaiseAndSetIfChanged(ref fontSize, value); }
         }
 
         private Dictionary<string, bool> validDict;
@@ -243,9 +257,9 @@ namespace Akorin.ViewModels
             // set splitwhitespace
             settings.DestinationFolder = DestinationFolder;
             // set input device
-            // set input level
+            settings.AudioInputLevel = AudioInputLevel;
             // set output device
-            // set output level
+            settings.AudioOutputLevel = AudioOutputLevel;
             settings.FontSize = FontSize;
             main.FontSize = FontSize;
             settings.SaveSettings(path);
