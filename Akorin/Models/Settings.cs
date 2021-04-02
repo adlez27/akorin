@@ -509,6 +509,8 @@ namespace Akorin.Models
 
             FontSize = newSettings.FontSize;
 
+            WaveformEnabled = newSettings.WaveformEnabled;
+
             recList.Clear();
             foreach (RecListItem item in newSettings.RecList)
             {

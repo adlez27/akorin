@@ -134,6 +134,8 @@ namespace Akorin.ViewModels
                         }
                         else
                             FileStatus = "No audio";
+
+                        ShowWaveform();
                     }
                     else
                     {
@@ -227,8 +229,7 @@ namespace Akorin.ViewModels
                 return fileStatus;
             }
             set
-            {
-                if (value == "Audio available") ShowWaveform();
+            {                
                 this.RaiseAndSetIfChanged(ref fileStatus, value);
             }
         }
@@ -237,10 +238,11 @@ namespace Akorin.ViewModels
         {
             waveform.Plot.Clear();
 
-            if (settings.WaveformEnabled)
+            if (settings.WaveformEnabled && selectedLine.Audio.Data.Length > 0)
             {
+                var waveformColor = Color.Blue;
                 double[] dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);
-                var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, Color.Blue);
+                var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, waveformColor);
                 waveform.Plot.Add(signalGraph);
                 waveform.Plot.AxisAutoX(0);
                 waveform.Plot.XAxis.Grid(true);
