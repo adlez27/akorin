@@ -213,6 +213,7 @@ namespace Akorin.ViewModels
             var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, Color.Blue);
             waveform.Plot.Add(signalGraph);
             waveform.Plot.AxisAutoX(0);
+            waveform.Plot.SetAxisLimitsY(-10000, 10000);
         }
     }
 }
