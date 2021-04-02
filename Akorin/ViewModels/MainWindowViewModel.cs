@@ -71,6 +71,7 @@ namespace Akorin.ViewModels
 
         public void OpenSettings(string tab)
         {
+            StopAudio();
             var settingsWindow = new SettingsWindow(tab, settings, this);
             settingsWindow.ShowDialog((Window)_view);
         }
@@ -101,13 +102,7 @@ namespace Akorin.ViewModels
                 {
                     if (selectedLineInit)
                     {
-                        if (playToggle || recordToggle)
-                        {
-                            selectedLine.Audio.Stop();
-                            playToggle = false;
-                            recordToggle = false;
-                            RecordPlayStatus = "Not recording or playing.";
-                        }
+                        StopAudio();
                         selectedLine.Audio.Write();
                     }
 
@@ -174,6 +169,17 @@ namespace Akorin.ViewModels
             }
 
             playToggle = !playToggle;
+        }
+
+        private void StopAudio()
+        {
+            if (playToggle || recordToggle)
+            {
+                selectedLine.Audio.Stop();
+                playToggle = false;
+                recordToggle = false;
+                RecordPlayStatus = "Not recording or playing.";
+            }
         }
 
         private string recordPlayStatus;
