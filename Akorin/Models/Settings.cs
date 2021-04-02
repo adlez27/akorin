@@ -235,8 +235,8 @@ namespace Akorin.Models
             var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             var defaultSettings = Path.Combine(currentDirectory, "default.arp");
 
-            readUnicode = false; //TEMPORARY
-            splitWhitespace = true; //TEMPORARY
+            //readUnicode = false; //TEMPORARY
+            //splitWhitespace = true; //TEMPORARY
 
             if (File.Exists(defaultSettings))
             {

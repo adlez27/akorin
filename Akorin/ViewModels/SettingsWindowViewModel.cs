@@ -101,6 +101,14 @@ namespace Akorin.ViewModels
             }
         }
 
+        private bool reclistFromFile
+        {
+            get
+            {
+                return (RecListFile != "List loaded from default.") && (RecListFile != "List loaded from project file.");
+            }
+        }
+
         private bool newRecList;
         public async void SelectRecordingList()
         {
@@ -125,49 +133,57 @@ namespace Akorin.ViewModels
             var recListFile = await openFileDialog.ShowAsync(window);
             if (recListFile.Length > 0)
             {
-                Settings temp = new Settings(true);
-                temp.ReadUnicode = settings.ReadUnicode; // use value from settings window
-                temp.SplitWhitespace = settings.SplitWhitespace; // use value from settings window
-                
-                bool validContent = true;
-                try
-                {
-                    temp.RecListFile = recListFile[0];
-                }
-                catch (Exception e)
-                {
-                    validContent = false;
-                }
+                LoadRecList(recListFile[0]);
+            }
+        }
 
-                if (validContent)
+        private void LoadRecList(string path)
+        {
+            Settings temp = new Settings(true);
+            temp.ReadUnicode = ReadUnicode;
+            temp.SplitWhitespace = SplitWhitespace;
+
+            bool validContent = true;
+            try
+            {
+                temp.RecListFile = path;
+            }
+            catch (Exception e)
+            {
+                validContent = false;
+            }
+
+            string invalid = "";
+
+            if (validContent)
+            {
+                foreach (RecListItem item in temp.RecList)
                 {
-                    foreach (RecListItem item in temp.RecList)
+                    foreach (char c in Path.GetInvalidFileNameChars())
                     {
-                        foreach (char c in Path.GetInvalidFileNameChars())
+                        if (item.Text.Contains(c))
                         {
-                            if (item.Text.Contains(c))
-                            {
-                                validContent = false;
-                                break;
-                            }
+                            validContent = false;
+                            invalid += c;
+                            break;
                         }
                     }
                 }
-
-                if (validContent)
-                {
-                    ReclistContentValid = "";
-                    validDict["RecListFile"] = true;
-                    RecListFile = recListFile[0];
-                    newRecList = true;
-                }
-                else
-                {
-                    ReclistContentValid = "Reclist contains invalid characters.";
-                    validDict["RecListFile"] = false;
-                }
-                this.RaisePropertyChanged("Valid");
             }
+
+            if (validContent)
+            {
+                ReclistContentValid = "";
+                validDict["RecListFile"] = true;
+                RecListFile = path;
+                newRecList = true;
+            }
+            else
+            {
+                ReclistContentValid = $"Reclist contains invalid character: {invalid}";
+                validDict["RecListFile"] = false;
+            }
+            this.RaisePropertyChanged("Valid");
         }
 
         private string reclistContentValid;
@@ -181,14 +197,28 @@ namespace Akorin.ViewModels
         public bool ReadUnicode
         {
             get => readUnicode;
-            set { this.RaiseAndSetIfChanged(ref readUnicode, value); }
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref readUnicode, value);
+                if (reclistFromFile)
+                {
+                    LoadRecList(RecListFile);
+                }
+            }
         }
 
         private bool splitWhitespace;
         public bool SplitWhitespace
         {
             get => splitWhitespace;
-            set { this.RaiseAndSetIfChanged(ref splitWhitespace, value); }
+            set 
+            { 
+                this.RaiseAndSetIfChanged(ref splitWhitespace, value);
+                if (reclistFromFile)
+                {
+                    LoadRecList(RecListFile);
+                }
+            }
         }
 
         private string destinationFolder;
@@ -269,14 +299,14 @@ namespace Akorin.ViewModels
 
         public void SaveSettings(string path)
         {
+            settings.ReadUnicode = ReadUnicode;
+            settings.SplitWhitespace = SplitWhitespace;
             if (newRecList)
             {
                 settings.RecList.Clear();
                 settings.RecListFile = RecListFile;
                 main.SelectedLine = settings.RecList[0];
             }
-            settings.ReadUnicode = ReadUnicode;
-            settings.SplitWhitespace = SplitWhitespace;
             settings.DestinationFolder = DestinationFolder;
             // set input device
             settings.AudioInputLevel = AudioInputLevel;
