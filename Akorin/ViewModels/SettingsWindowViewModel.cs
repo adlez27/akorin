@@ -66,6 +66,9 @@ namespace Akorin.ViewModels
 
             fontSize = settings.FontSize;
             validDict.Add("FontSize", true);
+
+            validDict.Add("WaveformEnabled", true);
+            waveformEnabled = settings.WaveformEnabled;
         }
 
         public SettingsWindowViewModel() { }
@@ -283,6 +286,13 @@ namespace Akorin.ViewModels
             { this.RaiseAndSetIfChanged(ref fontSize, value); }
         }
 
+        private bool waveformEnabled;
+        public bool WaveformEnabled
+        {
+            get => waveformEnabled;
+            set { this.RaiseAndSetIfChanged(ref waveformEnabled, value); }
+        }
+
         private Dictionary<string, bool> validDict;
         public bool Valid
         {
@@ -339,7 +349,8 @@ namespace Akorin.ViewModels
             settings.AudioOutputDevice = AudioOutputDevice;
             settings.AudioOutputLevel = AudioOutputLevel;
             settings.FontSize = FontSize;
-            
+            settings.WaveformEnabled = WaveformEnabled;
+
             main.FontSize = FontSize;
             
             settings.SaveSettings(path);

@@ -86,8 +86,8 @@
 								   Value="{Binding FontSize}" Increment="1" Minimum="8" Maximum="200"/>
 					
 					<!-- 0.1.1 enable -->
-					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox"
-							  IsEnabled="False">Waveform</CheckBox>
+					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox" IsChecked="{Binding WaveformEnabled}"
+							  IsEnabled="True">Waveform</CheckBox>
 					
 					<TextBlock Grid.Row="2" Grid.Column="0">Color</TextBlock>
 					<TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False"></TextBox>

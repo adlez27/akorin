@@ -35,6 +35,8 @@ namespace Akorin.ViewModels
 
             waveform = ((Window)_view).Find<AvaPlot>("Waveform");
             waveform.Plot.YAxis.Grid(false);
+            waveform.Plot.YAxis.Ticks(false);
+            waveform.Plot.XAxis.Grid(false);
             waveform.Plot.XAxis.Ticks(false);
             waveform.Plot.Frame(false);
             waveform.Plot.Layout(25, 0, 0, 0, 0);
@@ -226,26 +228,31 @@ namespace Akorin.ViewModels
             }
             set
             {
-                if (selectedLineInit)
-                {
-                    waveform.Plot.Clear();
-                    if (value == "Audio available")
-                    {
-                        ShowWaveform();
-                    }
-                    waveform.Render();
-                }
+                if (value == "Audio available") ShowWaveform();
                 this.RaiseAndSetIfChanged(ref fileStatus, value);
             }
         }
 
         public void ShowWaveform()
         {
-            double[] dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double) s);
-            var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, Color.Blue);
-            waveform.Plot.Add(signalGraph);
-            waveform.Plot.AxisAutoX(0);
-            waveform.Plot.SetAxisLimitsY(-10000, 10000);
+            waveform.Plot.Clear();
+
+            if (settings.WaveformEnabled)
+            {
+                double[] dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);
+                var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, Color.Blue);
+                waveform.Plot.Add(signalGraph);
+                waveform.Plot.AxisAutoX(0);
+                waveform.Plot.XAxis.Grid(true);
+                waveform.Plot.YAxis.Ticks(true);
+                waveform.Plot.SetAxisLimitsY(-10000, 10000);
+            } else
+            {
+                waveform.Plot.XAxis.Grid(false);
+                waveform.Plot.YAxis.Ticks(false);
+            }
+
+            waveform.Render();
         }
     }
 }

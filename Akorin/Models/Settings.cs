@@ -249,8 +249,8 @@ namespace Akorin.Models
                 //AudioOutputDevice = Bass.CurrentDevice;
                 AudioOutputLevel = 100;
 
-            FontSize = 24;
-            WaveformEnabled = true;
+                FontSize = 24;
+                WaveformEnabled = true;
 
                 var deserializer = new Deserializer();
                 var defaultRecList = deserializer.Deserialize<ObservableCollection<RecListItem>>(defaultRecListRaw);
