@@ -57,7 +57,7 @@
 					</ComboBox>
 
 					<TextBlock Grid.Row="1" Grid.Column="0">Input device</TextBlock>
-					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding Settings.AudioInputDevice}" 
+					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}" 
 							  Items="{Binding Settings.AudioInputDeviceList}"/>
 
 					<TextBlock Grid.Row="2" Grid.Column="0">Input level</TextBlock>
@@ -68,7 +68,7 @@
 							   Text="{Binding ElementName=InputSlider, Path=Value}"></TextBlock>
 
 					<TextBlock Grid.Row="3" Grid.Column="0">Output</TextBlock>
-					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding Settings.AudioOutputDevice}" 
+					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}" 
 							  Items="{Binding Settings.AudioOutputDeviceList}"/>
 					
 					<TextBlock Grid.Row="4" Grid.Column="0">Output level</TextBlock>

@@ -3,33 +3,14 @@ using Xunit;
 using Akorin.Models;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace AkorinTests
 {
     public class SettingsTests
     {
-        Settings settings = new Settings();
+        Settings settings = new Settings(true);
         string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
-        [Fact]
-        public void DefaultRecList()
-        {
-            Assert.Equal(Path.Combine(currentDirectory, "reclists", "default_reclist.arl"), settings.RecListFile);
-        }
-
-        [Fact]
-        public void SplitByWhitespace()
-        {
-            Assert.Equal("‚ ", settings.RecList[0].Text);
-        }
-
-        [Fact]
-        public void SplitByNewline()
-        {
-            settings.SplitWhitespace = false;
-            settings.RecListFile = Path.Combine(currentDirectory, "reclists", "default_reclist.txt");
-            Assert.Equal("‚  ‚¢ ‚¤ ‚¦ ‚¨", settings.RecList[0].Text);
-        }
 
         [Fact]
         public void ReadNotes()
@@ -62,10 +43,20 @@ namespace AkorinTests
         [Fact]
         public void LoadSettings()
         {
-            settings.LoadSettings(@"C:\Users\Mark\Desktop\project.arp");
+            settings.LoadSettings(Path.Combine(currentDirectory, "test.arp"));
             Assert.Equal("foo", settings.RecList[0].Text);
             Assert.Equal("bar", settings.RecList[0].Note);
             Assert.NotNull(settings.RecList[0].Audio);
+        }
+
+        [Fact]
+        public async void SwitchOutput()
+        {
+            settings.RecList[0].Audio.Play();
+            await Task.Delay(1000);
+            settings.AudioOutputDevice = 3;
+            settings.RecList[0].Audio.Play();
+            await Task.Delay(1000);
         }
     }
 }

@@ -50,13 +50,16 @@ namespace Akorin.ViewModels
 
             validDict.Add("DestinationFolder", true);
             destinationFolder = settings.DestinationFolder;
+            newFolder = false;
 
-            //validDict.Add("AudioInputDevice", true);
+            validDict.Add("AudioInputDevice", true);
+            audioInputDevice = settings.AudioInputDevice;
 
             validDict.Add("AudioInputLevel", true);
             audioInputLevel = settings.AudioInputLevel;
 
-            //validDict.Add("AudioOutputDevice", true);
+            validDict.Add("AudioOutputDevice", true);
+            audioOutputDevice = settings.AudioOutputDevice;
 
             validDict.Add("AudioOutputLevel", true);
             audioOutputLevel = settings.AudioOutputLevel;
@@ -221,6 +224,8 @@ namespace Akorin.ViewModels
             }
         }
 
+        private bool newFolder;
+
         private string destinationFolder;
         public string DestinationFolder
         {
@@ -236,8 +241,16 @@ namespace Akorin.ViewModels
             {
                 destinationFolder = selectedFolder;
                 validDict["DestinationFolder"] = true;
+                newFolder = true;
                 this.RaisePropertyChanged("DestinationFolder");
             }
+        }
+
+        private int audioInputDevice;
+        public int AudioInputDevice
+        {
+            get => audioInputDevice;
+            set { this.RaiseAndSetIfChanged(ref audioInputDevice, value); }
         }
 
         private int audioInputLevel;
@@ -245,6 +258,13 @@ namespace Akorin.ViewModels
         {
             get => audioInputLevel;
             set { this.RaiseAndSetIfChanged(ref audioInputLevel, value); }
+        }
+
+        private int audioOutputDevice;
+        public int AudioOutputDevice
+        {
+            get => audioOutputDevice;
+            set { this.RaiseAndSetIfChanged(ref audioOutputDevice, value); }
         }
 
         private int audioOutputLevel;
@@ -307,14 +327,20 @@ namespace Akorin.ViewModels
                 settings.RecListFile = RecListFile;
                 main.SelectedLine = settings.RecList[0];
             }
-            settings.DestinationFolder = DestinationFolder;
-            main.SelectedLine = main.SelectedLine; // I CANNOT FUCKING BELIEVE THIS WORKED???
-            // set input device
+            if (newFolder)
+            {
+                settings.DestinationFolder = DestinationFolder;
+                main.SelectedLine = main.SelectedLine;
+            }
+
+            settings.AudioInputDevice = AudioInputDevice;
             settings.AudioInputLevel = AudioInputLevel;
-            // set output device
+            settings.AudioOutputDevice = AudioOutputDevice;
             settings.AudioOutputLevel = AudioOutputLevel;
             settings.FontSize = FontSize;
+            
             main.FontSize = FontSize;
+            
             settings.SaveSettings(path);
         }
 

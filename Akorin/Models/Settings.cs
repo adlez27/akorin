@@ -244,9 +244,9 @@ namespace Akorin.Models
                 DestinationFolder = Path.Combine(currentDirectory, "voicebank");
 
                 AudioDriver = Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
-                AudioInputDevice = Bass.CurrentRecordingDevice;
+                //AudioInputDevice = Bass.CurrentRecordingDevice;
                 AudioInputLevel = 100;
-                AudioOutputDevice = Bass.CurrentDevice;
+                //AudioOutputDevice = Bass.CurrentDevice;
                 AudioOutputLevel = 100;
 
                 FontSize = 24;
@@ -400,7 +400,15 @@ namespace Akorin.Models
             }
         }
 
-        public int AudioInputDevice { get; set; }
+        public int AudioInputDevice
+        {
+            get => Bass.CurrentRecordingDevice;
+            set
+            {
+                Bass.RecordInit(value);
+                Bass.CurrentRecordingDevice = value;
+            }
+        }
 
         private int _audioInputLevel;
         public int AudioInputLevel
@@ -432,7 +440,15 @@ namespace Akorin.Models
             }
         }
 
-        public int AudioOutputDevice { get; set; }
+        public int AudioOutputDevice
+        {
+            get => Bass.CurrentDevice;
+            set
+            {
+                Bass.Init(value);
+                Bass.CurrentDevice = value;
+            }
+        }
 
         private int _audioOutputLevel;
         public int AudioOutputLevel 
