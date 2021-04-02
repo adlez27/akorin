@@ -104,13 +104,14 @@ namespace Akorin.ViewModels
                     if (selectedLineInit)
                     {
                         StopAudio();
-                        selectedLine.Audio.Write();
                     }
 
                     this.RaiseAndSetIfChanged(ref selectedLine, value);
 
                     if (selectedLineInit)
                     {
+                        selectedLine.Audio.Read();
+
                         if (selectedLine.Audio.Data.Length > 0)
                             FileStatus = "Audio available";
                         else
@@ -181,6 +182,7 @@ namespace Akorin.ViewModels
                 recordToggle = false;
                 RecordPlayStatus = "Not recording or playing.";
             }
+            selectedLine.Audio.Write();
         }
 
         private string recordPlayStatus;

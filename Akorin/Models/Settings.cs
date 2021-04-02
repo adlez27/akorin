@@ -364,7 +364,22 @@ namespace Akorin.Models
             }
         }
 
-        public string DestinationFolder { get; set; }
+        private string destinationFolder;
+        public string DestinationFolder
+        {
+            get => destinationFolder;
+            set
+            {
+                destinationFolder = value;
+                if (init)
+                {
+                    foreach(RecListItem item in RecList)
+                    {
+                        item.Audio.Unload();
+                    }
+                }
+            }
+        }
 
         public string AudioDriver { get; set; }
 

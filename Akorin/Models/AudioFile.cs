@@ -10,7 +10,6 @@ namespace Akorin.Models
     public class AudioFile
     {
         private ISettings settings;
-        private string fullName;
         private int stream;
         private bool recorded;
 
@@ -32,18 +31,24 @@ namespace Akorin.Models
         public AudioFile(ISettings s, string fileName)
         {
             settings = s;
-            fullName = Path.Combine(s.DestinationFolder, fileName + ".wav");
+            this.fileName = fileName;
             stream = 0;
             data = new List<byte>();
             recorded = false;
             Read();
         }
 
+        private string fileName;
+        private string FullName
+        {
+            get { return Path.Combine(settings.DestinationFolder, fileName + ".wav"); }
+        }
+
         public void Read ()
         {
-            if (File.Exists(fullName) && !recorded)
+            if (File.Exists(FullName) && !recorded)
             {
-                byte[] rawBytes = File.ReadAllBytes(fullName);
+                byte[] rawBytes = File.ReadAllBytes(FullName);
                 data = new ArraySegment<byte>(rawBytes, 46, rawBytes.Length - 46).ToList();
                 stream = Bass.CreateStream(rawBytes, 0, rawBytes.Length, BassFlags.Mono);
             }
@@ -59,6 +64,11 @@ namespace Akorin.Models
                 }
                 stream = Bass.CreateStream(reRead, 0, reRead.Length, BassFlags.Mono);
             }
+        }
+
+        public void Unload()
+        {
+            data.Clear();
         }
 
         public void Play()
@@ -110,7 +120,7 @@ namespace Akorin.Models
                 byte[] temp = new byte[Data.Length * 2];
                 System.Buffer.BlockCopy(Data, 0, temp, 0, Data.Length * 2);
 
-                Write(temp, fullName);
+                Write(temp, FullName);
             }
         }
     }

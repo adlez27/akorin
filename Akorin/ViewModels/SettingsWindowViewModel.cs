@@ -308,6 +308,7 @@ namespace Akorin.ViewModels
                 main.SelectedLine = settings.RecList[0];
             }
             settings.DestinationFolder = DestinationFolder;
+            main.SelectedLine = main.SelectedLine; // I CANNOT FUCKING BELIEVE THIS WORKED???
             // set input device
             settings.AudioInputLevel = AudioInputLevel;
             // set output device
