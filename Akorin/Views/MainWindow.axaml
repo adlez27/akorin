@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Akorin.ViewModels"
+		xmlns:c="using:Akorin.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
@@ -17,14 +18,12 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-				<!-- 0.1.0 temporarily disabled -->
-				<MenuItem Header="_New project" IsEnabled="False"/>
-				<MenuItem Header="_Open project" IsEnabled="False"/>
+				<MenuItem Header="_New project" Command="{Binding NewProject}"/>
+				<MenuItem Header="_Open project" Command="{Binding OpenProject}"/>
 				<MenuItem Header="_Exit" Command="{Binding Exit}" />
 			</MenuItem>
 			
-			<!-- 0.1.0 temporarily disabled-->
-			<MenuItem Header="_Settings" IsEnabled="False">
+			<MenuItem Header="_Settings" IsEnabled="True">
 				<MenuItem Header="_List and folder" Command="{Binding OpenSettings}" CommandParameter="files"/>
 				<MenuItem Header="_Audio" Command="{Binding OpenSettings}" CommandParameter="audio"/>
 				<MenuItem Header="_Display" Command="{Binding OpenSettings}" CommandParameter="display"/>
@@ -33,13 +32,22 @@
 
 		<StackPanel DockPanel.Dock="Top" Margin="5">
 			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="{Binding FontSize}"/>
-			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLineNote}"/>
+			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLine.Note}"/>
 		</StackPanel>
 
 		<TextBlock DockPanel.Dock="Bottom" Margin="5" Text="{Binding RecordPlayStatus}"/>
 
 		<ListBox DockPanel.Dock="Left" Width="100" SelectionMode="Single,AlwaysSelected"
 				 Items="{Binding RecList}" SelectedItem="{Binding SelectedLine}">
+			<ListBox.Resources>
+				<c:AudioToColorConverter x:Key="AudioToColorConverter"/>
+			</ListBox.Resources>
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Background" 
+							Value="{Binding Audio, Converter={StaticResource AudioToColorConverter}}"/>
+				</Style>
+			</ListBox.Styles>
 		</ListBox>
 		
 		<StackPanel>

@@ -1,7 +1,7 @@
-using Akorin.Models;
-using Akorin.Views;
 using Avalonia.Controls;
 using Avalonia.Input;
+using Akorin.Models;
+using Akorin.Views;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ using System.Text;
 using System.Drawing;
 using ScottPlot.Avalonia;
 using ScottPlot;
+using System.IO;
 
 namespace Akorin.ViewModels
 {
@@ -28,6 +29,9 @@ namespace Akorin.ViewModels
             recordToggle = false;
             recordPlayStatus = "Not recording or playing.";
             selectedLineInit = false;
+            fontSize = settings.FontSize;
+
+            ((Window)_view).Closing += OnClosingEventHandler;
 
             waveform = ((Window)_view).Find<AvaPlot>("Waveform");
             waveform.Plot.YAxis.Grid(false);
@@ -36,9 +40,17 @@ namespace Akorin.ViewModels
             waveform.Plot.Layout(25, 0, 0, 0, 0);
 
             if (RecList[0].Audio.Data.Length > 0)
+            {
                 FileStatus = "Audio available";
+                RecList[0].RaisePropertyChanged("Audio");
+            }
             else
                 FileStatus = "No audio";
+        }
+
+        public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            selectedLine.Audio.Write();
         }
 
         public void Exit()
@@ -46,15 +58,43 @@ namespace Akorin.ViewModels
             Environment.Exit(0);
         }
 
+        public void NewProject()
+        {
+            settings.LoadDefault();
+            OpenSettings("files");
+        }
+
+        public async void OpenProject()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.AllowMultiple = false;
+
+            var filter = new FileDialogFilter();
+            filter.Name = "Akorin recording project";
+            filter.Extensions = new List<string>() { "arp" };
+            openFileDialog.Filters = new List<FileDialogFilter>() { filter };
+
+            openFileDialog.Directory = Path.GetDirectoryName(settings.ProjectFile);
+            var projectFile = await openFileDialog.ShowAsync((Window)_view);
+            if (projectFile.Length > 0)
+            {
+                settings.LoadSettings(projectFile[0]);
+                FontSize = settings.FontSize;
+            }
+        }
+
         public void OpenSettings(string tab)
         {
-            var settingsWindow = new SettingsWindow(tab, settings);
+            StopAudio();
+            var settingsWindow = new SettingsWindow(tab, settings, this);
             settingsWindow.ShowDialog((Window)_view);
         }
 
+        private int fontSize;
         public int FontSize
         {
-            get { return settings.FontSize; }
+            get { return fontSize; }
+            set { this.RaiseAndSetIfChanged(ref fontSize, value); }
         }
 
         public ObservableCollection<RecListItem> RecList
@@ -65,11 +105,6 @@ namespace Akorin.ViewModels
             }
         }
 
-        public Dictionary<string, string> Notes
-        {
-            get { return settings.Notes; }
-        }
-
         private bool selectedLineInit;
         private RecListItem selectedLine;
         public RecListItem SelectedLine
@@ -77,51 +112,35 @@ namespace Akorin.ViewModels
             get => selectedLine;
             set
             {
-                if (selectedLineInit)
+                if (RecList.Count > 0)
                 {
-                    if (playToggle || recordToggle)
+                    if (selectedLineInit)
                     {
-                        selectedLine.Audio.Stop();
-                        playToggle = false;
-                        recordToggle = false;
-                        RecordPlayStatus = "Not recording or playing.";
+                        StopAudio();
                     }
-                    selectedLine.Audio.Write();
-                }
-                else
-                {
-                    selectedLineInit = true;
-                }
 
-                this.RaiseAndSetIfChanged(ref selectedLine, value);
-                SelectedLineNote = Notes[value.Text];
+                    this.RaiseAndSetIfChanged(ref selectedLine, value);
 
-                if (selectedLineInit)
-                {
-                    if (selectedLine.Audio.Data.Length > 0)
+                    if (selectedLineInit)
                     {
-                        FileStatus = "Audio available";                    }
+                        selectedLine.Audio.Read();
+
+                        if (selectedLine.Audio.Data.Length > 0)
+                        {
+                            FileStatus = "Audio available";
+                            selectedLine.RaisePropertyChanged("Audio");
+                        }
+                        else
+                            FileStatus = "No audio";
+                    }
                     else
                     {
-                        FileStatus = "No audio";
+                        selectedLineInit = true;
                     }
-                }
-                
-                playToggle = false;
-                recordToggle = false;
-            }
-        }
 
-        private string selectedLineNote;
-        public string SelectedLineNote
-        {
-            get
-            {
-                return selectedLineNote;
-            }
-            set
-            {
-                this.RaiseAndSetIfChanged(ref selectedLineNote, value);
+                    playToggle = false;
+                    recordToggle = false;
+                }
             }
         }
 
@@ -139,6 +158,7 @@ namespace Akorin.ViewModels
                 if (SelectedLine.Audio.Data.Length > 0)
                 {
                     FileStatus = "Audio available";
+                    selectedLine.RaisePropertyChanged("Audio");
                 }
             }
             else
@@ -170,6 +190,18 @@ namespace Akorin.ViewModels
             }
 
             playToggle = !playToggle;
+        }
+
+        private void StopAudio()
+        {
+            if (playToggle || recordToggle)
+            {
+                selectedLine.Audio.Stop();
+                playToggle = false;
+                recordToggle = false;
+                RecordPlayStatus = "Not recording or playing.";
+            }
+            selectedLine.Audio.Write();
         }
 
         private string recordPlayStatus;

@@ -19,23 +19,20 @@
 		<PackageReference Include="ScottPlot.Avalonia" Version="4.1.10-beta" />
 		<PackageReference Include="Spectrogram" Version="1.3.0" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+		<PackageReference Include="YamlDotNet" Version="9.1.4" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="External\bass.dll">
+	  <None Update="bass.dll">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="External\libbass.dylib">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="reclists\default_reclist.txt">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="voicebank\default_notes.json">
+	  <None Update="libbass.dylib">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="External\" />
+	  <Reference Include="ManagedBass">
+	    <HintPath>bin\Debug\net5.0\ManagedBass.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 	<PropertyGroup>
 		<CFBundleName>Akorin</CFBundleName>

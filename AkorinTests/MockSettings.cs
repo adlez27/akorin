@@ -16,9 +16,9 @@ namespace AkorinTests
             Bass.Init();
             Bass.RecordInit();
             AudioDriver = Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
-            AudioInputDevice = Bass.GetDeviceInfo(Bass.CurrentDevice).Name;
+            AudioInputDevice = Bass.CurrentDevice;
             AudioInputLevel = 100;
-            AudioOutputDevice = Bass.GetDeviceInfo(Bass.CurrentRecordingDevice).Name;
+            AudioOutputDevice = Bass.CurrentRecordingDevice;
             AudioOutputLevel = 100;
         }
 
@@ -27,11 +27,9 @@ namespace AkorinTests
         public bool SplitWhitespace { get; set; }
 
         public ObservableCollection<RecListItem> RecList => throw new NotImplementedException();
-
-        public string NotesFile { get; set; }
         public string DestinationFolder { get; set; }
         public string AudioDriver { get; set; }
-        public string AudioInputDevice { get; set; }
+        public int AudioInputDevice { get; set; }
 
         private int _audioInputLevel;
         public int AudioInputLevel
@@ -46,7 +44,7 @@ namespace AkorinTests
             }
         }
 
-        public string AudioOutputDevice { get; set; }
+        public int AudioOutputDevice { get; set; }
 
         private int _audioOutputLevel;
         public int AudioOutputLevel
@@ -64,6 +62,26 @@ namespace AkorinTests
         public int FontSize { get; set; }
         public bool WaveformEnabled { get; set; }
 
-        Dictionary<string, string> ISettings.Notes => throw new NotImplementedException();
+        List<string> ISettings.AudioInputDeviceList => throw new NotImplementedException();
+
+        List<string> ISettings.AudioOutputDeviceList => throw new NotImplementedException();
+
+        ObservableCollection<RecListItem> ISettings.RecList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string ISettings.ProjectFile { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        void ISettings.LoadSettings(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ISettings.SaveSettings(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ISettings.LoadDefault()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

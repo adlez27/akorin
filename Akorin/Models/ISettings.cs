@@ -9,21 +9,27 @@ namespace Akorin.Models
 {
     public interface ISettings
     {
+        public void LoadDefault();
         public string RecListFile { get; set; }
         public bool ReadUnicode { get; set; }
         public bool SplitWhitespace { get; set; }
-        public ObservableCollection<RecListItem> RecList { get; }
-        public string NotesFile { get; set; }
-        public Dictionary<string, string> Notes { get; }
+        public ObservableCollection<RecListItem> RecList { get; set; }
         public string DestinationFolder { get; set; }
 
         public string AudioDriver { get; set; }
-        public string AudioInputDevice { get; set; }
+        public List<string> AudioInputDeviceList { get; }
+        public int AudioInputDevice { get; set; }
         public int AudioInputLevel { get; set; }
-        public string AudioOutputDevice { get; set; }
+        public List<string> AudioOutputDeviceList { get; }
+        public int AudioOutputDevice { get; set; }
         public int AudioOutputLevel { get; set; }
 
         public int FontSize { get; set; }
+
+        public string ProjectFile { get; set; }
+        public void LoadSettings(string path);
+        public void SaveSettings(string path);
+
         public bool WaveformEnabled { get; set; }
     }
 }
