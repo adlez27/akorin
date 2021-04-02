@@ -30,7 +30,10 @@ namespace Akorin.ViewModels
             ((Window)_view).Closing += OnClosingEventHandler;
 
             if (RecList[0].Audio.Data.Length > 0)
+            {
                 FileStatus = "Audio available";
+                RecList[0].RaisePropertyChanged("Audio");
+            }
             else
                 FileStatus = "No audio";
         }
@@ -113,7 +116,10 @@ namespace Akorin.ViewModels
                         selectedLine.Audio.Read();
 
                         if (selectedLine.Audio.Data.Length > 0)
+                        {
                             FileStatus = "Audio available";
+                            selectedLine.RaisePropertyChanged("Audio");
+                        }
                         else
                             FileStatus = "No audio";
                     }
@@ -140,7 +146,10 @@ namespace Akorin.ViewModels
                 SelectedLine.Audio.Stop();
                 RecordPlayStatus = "Not recording or playing.";
                 if (SelectedLine.Audio.Data.Length > 0)
+                {
                     FileStatus = "Audio available";
+                    selectedLine.RaisePropertyChanged("Audio");
+                }
             }
             else
             {

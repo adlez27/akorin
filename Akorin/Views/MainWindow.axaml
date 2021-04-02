@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Akorin.ViewModels"
+		xmlns:c="using:Akorin.Converters"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
@@ -37,6 +38,15 @@
 
 		<ListBox DockPanel.Dock="Left" Width="100" SelectionMode="Single,AlwaysSelected"
 				 Items="{Binding RecList}" SelectedItem="{Binding SelectedLine}">
+			<ListBox.Resources>
+				<c:AudioToColorConverter x:Key="AudioToColorConverter"/>
+			</ListBox.Resources>
+			<ListBox.Styles>
+				<Style Selector="ListBoxItem">
+					<Setter Property="Background" 
+							Value="{Binding Audio, Converter={StaticResource AudioToColorConverter}}"/>
+				</Style>
+			</ListBox.Styles>
 		</ListBox>
 		
 		<StackPanel>

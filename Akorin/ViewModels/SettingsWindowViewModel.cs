@@ -243,6 +243,7 @@ namespace Akorin.ViewModels
                 validDict["DestinationFolder"] = true;
                 newFolder = true;
                 this.RaisePropertyChanged("DestinationFolder");
+                main.RaisePropertyChanged("RecList");
             }
         }
 

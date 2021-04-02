@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using YamlDotNet.Serialization;
+using ReactiveUI;
+using System.ComponentModel.DataAnnotations;
 
 namespace Akorin.Models
 {
-    public class RecListItem
+    //[MetadataType(typeof(RecListItemMetadata))]
+    public class RecListItem : ReactiveObject
     {
         [YamlIgnore]
         public AudioFile Audio { get; set; }
@@ -41,5 +44,12 @@ namespace Akorin.Models
         {
             return Text;
         }
+
+        [YamlIgnore]
+        public IObservable<IReactivePropertyChangedEventArgs<IReactiveObject>> Changing { get { return base.Changing; } }
+        [YamlIgnore]
+        public IObservable<IReactivePropertyChangedEventArgs<IReactiveObject>> Changed { get { return base.Changed; } }
+        [YamlIgnore]
+        public IObservable<Exception> ThrownExceptions { get { return base.ThrownExceptions; } }
     }
 }
