@@ -66,6 +66,7 @@ namespace Akorin.ViewModels
             if (projectFile.Length > 0)
             {
                 settings.LoadSettings(projectFile[0]);
+                FontSize = settings.FontSize;
             }
         }
 
