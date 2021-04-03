@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -251,6 +252,7 @@ namespace Akorin.Models
 
                 FontSize = 24;
                 WaveformEnabled = true;
+                WaveformColor = "Blue";
 
                 var deserializer = new Deserializer();
                 var defaultRecList = deserializer.Deserialize<ObservableCollection<RecListItem>>(defaultRecListRaw);
@@ -487,6 +489,8 @@ namespace Akorin.Models
             }
         }
 
+        public string WaveformColor { get; set; }
+
         [YamlIgnore]
         public string ProjectFile { get; set; }
 
@@ -509,6 +513,7 @@ namespace Akorin.Models
 
             FontSize = newSettings.FontSize;
             WaveformEnabled = newSettings.WaveformEnabled;
+            WaveformColor = newSettings.WaveformColor;
 
             recList.Clear();
             foreach (RecListItem item in newSettings.RecList)

@@ -89,7 +89,8 @@
 							  IsChecked="{Binding WaveformEnabled}">Waveform</CheckBox>
 
 					<TextBlock Grid.Row="2" Grid.Column="0">Color</TextBlock>
-					<TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False"></TextBox>
+					<ComboBox Grid.Row="2" Grid.Column="1" IsEnabled="{Binding WaveformEnabled}"
+							  Items="{Binding WaveformColorList}" SelectedItem="{Binding WaveformColor}"/>
 
 					<!-- 0.1.2 enable -->
 					<CheckBox Grid.Row="3" Grid.Column="0" x:Name="SpectrogramCheckbox"

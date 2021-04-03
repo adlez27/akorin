@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,11 +26,12 @@ namespace Akorin.Models
         public int AudioOutputLevel { get; set; }
 
         public int FontSize { get; set; }
+        public bool WaveformEnabled { get; set; }
+        public string WaveformColor { get; set; }
 
         public string ProjectFile { get; set; }
         public void LoadSettings(string path);
         public void SaveSettings(string path);
 
-        public bool WaveformEnabled { get; set; }
     }
 }

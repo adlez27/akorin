@@ -5,7 +5,9 @@ using Avalonia.Controls;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -66,6 +68,9 @@ namespace Akorin.ViewModels
 
             validDict.Add("FontSize", true);
             fontSize = settings.FontSize;
+
+            validDict.Add("WaveformColor", true);
+            waveformColor = settings.WaveformColor;
 
             validDict.Add("VisualizerEnabled", true);
             waveformEnabled = settings.WaveformEnabled;
@@ -294,6 +299,34 @@ namespace Akorin.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref waveformEnabled, value);
                 validDict["VisualizerEnabled"] = visualizerEnabled;
+                this.RaisePropertyChanged("Valid");
+            }
+        }
+
+        public List<string> WaveformColorList
+        {
+            get
+            {
+                Type type = typeof(Color);
+                PropertyInfo[] propInfoList = type.GetProperties(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public);
+                var colorList = new List<string>();
+                foreach (PropertyInfo c in propInfoList)
+                {
+                    colorList.Add(c.Name);
+                }
+                return colorList;
+            }
+        }
+
+        private string waveformColor;
+        public string WaveformColor
+        {
+            get => waveformColor;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref waveformColor, value);
+                validDict["WaveformColor"] = waveformColor != "Transparent";
+                this.RaisePropertyChanged("Valid");
             }
         }
 
@@ -364,6 +397,8 @@ namespace Akorin.ViewModels
             settings.FontSize = FontSize;
             main.FontSize = FontSize;
             settings.WaveformEnabled = WaveformEnabled;
+            settings.WaveformColor = WaveformColor;
+            main.WaveformColor = Color.FromName(WaveformColor);
 
             settings.SaveSettings(path);
         }

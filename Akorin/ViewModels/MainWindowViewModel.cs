@@ -30,8 +30,7 @@ namespace Akorin.ViewModels
             status = "Not recording or playing.";
             selectedLineInit = false;
             fontSize = settings.FontSize;
-
-            ((Window)_view).Closing += OnClosingEventHandler;
+            waveformColor = Color.FromName(settings.WaveformColor);
 
             waveform = ((Window)_view).Find<AvaPlot>("Waveform");
             waveform.Plot.YAxis.Grid(false);
@@ -43,6 +42,8 @@ namespace Akorin.ViewModels
 
             if (RecList[0].Audio.Data.Length > 0)
                 RecList[0].RaisePropertyChanged("Audio");
+
+            ((Window)_view).Closing += OnClosingEventHandler;
         }
 
         public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
@@ -77,6 +78,7 @@ namespace Akorin.ViewModels
             {
                 settings.LoadSettings(projectFile[0]);
                 FontSize = settings.FontSize;
+                WaveformColor = Color.FromName(settings.WaveformColor);
             }
         }
 
@@ -208,6 +210,17 @@ namespace Akorin.ViewModels
             }
         }
 
+        private Color waveformColor;
+        public Color WaveformColor
+        {
+            get { return waveformColor; }
+            set 
+            {
+                this.RaiseAndSetIfChanged(ref waveformColor, value);
+                ShowWaveform();
+            }
+        }
+
         public void ShowWaveform()
         {
             waveform.Plot.Clear();
@@ -216,7 +229,7 @@ namespace Akorin.ViewModels
 
             if (settings.WaveformEnabled)
             {
-                var waveformColor = Color.Blue;
+                //var waveformColor = Color.Blue;
 
                 double[] dataDouble;
                 if (selectedLine.Audio.Data.Length < 1)
@@ -224,7 +237,7 @@ namespace Akorin.ViewModels
                 else
                     dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);
 
-                var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, waveformColor);
+                var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, WaveformColor);
                 waveform.Plot.Add(signalGraph);
                 waveform.Plot.AxisAutoX(0);
                 waveform.Plot.XAxis.Grid(true);

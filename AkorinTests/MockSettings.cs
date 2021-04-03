@@ -3,6 +3,7 @@ using ManagedBass;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,6 +69,7 @@ namespace AkorinTests
 
         ObservableCollection<RecListItem> ISettings.RecList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         string ISettings.ProjectFile { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string ISettings.WaveformColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         void ISettings.LoadSettings(string path)
         {
