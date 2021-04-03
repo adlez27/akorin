@@ -31,7 +31,7 @@ namespace Akorin.ViewModels
         }
         private MainWindowViewModel main;
 
-        public SettingsWindowViewModel(Window window, string tab, ISettings s, MainWindowViewModel m)
+        public SettingsWindowViewModel(Window window, string tab, ISettings s, MainWindowViewModel m, bool newProject)
         {
             this.window = window;
             this.tab = tab;
@@ -74,6 +74,9 @@ namespace Akorin.ViewModels
 
             validDict.Add("VisualizerEnabled", true);
             waveformEnabled = settings.WaveformEnabled;
+
+            if (newProject)
+                NewProject();
         }
 
         public SettingsWindowViewModel() { }
@@ -362,6 +365,25 @@ namespace Akorin.ViewModels
             {
                 return !validDict.ContainsValue(false);
             }
+        }
+
+        public void NewProject()
+        {
+            Settings newProject = new Settings(true);
+
+            RecListFile = newProject.RecListFile;
+            ReadUnicode = newProject.ReadUnicode;
+            SplitWhitespace = newProject.SplitWhitespace;
+            DestinationFolder = newProject.DestinationFolder;
+
+            AudioInputDevice = newProject.AudioInputDevice;
+            AudioInputLevel = newProject.AudioInputLevel;
+            AudioOutputDevice = newProject.AudioOutputDevice;
+            AudioOutputLevel = newProject.AudioOutputLevel;
+
+            FontSize = newProject.FontSize;
+            WaveformEnabled = newProject.WaveformEnabled;
+            WaveformColor = newProject.WaveformColor;
         }
 
         public void SetDefault()

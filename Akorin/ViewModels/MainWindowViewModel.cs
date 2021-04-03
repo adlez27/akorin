@@ -29,6 +29,8 @@ namespace Akorin.ViewModels
             recordToggle = false;
             status = "Not recording or playing.";
             selectedLineInit = false;
+            newProject = false;
+
             fontSize = settings.FontSize;
             waveformColor = Color.FromName(settings.WaveformColor);
 
@@ -56,10 +58,11 @@ namespace Akorin.ViewModels
             Environment.Exit(0);
         }
 
+        private bool newProject;
         public void NewProject()
         {
             StopAudio();
-            settings.LoadDefault();
+            newProject = true;
             OpenSettings("files");
         }
 
@@ -87,8 +90,9 @@ namespace Akorin.ViewModels
         public void OpenSettings(string tab)
         {
             StopAudio();
-            var settingsWindow = new SettingsWindow(tab, settings, this);
+            var settingsWindow = new SettingsWindow(tab, settings, this, newProject);
             settingsWindow.ShowDialog((Window)_view);
+            newProject = false;
         }
 
         private int fontSize;

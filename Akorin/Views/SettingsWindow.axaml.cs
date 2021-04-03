@@ -18,10 +18,10 @@ namespace Akorin.Views
 #endif
         }
 
-        public SettingsWindow(string tab, ISettings s, MainWindowViewModel m)
+        public SettingsWindow(string tab, ISettings s, MainWindowViewModel m, bool newProject)
         {
             InitializeComponent();
-            DataContext = new SettingsWindowViewModel(this, tab, s, m);
+            DataContext = new SettingsWindowViewModel(this, tab, s, m, newProject);
 
 #if DEBUG
             this.AttachDevTools();
