@@ -60,7 +60,7 @@ namespace Akorin.Models
                 using (MemoryStream ms = new MemoryStream())
                 using (WaveFileWriter wfw = new WaveFileWriter(ms, format))
                 {
-                    wfw.Write(Data, Data.Length);
+                    wfw.Write(Data, Data.Length * 2);
                     reRead = ms.GetBuffer();
                 }
                 stream = Bass.CreateStream(reRead, 0, reRead.Length, BassFlags.Mono);
