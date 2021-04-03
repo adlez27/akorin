@@ -75,6 +75,8 @@ namespace Akorin.ViewModels
             validDict.Add("VisualizerEnabled", true);
             waveformEnabled = settings.WaveformEnabled;
 
+            projectFile = settings.ProjectFile;
+
             if (newProject)
                 NewProject();
         }
@@ -358,6 +360,8 @@ namespace Akorin.ViewModels
             }
         }
 
+        private string projectFile { get; set; }
+
         private Dictionary<string, bool> validDict;
         public bool Valid
         {
@@ -384,6 +388,8 @@ namespace Akorin.ViewModels
             FontSize = newProject.FontSize;
             WaveformEnabled = newProject.WaveformEnabled;
             WaveformColor = newProject.WaveformColor;
+
+            projectFile = "";
         }
 
         public void SetDefault()
@@ -395,7 +401,7 @@ namespace Akorin.ViewModels
 
         public async void OKSettings()
         {
-            if (settings.ProjectFile == "")
+            if (projectFile == "")
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
                 saveFileDialog.Directory = settings.DestinationFolder;
@@ -406,9 +412,9 @@ namespace Akorin.ViewModels
                 arp.Extensions = new List<string>() { "arp" };
                 saveFileDialog.Filters = new List<FileDialogFilter>() { arp };
 
-                settings.ProjectFile = await saveFileDialog.ShowAsync(window);
+                projectFile = await saveFileDialog.ShowAsync(window);
             }
-            SaveSettings(settings.ProjectFile);
+            SaveSettings(projectFile);
             window.Close();
         }
 
@@ -439,6 +445,8 @@ namespace Akorin.ViewModels
             settings.WaveformEnabled = WaveformEnabled;
             settings.WaveformColor = WaveformColor;
             main.WaveformColor = Color.FromName(WaveformColor);
+
+            settings.ProjectFile = projectFile;
 
             settings.SaveSettings(path);
         }
