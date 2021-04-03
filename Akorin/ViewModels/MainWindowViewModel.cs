@@ -58,12 +58,14 @@ namespace Akorin.ViewModels
 
         public void NewProject()
         {
+            StopAudio();
             settings.LoadDefault();
             OpenSettings("files");
         }
 
         public async void OpenProject()
         {
+            StopAudio();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.AllowMultiple = false;
 

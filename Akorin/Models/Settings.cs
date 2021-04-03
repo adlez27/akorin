@@ -242,12 +242,11 @@ namespace Akorin.Models
             }
             else
             {
+                ReadUnicode = false;
+                SplitWhitespace = true;
                 DestinationFolder = Path.Combine(currentDirectory, "voicebank");
 
-                AudioDriver = Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
-                //AudioInputDevice = Bass.CurrentRecordingDevice;
                 AudioInputLevel = 100;
-                //AudioOutputDevice = Bass.CurrentDevice;
                 AudioOutputLevel = 100;
 
                 FontSize = 24;
@@ -384,7 +383,11 @@ namespace Akorin.Models
             }
         }
 
-        public string AudioDriver { get; set; }
+        public string AudioDriver
+        {
+            get => Bass.GetDeviceInfo(Bass.CurrentDevice).Driver;
+            set { }
+        }
 
         [YamlIgnore]
         public List<string> AudioInputDeviceList

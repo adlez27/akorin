@@ -6,12 +6,13 @@
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="350"
 		Width="600" Height="350"
         x:Class="Akorin.Views.SettingsWindow"
-        Title="SettingsWindow">
-
+		Icon="/Assets/mic.ico"
+        Title="Settings">
+	
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
 			<Button IsEnabled="{Binding Valid}" Command="{Binding SetDefault}">Set as default</Button>
-
+			
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 				<Button Command="{Binding CloseSettings}">Cancel</Button>
 				<Button IsEnabled="{Binding Valid}" Command="{Binding OKSettings}">OK</Button>
@@ -57,20 +58,20 @@
 					</ComboBox>
 
 					<TextBlock Grid.Row="1" Grid.Column="0">Input device</TextBlock>
-					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}"
+					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}" 
 							  Items="{Binding Settings.AudioInputDeviceList}"/>
 
 					<TextBlock Grid.Row="2" Grid.Column="0">Input level</TextBlock>
 					<Slider Grid.Row="2" Grid.Column="1"
 							Minimum="0" Maximum="100" Value="{Binding AudioInputLevel}" x:Name="InputSlider"
 							IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-					<TextBlock Grid.Row="2" Grid.Column="2"
+					<TextBlock Grid.Row="2" Grid.Column="2" 
 							   Text="{Binding ElementName=InputSlider, Path=Value}"></TextBlock>
 
 					<TextBlock Grid.Row="3" Grid.Column="0">Output</TextBlock>
-					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}"
+					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}" 
 							  Items="{Binding Settings.AudioOutputDeviceList}"/>
-
+					
 					<TextBlock Grid.Row="4" Grid.Column="0">Output level</TextBlock>
 					<Slider Grid.Row="4" Grid.Column="1"
 							Minimum="0" Maximum="100" Value="{Binding AudioOutputLevel}" x:Name="OutputSlider"

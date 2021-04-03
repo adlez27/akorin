@@ -146,6 +146,11 @@ namespace Akorin.ViewModels
             {
                 LoadRecList(recListFile[0]);
             }
+            else
+            {
+                validDict["RecListFile"] = false;
+                this.RaisePropertyChanged("Valid");
+            }
         }
 
         private void LoadRecList(string path)
@@ -164,7 +169,8 @@ namespace Akorin.ViewModels
                 validContent = false;
             }
 
-            string invalid = "";
+            string invalidChar = "";
+            bool containsInvalidChar = false;
 
             if (validContent)
             {
@@ -175,7 +181,8 @@ namespace Akorin.ViewModels
                         if (item.Text.Contains(c))
                         {
                             validContent = false;
-                            invalid += c;
+                            containsInvalidChar = true;
+                            invalidChar += c;
                             break;
                         }
                     }
@@ -191,7 +198,10 @@ namespace Akorin.ViewModels
             }
             else
             {
-                ReclistContentValid = $"Reclist contains invalid character: {invalid}";
+                if (containsInvalidChar)
+                    ReclistContentValid = $"Reclist contains invalid character: {invalidChar}";
+                else
+                    ReclistContentValid = "Could not load reclist.";
                 validDict["RecListFile"] = false;
             }
             this.RaisePropertyChanged("Valid");
@@ -238,6 +248,11 @@ namespace Akorin.ViewModels
         public string DestinationFolder
         {
             get => destinationFolder;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref destinationFolder, value);
+                newFolder = true;
+            }
         }
 
         public async void SelectDestinationFolder()
@@ -247,12 +262,14 @@ namespace Akorin.ViewModels
             var selectedFolder = await openFolderDialog.ShowAsync(window);
             if (selectedFolder.Length > 0)
             {
-                destinationFolder = selectedFolder;
+                DestinationFolder = selectedFolder;
                 validDict["DestinationFolder"] = true;
-                newFolder = true;
-                this.RaisePropertyChanged("DestinationFolder");
                 main.RaisePropertyChanged("RecList");
+            } else
+            {
+                validDict["DestinationFolder"] = false;
             }
+            this.RaisePropertyChanged("Valid");
         }
 
         private int audioInputDevice;
@@ -386,6 +403,7 @@ namespace Akorin.ViewModels
             if (newFolder)
             {
                 settings.DestinationFolder = DestinationFolder;
+                main.RaisePropertyChanged("RecList");
                 main.SelectedLine = main.SelectedLine;
             }
 

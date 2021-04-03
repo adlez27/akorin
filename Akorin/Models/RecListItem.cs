@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Akorin.Models
 {
-    //[MetadataType(typeof(RecListItemMetadata))]
     public class RecListItem : ReactiveObject
     {
         [YamlIgnore]
