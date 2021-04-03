@@ -43,11 +43,11 @@ namespace Akorin.ViewModels
 
             if (RecList[0].Audio.Data.Length > 0)
             {
-                FileStatus = "Audio available";
+                //FileStatus = "Audio available";
                 RecList[0].RaisePropertyChanged("Audio");
             }
-            else
-                FileStatus = "No audio";
+            //else
+                //FileStatus = "No audio";
         }
 
         public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
@@ -129,19 +129,18 @@ namespace Akorin.ViewModels
 
                         if (selectedLine.Audio.Data.Length > 0)
                         {
-                            FileStatus = "Audio available";
+                            //FileStatus = "Audio available";
                             selectedLine.RaisePropertyChanged("Audio");
                         }
-                        else
-                            FileStatus = "No audio";
-
-                        ShowWaveform();
+                        //else
+                            //FileStatus = "No audio";
                     }
                     else
                     {
                         selectedLineInit = true;
                     }
 
+                    ShowWaveform();
                     playToggle = false;
                     recordToggle = false;
                 }
@@ -161,9 +160,10 @@ namespace Akorin.ViewModels
                 RecordPlayStatus = "Not recording or playing.";
                 if (SelectedLine.Audio.Data.Length > 0)
                 {
-                    FileStatus = "Audio available";
+                    //FileStatus = "Audio available";
                     selectedLine.RaisePropertyChanged("Audio");
                 }
+                ShowWaveform();
             }
             else
             {
@@ -221,36 +221,46 @@ namespace Akorin.ViewModels
             }
         }
 
-        private string fileStatus;
-        public string FileStatus
-        {
-            get
-            {
-                return fileStatus;
-            }
-            set
-            {                
-                this.RaiseAndSetIfChanged(ref fileStatus, value);
-            }
-        }
+        //private string fileStatus;
+        //public string FileStatus
+        //{
+        //    get
+        //    {
+        //        return fileStatus;
+        //    }
+        //    set
+        //    {                
+        //        this.RaiseAndSetIfChanged(ref fileStatus, value);
+        //    }
+        //}
 
         public void ShowWaveform()
         {
             waveform.Plot.Clear();
+            waveform.Configuration.Pan = false;
+            waveform.Configuration.Zoom = false;
 
-            if (settings.WaveformEnabled && selectedLine.Audio.Data.Length > 0)
+            if (settings.WaveformEnabled)
             {
                 var waveformColor = Color.Blue;
-                double[] dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);
+
+                double[] dataDouble;
+                if (selectedLine.Audio.Data.Length < 1)
+                    dataDouble = new double[] { 0.0 };
+                else
+                    dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);
+
                 var signalGraph = waveform.Plot.AddSignal(dataDouble, 44100, waveformColor);
                 waveform.Plot.Add(signalGraph);
                 waveform.Plot.AxisAutoX(0);
                 waveform.Plot.XAxis.Grid(true);
+                waveform.Plot.XAxis.Ticks(true);
                 waveform.Plot.YAxis.Ticks(true);
-                waveform.Plot.SetAxisLimitsY(-10000, 10000);
+                waveform.Plot.SetAxisLimitsY(-32768, 32767);
             } else
             {
                 waveform.Plot.XAxis.Grid(false);
+                waveform.Plot.XAxis.Ticks(false);
                 waveform.Plot.YAxis.Ticks(false);
             }
 
