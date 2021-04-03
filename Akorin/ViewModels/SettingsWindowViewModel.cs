@@ -295,7 +295,12 @@ namespace Akorin.ViewModels
         public int AudioOutputDevice
         {
             get => audioOutputDevice;
-            set { this.RaiseAndSetIfChanged(ref audioOutputDevice, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref audioOutputDevice, value);
+                validDict["AudioOutputDevice"] = value != 0;
+                this.RaisePropertyChanged("Valid");
+            }
         }
 
         private int audioOutputLevel;
