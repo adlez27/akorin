@@ -508,7 +508,6 @@ namespace Akorin.Models
             AudioOutputLevel = newSettings.AudioOutputLevel;
 
             FontSize = newSettings.FontSize;
-
             WaveformEnabled = newSettings.WaveformEnabled;
 
             recList.Clear();

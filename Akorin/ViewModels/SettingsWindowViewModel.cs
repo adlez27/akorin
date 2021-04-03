@@ -64,10 +64,10 @@ namespace Akorin.ViewModels
             validDict.Add("AudioOutputLevel", true);
             audioOutputLevel = settings.AudioOutputLevel;
 
-            fontSize = settings.FontSize;
             validDict.Add("FontSize", true);
+            fontSize = settings.FontSize;
 
-            validDict.Add("WaveformEnabled", true);
+            validDict.Add("VisualizerEnabled", true);
             waveformEnabled = settings.WaveformEnabled;
         }
 
@@ -290,7 +290,19 @@ namespace Akorin.ViewModels
         public bool WaveformEnabled
         {
             get => waveformEnabled;
-            set { this.RaiseAndSetIfChanged(ref waveformEnabled, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref waveformEnabled, value);
+                validDict["VisualizerEnabled"] = visualizerEnabled;
+            }
+        }
+
+        private bool visualizerEnabled
+        {
+            get
+            {
+                return WaveformEnabled; // later on it'll be WaveformEnabled or SpectrogramEnabled
+            }
         }
 
         private Dictionary<string, bool> validDict;
@@ -348,11 +360,11 @@ namespace Akorin.ViewModels
             settings.AudioInputLevel = AudioInputLevel;
             settings.AudioOutputDevice = AudioOutputDevice;
             settings.AudioOutputLevel = AudioOutputLevel;
+
             settings.FontSize = FontSize;
+            main.FontSize = FontSize;
             settings.WaveformEnabled = WaveformEnabled;
 
-            main.FontSize = FontSize;
-            
             settings.SaveSettings(path);
         }
 

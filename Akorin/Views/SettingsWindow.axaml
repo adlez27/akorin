@@ -7,11 +7,11 @@
 		Width="600" Height="350"
         x:Class="Akorin.Views.SettingsWindow"
         Title="SettingsWindow">
-	
+
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
 			<Button IsEnabled="{Binding Valid}" Command="{Binding SetDefault}">Set as default</Button>
-			
+
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 				<Button Command="{Binding CloseSettings}">Cancel</Button>
 				<Button IsEnabled="{Binding Valid}" Command="{Binding OKSettings}">OK</Button>
@@ -57,20 +57,20 @@
 					</ComboBox>
 
 					<TextBlock Grid.Row="1" Grid.Column="0">Input device</TextBlock>
-					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}" 
+					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}"
 							  Items="{Binding Settings.AudioInputDeviceList}"/>
 
 					<TextBlock Grid.Row="2" Grid.Column="0">Input level</TextBlock>
 					<Slider Grid.Row="2" Grid.Column="1"
 							Minimum="0" Maximum="100" Value="{Binding AudioInputLevel}" x:Name="InputSlider"
 							IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-					<TextBlock Grid.Row="2" Grid.Column="2" 
+					<TextBlock Grid.Row="2" Grid.Column="2"
 							   Text="{Binding ElementName=InputSlider, Path=Value}"></TextBlock>
 
 					<TextBlock Grid.Row="3" Grid.Column="0">Output</TextBlock>
-					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}" 
+					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}"
 							  Items="{Binding Settings.AudioOutputDeviceList}"/>
-					
+
 					<TextBlock Grid.Row="4" Grid.Column="0">Output level</TextBlock>
 					<Slider Grid.Row="4" Grid.Column="1"
 							Minimum="0" Maximum="100" Value="{Binding AudioOutputLevel}" x:Name="OutputSlider"
@@ -84,24 +84,23 @@
 					<TextBlock Grid.Row="0" Grid.Column="0">Line font size</TextBlock>
 					<NumericUpDown Grid.Row="0" Grid.Column="1"
 								   Value="{Binding FontSize}" Increment="1" Minimum="8" Maximum="200"/>
-					
-					<!-- 0.1.1 enable -->
-					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox" IsChecked="{Binding WaveformEnabled}"
-							  IsEnabled="True">Waveform</CheckBox>
-					
+
+					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox"
+							  IsChecked="{Binding WaveformEnabled}">Waveform</CheckBox>
+
 					<TextBlock Grid.Row="2" Grid.Column="0">Color</TextBlock>
 					<TextBox Grid.Row="2" Grid.Column="1" IsEnabled="False"></TextBox>
 
 					<!-- 0.1.2 enable -->
 					<CheckBox Grid.Row="3" Grid.Column="0" x:Name="SpectrogramCheckbox"
 							  IsEnabled="False">Spectrogram</CheckBox>
-					
+
 					<TextBlock Grid.Row="4" Grid.Column="0">Color</TextBlock>
 					<ComboBox Grid.Row="4" Grid.Column="1" SelectedIndex="0" IsEnabled="False">
 						<ComboBoxItem>Default colors</ComboBoxItem>
 						<ComboBoxItem>Another color</ComboBoxItem>
 					</ComboBox>
-					
+
 					<TextBlock Grid.Row="5" Grid.Column="0">Scale</TextBlock>
 					<StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
 						<RadioButton>Linear</RadioButton>
