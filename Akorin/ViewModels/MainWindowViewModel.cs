@@ -236,8 +236,6 @@ namespace Akorin.ViewModels
 
             if (settings.WaveformEnabled)
             {
-                //var waveformColor = Color.Blue;
-
                 double[] dataDouble;
                 if (selectedLine.Audio.Data.Length < 1)
                     dataDouble = new double[] { 0.0 };

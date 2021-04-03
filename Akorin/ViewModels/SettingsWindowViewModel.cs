@@ -436,7 +436,11 @@ namespace Akorin.ViewModels
             if (newFolder)
             {
                 settings.DestinationFolder = DestinationFolder;
-                main.RaisePropertyChanged("RecList");
+                foreach(RecListItem item in settings.RecList)
+                {
+                    item.Audio.Read();
+                    item.RaisePropertyChanged("Audio");
+                }
                 main.SelectedLine = main.SelectedLine;
             }
 
