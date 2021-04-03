@@ -55,6 +55,7 @@ namespace Akorin.ViewModels
 
         public void Exit()
         {
+            selectedLine.Audio.Write();
             Environment.Exit(0);
         }
 
