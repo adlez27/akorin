@@ -35,7 +35,7 @@
 			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLine.Note}"/>
 		</StackPanel>
 
-		<TextBlock DockPanel.Dock="Bottom" Margin="5" Text="{Binding RecordPlayStatus}"/>
+		<TextBlock DockPanel.Dock="Bottom" Margin="5" Text="{Binding Status}"/>
 
 		<ListBox DockPanel.Dock="Left" Width="100" SelectionMode="Single,AlwaysSelected"
 				 Items="{Binding RecList}" SelectedItem="{Binding SelectedLine}">

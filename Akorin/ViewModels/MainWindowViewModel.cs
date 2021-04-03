@@ -27,7 +27,7 @@ namespace Akorin.ViewModels
             settings = s;
             playToggle = false;
             recordToggle = false;
-            recordPlayStatus = "Not recording or playing.";
+            status = "Not recording or playing.";
             selectedLineInit = false;
             fontSize = settings.FontSize;
 
@@ -42,12 +42,7 @@ namespace Akorin.ViewModels
             waveform.Plot.Layout(25, 0, 0, 0, 0);
 
             if (RecList[0].Audio.Data.Length > 0)
-            {
-                //FileStatus = "Audio available";
                 RecList[0].RaisePropertyChanged("Audio");
-            }
-            //else
-                //FileStatus = "No audio";
         }
 
         public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
@@ -128,12 +123,7 @@ namespace Akorin.ViewModels
                         selectedLine.Audio.Read();
 
                         if (selectedLine.Audio.Data.Length > 0)
-                        {
-                            //FileStatus = "Audio available";
                             selectedLine.RaisePropertyChanged("Audio");
-                        }
-                        //else
-                            //FileStatus = "No audio";
                     }
                     else
                     {
@@ -157,18 +147,15 @@ namespace Akorin.ViewModels
             if (recordToggle)
             {
                 SelectedLine.Audio.Stop();
-                RecordPlayStatus = "Not recording or playing.";
+                Status = "Not recording or playing.";
                 if (SelectedLine.Audio.Data.Length > 0)
-                {
-                    //FileStatus = "Audio available";
                     selectedLine.RaisePropertyChanged("Audio");
-                }
                 ShowWaveform();
             }
             else
             {
                 SelectedLine.Audio.Record();
-                RecordPlayStatus = "Recording...";
+                Status = "Recording...";
             }
 
             recordToggle = !recordToggle;
@@ -185,12 +172,12 @@ namespace Akorin.ViewModels
             if (playToggle)
             {
                 SelectedLine.Audio.Stop();
-                RecordPlayStatus = "Not recording or playing.";
+                Status = "Not recording or playing.";
             }
             else
             {
                 SelectedLine.Audio.Play();
-                RecordPlayStatus = "Playing...";
+                Status = "Playing...";
             }
 
             playToggle = !playToggle;
@@ -203,36 +190,23 @@ namespace Akorin.ViewModels
                 selectedLine.Audio.Stop();
                 playToggle = false;
                 recordToggle = false;
-                RecordPlayStatus = "Not recording or playing.";
+                Status = "Not recording or playing.";
             }
             selectedLine.Audio.Write();
         }
 
-        private string recordPlayStatus;
-        public string RecordPlayStatus
+        private string status;
+        public string Status
         {
             get
             {
-                return recordPlayStatus;
+                return status;
             }
             set
             {
-                this.RaiseAndSetIfChanged(ref recordPlayStatus, value);
+                this.RaiseAndSetIfChanged(ref status, value);
             }
         }
-
-        //private string fileStatus;
-        //public string FileStatus
-        //{
-        //    get
-        //    {
-        //        return fileStatus;
-        //    }
-        //    set
-        //    {                
-        //        this.RaiseAndSetIfChanged(ref fileStatus, value);
-        //    }
-        //}
 
         public void ShowWaveform()
         {
