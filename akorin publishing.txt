@@ -6,4 +6,3 @@ dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration
 
 Go inside app bundle
 Remove icon and signature from info plist
-move libbass.dylib out of folder

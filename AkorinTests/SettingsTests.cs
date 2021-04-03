@@ -10,7 +10,7 @@ namespace AkorinTests
     public class SettingsTests
     {
         Settings settings = new Settings(true);
-        string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        string currentDirectory = AppContext.BaseDirectory;
 
         [Fact]
         public void ReadNotes()

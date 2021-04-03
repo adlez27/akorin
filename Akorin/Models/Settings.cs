@@ -233,7 +233,7 @@ namespace Akorin.Models
 
         public void LoadDefault()
         {
-            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var currentDirectory = AppContext.BaseDirectory;
             var defaultSettings = Path.Combine(currentDirectory, "default.arp");
 
             if (File.Exists(defaultSettings))

@@ -399,7 +399,7 @@ namespace Akorin.ViewModels
 
         public void SetDefault()
         {
-            var currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var currentDirectory = AppContext.BaseDirectory;
             var defaultSettings = Path.Combine(currentDirectory, "default.arp");
             SaveSettings(defaultSettings);
         }
