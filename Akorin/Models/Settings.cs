@@ -320,6 +320,7 @@ namespace Akorin.Models
         {
             if (init)
             {
+                RecList.Clear();
                 HashSet<string> uniqueStrings = new HashSet<string>();
 
                 Encoding e;

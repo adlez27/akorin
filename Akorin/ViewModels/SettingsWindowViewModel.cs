@@ -33,6 +33,7 @@ namespace Akorin.ViewModels
             validDict.Add("RecListFile", true);
             recListFile = settings.RecListFile;
             reclistContentValid = "";
+            newRecList = false;
 
             validDict.Add("ReadUnicode", true);
             readUnicode = settings.ReadUnicode;
@@ -209,6 +210,7 @@ namespace Akorin.ViewModels
                 validDict["RecListFile"] = true;
                 RecListFile = path;
                 newRecList = true;
+                recList = temp.RecList;
             }
             else
             {
@@ -219,6 +221,7 @@ namespace Akorin.ViewModels
                 validDict["RecListFile"] = false;
             }
             this.RaisePropertyChanged("Valid");
+
         }
 
         private string reclistContentValid;
@@ -297,7 +300,40 @@ namespace Akorin.ViewModels
                 if (Path.GetExtension(file) == ".wav")
                     recList.Add(new RecListItem(settings,Path.GetFileNameWithoutExtension(file)));
             }
+            newRecList = true;
             recListFromFolder = true;
+            RecListFile = "List generated from files in folder.";
+        }
+
+        public async void ExportRecList()
+        {
+            var arlContent = new Dictionary<string, string>();
+            if (newRecList)
+            {
+                foreach (var item in recList)
+                    arlContent.Add(item.Text, item.Note);
+            }
+            else
+            {
+                foreach (var item in settings.RecList)
+                    arlContent.Add(item.Text, item.Note);
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Directory = settings.DestinationFolder;
+            saveFileDialog.DefaultExtension = "arl";
+
+            var arl = new FileDialogFilter();
+            arl.Name = "Akorin recording list";
+            arl.Extensions = new List<string>() { "arl" };
+            saveFileDialog.Filters = new List<FileDialogFilter>() { arl };
+
+            var filename = await saveFileDialog.ShowAsync(window);
+            using (StreamWriter file = new(filename))
+            {
+                var serializer = new YamlDotNet.Serialization.Serializer();
+                serializer.Serialize(file, arlContent);
+            }
         }
 
         private int audioInputDevice;
@@ -452,12 +488,7 @@ namespace Akorin.ViewModels
             settings.SplitWhitespace = SplitWhitespace;
             if (newRecList)
             {
-                settings.RecList.Clear();
                 settings.RecListFile = RecListFile;
-                main.SelectedLine = settings.RecList[0];
-            }
-            if (recListFromFolder)
-            {
                 settings.RecList.Clear();
                 foreach (var item in recList)
                     settings.RecList.Add(item);

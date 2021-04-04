@@ -51,7 +51,7 @@
 					<StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
 						<Button Margin="0,10,0,0" Command="{Binding GenerateRecListFromFolder}">
 							Generate reclist from folder</Button>
-						<Button Margin="0,10,0,0" IsEnabled="False">Export reclist</Button>
+						<Button Margin="0,10,0,0" Command="{Binding ExportRecList}">Export reclist</Button>
 					</StackPanel>
 				</Grid>
 			</TabItem>
