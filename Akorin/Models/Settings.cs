@@ -332,24 +332,40 @@ namespace Akorin.Models
                 var ext = Path.GetExtension(RecListFile);
                 if (ext == ".txt")
                 {
-                    string[] textArr;
-                    if (SplitWhitespace)
+                    if (Path.GetFileName(RecListFile) == "OREMO-comment.txt")
                     {
-                        var rawText = File.ReadAllText(RecListFile, e);
-                        rawText = Regex.Replace(rawText, @"\s{2,}", " ");
-                        textArr = Regex.Split(rawText, @"\s");
+                        var rawText = File.ReadAllLines(RecListFile, e);
+                        foreach(string rawLine in rawText)
+                        {
+                            var line = rawLine.Split("\t");
+                            if (!uniqueStrings.Contains(line[0]))
+                            {
+                                RecList.Add(new RecListItem(this, line[0], line[1]));
+                                uniqueStrings.Add(line[0]);
+                            }
+                        }
                     }
                     else
                     {
-                        textArr = File.ReadAllLines(RecListFile, e);
-                    }
-
-                    foreach (string line in textArr)
-                    {
-                        if (!uniqueStrings.Contains(line))
+                        string[] textArr;
+                        if (SplitWhitespace)
                         {
-                            RecList.Add(new RecListItem(this, line));
-                            uniqueStrings.Add(line);
+                            var rawText = File.ReadAllText(RecListFile, e);
+                            rawText = Regex.Replace(rawText, @"\s{2,}", " ");
+                            textArr = Regex.Split(rawText, @"\s");
+                        }
+                        else
+                        {
+                            textArr = File.ReadAllLines(RecListFile, e);
+                        }
+
+                        foreach (string line in textArr)
+                        {
+                            if (!uniqueStrings.Contains(line))
+                            {
+                                RecList.Add(new RecListItem(this, line));
+                                uniqueStrings.Add(line);
+                            }
                         }
                     }
                 }

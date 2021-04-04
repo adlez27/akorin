@@ -139,11 +139,15 @@ namespace Akorin.ViewModels
             arl.Name = "Akorin recording list";
             arl.Extensions = new List<string>() { "arl" };
 
+            var oremo = new FileDialogFilter();
+            oremo.Name = "OREMO comment";
+            oremo.Extensions = new List<string>() { "txt" };
+
             var txt = new FileDialogFilter();
             txt.Name = "Plain text";
             txt.Extensions = new List<string>() { "txt" };
 
-            openFileDialog.Filters = new List<FileDialogFilter>() { all, arl, txt };
+            openFileDialog.Filters = new List<FileDialogFilter>() { all, arl, oremo, txt };
 
             openFileDialog.Directory = Path.GetDirectoryName(settings.RecListFile);
             var recListFile = await openFileDialog.ShowAsync(window);
