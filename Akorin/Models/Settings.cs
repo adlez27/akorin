@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -411,6 +412,21 @@ namespace Akorin.Models
                         {
                             RecList.Add(new RecListItem(this, line.Filename, line.Description));
                             uniqueStrings.Add(line.Filename);
+                        }
+                    }
+                }
+                else if (ext == ".ust"){
+                    var rawText = File.ReadAllLines(RecListFile, e);
+                    foreach (var line in rawText)
+                    {
+                        if (line.StartsWith("Lyric="))
+                        {
+                            var lyric = line.Substring(6);
+                            if (lyric != "R" && lyric != "r" && lyric != "" && !uniqueStrings.Contains(lyric))
+                            {
+                                RecList.Add(new RecListItem(this, lyric));
+                                uniqueStrings.Add(lyric);
+                            }
                         }
                     }
                 }

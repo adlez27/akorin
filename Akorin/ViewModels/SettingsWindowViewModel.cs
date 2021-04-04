@@ -133,7 +133,7 @@ namespace Akorin.ViewModels
 
             var all = new FileDialogFilter();
             all.Name = "All supported formats";
-            all.Extensions = new List<string>() { "arl", "csv", "reclist", "txt" };
+            all.Extensions = new List<string>() { "arl", "csv", "reclist", "ust", "txt" };
 
             var arl = new FileDialogFilter();
             arl.Name = "Akorin recording list";
@@ -151,11 +151,15 @@ namespace Akorin.ViewModels
             wct.Name = "WavConfigTool reclist";
             wct.Extensions = new List<string>() { "reclist" };
 
+            var ust = new FileDialogFilter();
+            ust.Name = "UTAU sequence text";
+            ust.Extensions = new List<string>() { "ust" };
+
             var txt = new FileDialogFilter();
             txt.Name = "Plain text";
             txt.Extensions = new List<string>() { "txt" };
 
-            openFileDialog.Filters = new List<FileDialogFilter>() { all, arl, oremo, csv, wct, txt };
+            openFileDialog.Filters = new List<FileDialogFilter>() { all, arl, oremo, csv, wct, ust, txt };
 
             openFileDialog.Directory = Path.GetDirectoryName(settings.RecListFile);
             var recListFile = await openFileDialog.ShowAsync(window);
