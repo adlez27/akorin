@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using ManagedBass;
+using Microsoft.VisualBasic.FileIO;
 using ReactiveUI;
 using YamlDotNet.Serialization;
 
@@ -330,6 +331,7 @@ namespace Akorin.Models
                 }
 
                 var ext = Path.GetExtension(RecListFile);
+
                 if (ext == ".txt")
                 {
                     if (Path.GetFileName(RecListFile) == "OREMO-comment.txt")
@@ -379,6 +381,34 @@ namespace Akorin.Models
                         RecList.Add(new RecListItem(this, item.Key, item.Value));
                     }
                 }
+                else if (ext == ".csv")
+                {
+                    using (TextFieldParser parser = new TextFieldParser(RecListFile))
+                    {
+                        parser.TextFieldType = FieldType.Delimited;
+                        parser.SetDelimiters(",");
+                        while (!parser.EndOfData)
+                        {
+                            string[] line = parser.ReadFields();
+                            var text = line[0].Substring(0,line[0].Length - 4);
+                            if (!uniqueStrings.Contains(text))
+                            {
+                                RecList.Add(new RecListItem(this, text, line[1]));
+                                uniqueStrings.Add(text);
+                            }
+                        }
+                    }
+                    CopyIndex();
+                }
+            }
+        }
+
+        public void CopyIndex()
+        {
+            var vbIndex = Path.Combine(DestinationFolder, "index.csv");
+            if (Path.GetFileName(RecListFile) == "index.csv" && !File.Exists(vbIndex))
+            {
+                File.Copy(RecListFile, vbIndex);
             }
         }
 
@@ -396,6 +426,7 @@ namespace Akorin.Models
                         item.Audio.Unload();
                     }
                 }
+                CopyIndex();
             }
         }
 

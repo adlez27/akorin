@@ -133,7 +133,7 @@ namespace Akorin.ViewModels
 
             var all = new FileDialogFilter();
             all.Name = "All supported formats";
-            all.Extensions = new List<string>() { "arl", "txt" };
+            all.Extensions = new List<string>() { "arl", "csv", "txt" };
 
             var arl = new FileDialogFilter();
             arl.Name = "Akorin recording list";
@@ -143,11 +143,15 @@ namespace Akorin.ViewModels
             oremo.Name = "OREMO comment";
             oremo.Extensions = new List<string>() { "txt" };
 
+            var csv = new FileDialogFilter();
+            csv.Name = "ARPAsing index.csv";
+            csv.Extensions = new List<string>() { "csv" };
+
             var txt = new FileDialogFilter();
             txt.Name = "Plain text";
             txt.Extensions = new List<string>() { "txt" };
 
-            openFileDialog.Filters = new List<FileDialogFilter>() { all, arl, oremo, txt };
+            openFileDialog.Filters = new List<FileDialogFilter>() { all, arl, oremo, csv, txt };
 
             openFileDialog.Directory = Path.GetDirectoryName(settings.RecListFile);
             var recListFile = await openFileDialog.ShowAsync(window);
