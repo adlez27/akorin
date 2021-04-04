@@ -11,6 +11,7 @@ using System.Drawing;
 using ScottPlot.Avalonia;
 using ScottPlot;
 using System.IO;
+using System.Linq;
 
 namespace Akorin.ViewModels
 {
@@ -284,7 +285,11 @@ namespace Akorin.ViewModels
                 waveform.Plot.XAxis.Grid(true);
                 waveform.Plot.XAxis.Ticks(true);
                 waveform.Plot.YAxis.Ticks(true);
-                waveform.Plot.SetAxisLimitsY(-32768, 32767);
+
+                var min = dataDouble.ToList().Min();
+                var max = dataDouble.ToList().Max();
+                var trueMax = Math.Max(0 - min, max);
+                waveform.Plot.SetAxisLimitsY(0 - trueMax, trueMax);
             } else
             {
                 waveform.Plot.XAxis.Grid(false);
