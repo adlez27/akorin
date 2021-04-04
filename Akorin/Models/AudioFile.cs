@@ -21,10 +21,6 @@ namespace Akorin.Models
             {
                 short[] sdata = new short[data.Count / 2];
                 System.Buffer.BlockCopy(data.ToArray(), 0, sdata, 0, data.Count);
-                for (var i = 0; i < sdata.Length; i++)
-                {
-                    sdata[i] = (short)(sdata[i] * ((double)settings.AudioInputLevel / 100.0));
-                }
                 return sdata;
             }
         }
@@ -99,6 +95,16 @@ namespace Akorin.Models
         {
             byte[] temp = new byte[Length];
             Marshal.Copy(Buffer, temp, 0, Length);
+
+            //Modify recording according to Input Volume
+            short[] sdata = new short[temp.Length/2];
+            System.Buffer.BlockCopy(temp, 0, sdata, 0, temp.Length);
+            for (var i = 0; i < sdata.Length; i++)
+            {
+                sdata[i] = (short)(sdata[i] * ((double)settings.AudioInputLevel / 100.0));
+            }
+            System.Buffer.BlockCopy(sdata, 0, temp, 0, temp.Length);
+
             data.AddRange(temp);
             return true;
         }
