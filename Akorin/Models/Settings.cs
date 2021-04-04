@@ -281,7 +281,8 @@ namespace Akorin.Models
             set
             {
                 recListFile = value;
-                LoadRecList();
+                if (File.Exists(recListFile))
+                    LoadRecList();
             }
         }
 

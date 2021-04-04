@@ -12,7 +12,7 @@
 	<DockPanel>
 		<Grid DockPanel.Dock="Bottom" Margin="10">
 			<Button IsEnabled="{Binding Valid}" Command="{Binding SetDefault}">Set as default</Button>
-			
+
 			<StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 				<Button Command="{Binding CloseSettings}">Cancel</Button>
 				<Button IsEnabled="{Binding Valid}" Command="{Binding OKSettings}">OK</Button>
@@ -20,92 +20,104 @@
 		</Grid>
 		<TabControl>
 			<TabItem Header="Files" IsSelected="{Binding FilesSelected}">
-				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-					<TextBlock Grid.Row="0" Grid.Column="0">Recording list</TextBlock>
-					<DockPanel Grid.Row="0" Grid.Column="1" IsEnabled="True">
-						<Button DockPanel.Dock="Right" Command="{Binding SelectRecordingList}">Browse</Button>
-						<TextBox Text="{Binding RecListFile}"></TextBox>
-					</DockPanel>
+				<Grid ColumnDefinitions="100,*,100" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+					<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Recording list</TextBlock>
+					<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RecListFile}"/>
+					<Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+							Command="{Binding SelectRecordingList}">Browse</Button>
 
 					<TextBlock Grid.Row="1" Grid.Column="1" Foreground="Red"
 							   Text="{Binding ReclistContentValid}"/>
 
-					<TextBlock Grid.Row="2" Grid.Column="0">Encoding</TextBlock>
+					<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Encoding</TextBlock>
 					<StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-						<RadioButton IsChecked="{Binding ReadUnicode}">UTF-8</RadioButton>
+						<RadioButton Margin="0,0,-40,0" IsChecked="{Binding ReadUnicode}">UTF-8</RadioButton>
 						<RadioButton IsChecked="{Binding !ReadUnicode}">Shift JIS</RadioButton>
 					</StackPanel>
 
-					<TextBlock Grid.Row="3" Grid.Column="0">Split .txt by</TextBlock>
+					<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Split .txt by</TextBlock>
 					<StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
 						<RadioButton IsChecked="{Binding SplitWhitespace}">All whitespace</RadioButton>
-						<RadioButton IsChecked="{Binding !SplitWhitespace}">New line</RadioButton>
+						<RadioButton Margin="10,0,0,0" IsChecked="{Binding !SplitWhitespace}">New line</RadioButton>
 					</StackPanel>
+					
+					<Separator Grid.Row="4" Height="20"/>
 
-					<TextBlock Grid.Row="5" Grid.Column="0">Destination</TextBlock>
-					<DockPanel Grid.Row="5" Grid.Column="1" IsEnabled="True">
-						<Button DockPanel.Dock="Right" Command="{Binding SelectDestinationFolder}">Browse</Button>
-						<TextBox Text="{Binding DestinationFolder}"></TextBox>
-					</DockPanel>
+					<TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Destination</TextBlock>
+					<TextBox Grid.Row="5" Grid.Column="1" Text="{Binding DestinationFolder}"/>
+					<Button Grid.Row="5" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+						Command="{Binding SelectDestinationFolder}">Browse</Button>
+
+					<StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+						<Button Margin="0,10,0,0" Command="{Binding GenerateRecListFromFolder}">
+							Generate reclist from folder</Button>
+						<Button Margin="0,10,0,0" IsEnabled="False">Export reclist</Button>
+					</StackPanel>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Audio" IsSelected="{Binding AudioSelected}">
-				<Grid ColumnDefinitions="100,*,30" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+				<Grid ColumnDefinitions="100,*,30" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
 					<!-- 0.1.2 enable choice -->
-					<TextBlock Grid.Row="0" Grid.Column="0">Driver</TextBlock>
+					<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Driver</TextBlock>
 					<ComboBox Grid.Row="0" Grid.Column="1" SelectedIndex="0" IsEnabled="False">
 						<ComboBoxItem Content="{Binding Settings.AudioDriver}" />
 					</ComboBox>
+					
+					<Separator Grid.Row="1" Height="20"/>
 
-					<TextBlock Grid.Row="1" Grid.Column="0">Input device</TextBlock>
-					<ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}" 
+					<TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Input device</TextBlock>
+					<ComboBox Grid.Row="2" Grid.Column="1" SelectedIndex="{Binding AudioInputDevice}"
 							  Items="{Binding Settings.AudioInputDeviceList}"/>
 
-					<TextBlock Grid.Row="2" Grid.Column="0">Input level</TextBlock>
-					<Slider Grid.Row="2" Grid.Column="1"
+					<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Input level</TextBlock>
+					<Slider Grid.Row="3" Grid.Column="1"
 							Minimum="0" Maximum="100" Value="{Binding AudioInputLevel}" x:Name="InputSlider"
 							IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-					<TextBlock Grid.Row="2" Grid.Column="2" 
+					<TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
 							   Text="{Binding ElementName=InputSlider, Path=Value}"></TextBlock>
 
-					<TextBlock Grid.Row="3" Grid.Column="0">Output</TextBlock>
-					<ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}" 
+					<TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Output</TextBlock>
+					<ComboBox Grid.Row="4" Grid.Column="1" SelectedIndex="{Binding AudioOutputDevice}"
 							  Items="{Binding Settings.AudioOutputDeviceList}"/>
-					
-					<TextBlock Grid.Row="4" Grid.Column="0">Output level</TextBlock>
-					<Slider Grid.Row="4" Grid.Column="1"
+
+					<TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center">Output level</TextBlock>
+					<Slider Grid.Row="5" Grid.Column="1"
 							Minimum="0" Maximum="100" Value="{Binding AudioOutputLevel}" x:Name="OutputSlider"
 							IsSnapToTickEnabled="True" TickFrequency="1"></Slider>
-					<TextBlock Grid.Row="4" Grid.Column="2"
+					<TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"
 							   Text="{Binding ElementName=OutputSlider, Path=Value}"></TextBlock>
 				</Grid>
 			</TabItem>
 			<TabItem Header="Display" IsSelected="{Binding DisplaySelected}">
-				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
-					<TextBlock Grid.Row="0" Grid.Column="0">Line font size</TextBlock>
+				<Grid ColumnDefinitions="100,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+					<TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Line font size</TextBlock>
 					<NumericUpDown Grid.Row="0" Grid.Column="1"
 								   Value="{Binding FontSize}" Increment="1" Minimum="8" Maximum="200"/>
+					
+					<Separator Grid.Row="1" Height="10"/>
 
-					<CheckBox Grid.Row="1" Grid.Column="0" x:Name="WaveformCheckbox"
+					<CheckBox Grid.Row="2" Grid.Column="0" x:Name="WaveformCheckbox" Margin="0,0,0,2"
 							  IsChecked="{Binding WaveformEnabled}">Waveform</CheckBox>
 
-					<TextBlock Grid.Row="2" Grid.Column="0">Color</TextBlock>
-					<ComboBox Grid.Row="2" Grid.Column="1" IsEnabled="{Binding WaveformEnabled}"
+					<TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Color</TextBlock>
+					<ComboBox Grid.Row="3" Grid.Column="1" IsEnabled="{Binding WaveformEnabled}"
 							  Items="{Binding WaveformColorList}" SelectedItem="{Binding WaveformColor}"/>
+					
+					<Separator Grid.Row="4" Height="10"/>
 
 					<!-- 0.1.2 enable -->
-					<CheckBox Grid.Row="3" Grid.Column="0" x:Name="SpectrogramCheckbox"
+					<CheckBox Grid.Row="5" Grid.Column="0" x:Name="SpectrogramCheckbox" Margin="0,0,0,2"
 							  IsEnabled="False">Spectrogram</CheckBox>
 
-					<TextBlock Grid.Row="4" Grid.Column="0">Color</TextBlock>
-					<ComboBox Grid.Row="4" Grid.Column="1" SelectedIndex="0" IsEnabled="False">
+					<TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center">Color</TextBlock>
+					<ComboBox Grid.Row="6" Grid.Column="1" SelectedIndex="0" IsEnabled="False">
 						<ComboBoxItem>Default colors</ComboBoxItem>
 						<ComboBoxItem>Another color</ComboBoxItem>
 					</ComboBox>
 
-					<TextBlock Grid.Row="5" Grid.Column="0">Scale</TextBlock>
-					<StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
-						<RadioButton>Linear</RadioButton>
+					<TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center">Scale</TextBlock>
+					<StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" IsEnabled="False">
+						<RadioButton Margin="0,0,-40,0">Linear</RadioButton>
 						<RadioButton>Mel</RadioButton>
 					</StackPanel>
 				</Grid>

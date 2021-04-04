@@ -5,6 +5,7 @@ using Avalonia.Controls;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,18 +18,7 @@ namespace Akorin.ViewModels
     {
         private Window window;
         private string tab;
-        private ISettings settings;
-        public ISettings Settings
-        {
-            get
-            {
-                return settings;
-            }
-            set
-            {
-                settings = value;
-            }
-        }
+        private ISettings settings { get; set; }
         private MainWindowViewModel main;
 
         public SettingsWindowViewModel(Window window, string tab, ISettings s, MainWindowViewModel m, bool newProject)
@@ -49,6 +39,8 @@ namespace Akorin.ViewModels
 
             validDict.Add("SplitWhitespace", true);
             splitWhitespace = settings.SplitWhitespace;
+
+            recListFromFolder = false;
 
             validDict.Add("DestinationFolder", true);
             destinationFolder = settings.DestinationFolder;
@@ -83,6 +75,7 @@ namespace Akorin.ViewModels
 
         public SettingsWindowViewModel() { }
 
+        private bool filesSelected;
         public bool FilesSelected
         {
             get
@@ -144,7 +137,7 @@ namespace Akorin.ViewModels
             oremo.Extensions = new List<string>() { "txt" };
 
             var csv = new FileDialogFilter();
-            csv.Name = "ARPAsing index.csv";
+            csv.Name = "ARPAsing index";
             csv.Extensions = new List<string>() { "csv" };
 
             var wct = new FileDialogFilter();
@@ -291,6 +284,20 @@ namespace Akorin.ViewModels
                 validDict["DestinationFolder"] = false;
             }
             this.RaisePropertyChanged("Valid");
+        }
+
+        private bool recListFromFolder;
+        private ObservableCollection<RecListItem> recList;
+        public void GenerateRecListFromFolder()
+        {
+            recList = new ObservableCollection<RecListItem>();
+            var allFiles = Directory.GetFiles(DestinationFolder);
+            foreach(var file in allFiles)
+            {
+                if (Path.GetExtension(file) == ".wav")
+                    recList.Add(new RecListItem(settings,Path.GetFileNameWithoutExtension(file)));
+            }
+            recListFromFolder = true;
         }
 
         private int audioInputDevice;
@@ -447,6 +454,13 @@ namespace Akorin.ViewModels
             {
                 settings.RecList.Clear();
                 settings.RecListFile = RecListFile;
+                main.SelectedLine = settings.RecList[0];
+            }
+            if (recListFromFolder)
+            {
+                settings.RecList.Clear();
+                foreach (var item in recList)
+                    settings.RecList.Add(item);
                 main.SelectedLine = settings.RecList[0];
             }
             if (newFolder)
