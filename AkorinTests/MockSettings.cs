@@ -70,6 +70,7 @@ namespace AkorinTests
         ObservableCollection<RecListItem> ISettings.RecList { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         string ISettings.ProjectFile { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         string ISettings.WaveformColor { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        int ISettings.LastLine { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         void ISettings.LoadSettings(string path)
         {

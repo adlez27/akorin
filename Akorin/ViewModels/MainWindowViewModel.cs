@@ -42,20 +42,22 @@ namespace Akorin.ViewModels
             waveform.Plot.Frame(false);
             waveform.Plot.Layout(25, 0, 0, 0, 0);
 
-            if (RecList[0].Audio.Data.Length > 0)
-                RecList[0].RaisePropertyChanged("Audio");
+            SelectedLineIndex = settings.LastLine;
+
+            if (SelectedLine.Audio.Data.Length > 0)
+                SelectedLine.RaisePropertyChanged("Audio");
 
             ((Window)_view).Closing += OnClosingEventHandler;
         }
 
         public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            selectedLine.Audio.Write();
+            SelectedLine.Audio.Write();
         }
 
         public void Exit()
         {
-            selectedLine.Audio.Write();
+            SelectedLine.Audio.Write();
             Environment.Exit(0);
         }
 
@@ -83,6 +85,7 @@ namespace Akorin.ViewModels
             if (projectFile.Length > 0)
             {
                 settings.LoadSettings(projectFile[0]);
+                SelectedLineIndex = settings.LastLine;
                 FontSize = settings.FontSize;
                 WaveformColor = Color.FromName(settings.WaveformColor);
             }
@@ -112,10 +115,10 @@ namespace Akorin.ViewModels
         }
 
         private bool selectedLineInit;
-        private RecListItem selectedLine;
-        public RecListItem SelectedLine
+        private int selectedLineIndex;
+        public int SelectedLineIndex
         {
-            get => selectedLine;
+            get => selectedLineIndex;
             set
             {
                 if (RecList.Count > 0)
@@ -125,14 +128,16 @@ namespace Akorin.ViewModels
                         StopAudio();
                     }
 
-                    this.RaiseAndSetIfChanged(ref selectedLine, value);
+                    this.RaiseAndSetIfChanged(ref selectedLineIndex, value);
+                    this.RaisePropertyChanged("SelectedLine");
 
                     if (selectedLineInit)
                     {
-                        selectedLine.Audio.Read();
+                        SelectedLine.Audio.Read();
+                        settings.LastLine = selectedLineIndex;
 
-                        if (selectedLine.Audio.Data.Length > 0)
-                            selectedLine.RaisePropertyChanged("Audio");
+                        if (SelectedLine.Audio.Data.Length > 0)
+                            SelectedLine.RaisePropertyChanged("Audio");
                     }
                     else
                     {
@@ -146,6 +151,11 @@ namespace Akorin.ViewModels
             }
         }
 
+        public RecListItem SelectedLine
+        {
+            get => RecList[SelectedLineIndex];
+        }
+
         private bool recordToggle;
         public void Record()
         {
@@ -155,15 +165,15 @@ namespace Akorin.ViewModels
             }
             if (recordToggle)
             {
-                SelectedLine.Audio.Stop();
+                SelectedLine.Audio.Stop(); // change this
                 Status = "Not recording or playing.";
-                if (SelectedLine.Audio.Data.Length > 0)
-                    selectedLine.RaisePropertyChanged("Audio");
+                if (SelectedLine.Audio.Data.Length > 0) // change this
+                    SelectedLine.RaisePropertyChanged("Audio");
                 ShowWaveform();
             }
             else
             {
-                SelectedLine.Audio.Record();
+                SelectedLine.Audio.Record(); // change this
                 Status = "Recording...";
             }
 
@@ -196,12 +206,12 @@ namespace Akorin.ViewModels
         {
             if (playToggle || recordToggle)
             {
-                selectedLine.Audio.Stop();
+                SelectedLine.Audio.Stop();
                 playToggle = false;
                 recordToggle = false;
                 Status = "Not recording or playing.";
             }
-            selectedLine.Audio.Write();
+            SelectedLine.Audio.Write();
         }
 
         private string status;
@@ -237,7 +247,7 @@ namespace Akorin.ViewModels
             if (settings.WaveformEnabled)
             {
                 double[] dataDouble;
-                if (selectedLine.Audio.Data.Length < 1)
+                if (SelectedLine.Audio.Data.Length < 1)
                     dataDouble = new double[] { 0.0 };
                 else
                     dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);

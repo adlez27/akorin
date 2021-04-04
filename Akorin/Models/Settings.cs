@@ -246,6 +246,7 @@ namespace Akorin.Models
             {
                 ReadUnicode = false;
                 SplitWhitespace = true;
+                LastLine = 0;
                 DestinationFolder = Path.Combine(currentDirectory, "voicebank");
 
                 AudioInputLevel = 100;
@@ -281,8 +282,7 @@ namespace Akorin.Models
             set
             {
                 recListFile = value;
-                if (File.Exists(recListFile))
-                    LoadRecList();
+                LoadRecList();
             }
         }
 
@@ -318,7 +318,7 @@ namespace Akorin.Models
         }
         public void LoadRecList()
         {
-            if (init)
+            if (init && File.Exists(RecListFile))
             {
                 RecList.Clear();
                 HashSet<string> uniqueStrings = new HashSet<string>();
@@ -434,6 +434,8 @@ namespace Akorin.Models
                 }
             }
         }
+
+        public int LastLine { get; set; }
 
         public void CopyIndex()
         {
@@ -585,6 +587,7 @@ namespace Akorin.Models
             var newSettings = deserializer.Deserialize<Settings>(raw);
 
             recListFile = "List loaded from project file.";
+            LastLine = newSettings.LastLine;
             DestinationFolder = newSettings.DestinationFolder;
 
             AudioDriver = newSettings.AudioDriver;

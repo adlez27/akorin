@@ -479,6 +479,7 @@ namespace Akorin.ViewModels
                 projectFile = await saveFileDialog.ShowAsync(window);
             }
             SaveSettings(projectFile);
+            main.Status = "Settings saved.";
             window.Close();
         }
 
@@ -492,7 +493,7 @@ namespace Akorin.ViewModels
                 settings.RecList.Clear();
                 foreach (var item in recList)
                     settings.RecList.Add(item);
-                main.SelectedLine = settings.RecList[0];
+                main.SelectedLineIndex = 0;
             }
             if (newFolder)
             {
@@ -502,7 +503,7 @@ namespace Akorin.ViewModels
                     item.Audio.Read();
                     item.RaisePropertyChanged("Audio");
                 }
-                main.SelectedLine = main.SelectedLine;
+                main.SelectedLineIndex = main.SelectedLineIndex;
             }
 
             settings.AudioInputDevice = AudioInputDevice;
