@@ -374,7 +374,7 @@ namespace Akorin.Models
                 else if (ext == ".arl")
                 {
                     var rawText = File.ReadAllText(RecListFile, e);
-                    var deserializer = new YamlDotNet.Serialization.Deserializer();
+                    var deserializer = new Deserializer();
                     var tempDict = deserializer.Deserialize<Dictionary<string, string>>(rawText);
                     foreach (var item in tempDict)
                     {
@@ -399,6 +399,20 @@ namespace Akorin.Models
                         }
                     }
                     CopyIndex();
+                }
+                else if (ext == ".reclist")
+                {
+                    var rawText = File.ReadAllText(RecListFile, e);
+                    var deserializer = new Deserializer();
+                    var reclist = deserializer.Deserialize<WCTReclist>(rawText);
+                    foreach(var line in reclist.Files)
+                    {
+                        if (!uniqueStrings.Contains(line.Filename))
+                        {
+                            RecList.Add(new RecListItem(this, line.Filename, line.Description));
+                            uniqueStrings.Add(line.Filename);
+                        }
+                    }
                 }
             }
         }
