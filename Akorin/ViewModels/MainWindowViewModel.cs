@@ -50,17 +50,6 @@ namespace Akorin.ViewModels
             ((Window)_view).Closing += OnClosingEventHandler;
         }
 
-        public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            SelectedLine.Audio.Write();
-        }
-
-        public void Exit()
-        {
-            SelectedLine.Audio.Write();
-            Environment.Exit(0);
-        }
-
         private bool newProject;
         public void NewProject()
         {
@@ -89,6 +78,32 @@ namespace Akorin.ViewModels
                 FontSize = settings.FontSize;
                 WaveformColor = Color.FromName(settings.WaveformColor);
             }
+        }
+
+        public void OnClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Exit();
+        }
+
+        public async void Exit()
+        {
+            SelectedLine.Audio.Write();
+            if (settings.ProjectFile == "")
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Directory = settings.DestinationFolder;
+                saveFileDialog.DefaultExtension = "arp";
+
+                var arp = new FileDialogFilter();
+                arp.Name = "Akorin recording project";
+                arp.Extensions = new List<string>() { "arp" };
+                saveFileDialog.Filters = new List<FileDialogFilter>() { arp };
+
+                settings.ProjectFile = await saveFileDialog.ShowAsync((Window)_view);
+            }
+            settings.SaveSettings(settings.ProjectFile);
+            Environment.Exit(0);
         }
 
         public void OpenSettings(string tab)
@@ -156,50 +171,61 @@ namespace Akorin.ViewModels
             get => RecList[SelectedLineIndex];
         }
 
+        public bool EditingNotes
+        {
+            get => ((Window)_view).FindControl<TextBox>("Notes").IsFocused;
+        }
+
         private bool recordToggle;
         public void Record()
         {
-            if (playToggle)
+            if (!EditingNotes)
             {
-                Play();
-            }
-            if (recordToggle)
-            {
-                SelectedLine.Audio.Stop(); // change this
-                Status = "Not recording or playing.";
-                if (SelectedLine.Audio.Data.Length > 0) // change this
-                    SelectedLine.RaisePropertyChanged("Audio");
-                ShowWaveform();
-            }
-            else
-            {
-                SelectedLine.Audio.Record(); // change this
-                Status = "Recording...";
-            }
+                if (playToggle)
+                {
+                    Play();
+                }
+                if (recordToggle)
+                {
+                    SelectedLine.Audio.Stop(); // change this
+                    Status = "Not recording or playing.";
+                    if (SelectedLine.Audio.Data.Length > 0) // change this
+                        SelectedLine.RaisePropertyChanged("Audio");
+                    ShowWaveform();
+                }
+                else
+                {
+                    SelectedLine.Audio.Record(); // change this
+                    Status = "Recording...";
+                }
 
-            recordToggle = !recordToggle;
+                recordToggle = !recordToggle;
+            }
         }
 
         private bool playToggle;
         public void Play()
         {
-            if (recordToggle)
+            if (!EditingNotes)
             {
-                Record();
-            }
+                if (recordToggle)
+                {
+                    Record();
+                }
 
-            if (playToggle)
-            {
-                SelectedLine.Audio.Stop();
-                Status = "Not recording or playing.";
-            }
-            else
-            {
-                SelectedLine.Audio.Play();
-                Status = "Playing...";
-            }
+                if (playToggle)
+                {
+                    SelectedLine.Audio.Stop();
+                    Status = "Not recording or playing.";
+                }
+                else
+                {
+                    SelectedLine.Audio.Play();
+                    Status = "Playing...";
+                }
 
-            playToggle = !playToggle;
+                playToggle = !playToggle;
+            }
         }
 
         private void StopAudio()

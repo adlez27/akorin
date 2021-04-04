@@ -105,7 +105,7 @@
 					
 					<Separator Grid.Row="4" Height="10"/>
 
-					<!-- 0.1.2 enable -->
+					<!-- enable later -->
 					<CheckBox Grid.Row="5" Grid.Column="0" x:Name="SpectrogramCheckbox" Margin="0,0,0,2"
 							  IsEnabled="False">Spectrogram</CheckBox>
 

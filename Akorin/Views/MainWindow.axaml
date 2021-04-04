@@ -30,9 +30,9 @@
 			</MenuItem>
 		</Menu>
 
-		<StackPanel DockPanel.Dock="Top" Margin="5">
+		<StackPanel DockPanel.Dock="Top" Margin="5" >
 			<TextBlock Text="{Binding SelectedLine.Text}" FontSize="{Binding FontSize}"/>
-			<TextBox Watermark="no note available" IsReadOnly="True" Text="{Binding SelectedLine.Note}"/>
+			<TextBox Watermark="no note available" Text="{Binding SelectedLine.Note}" Name="Notes"/>
 		</StackPanel>
 
 		<TextBlock DockPanel.Dock="Bottom" Margin="5" Text="{Binding Status}" Background="White"/>
