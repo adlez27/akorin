@@ -478,9 +478,17 @@ namespace Akorin.ViewModels
 
                 projectFile = await saveFileDialog.ShowAsync(window);
             }
-            SaveSettings(projectFile);
-            main.Status = "Settings saved.";
-            window.Close();
+            if (projectFile is null)
+            {
+                //Undo changes, and return to the previous state.
+                projectFile = "";
+            }
+            else
+            {
+                SaveSettings(projectFile);
+                main.Status = "Settings saved.";
+                window.Close();
+            }
         }
 
         public void SaveSettings(string path)
