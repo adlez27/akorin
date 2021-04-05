@@ -4,5 +4,10 @@ dotnet publish -c Release -r win-x64 -o ../Release/Windows -p:PublishSingleFile=
 mac
 dotnet msbuild -t:BundleApp -p:RuntimeIdentifier=osx-x64 -property:Configuration=Release -p:UseAppHost=true
 
+shady stuff
+dotnet publish -c Release -r osx-x64 -o ../Release/Mac -p:UseAppHost=true --self-contained=true
+
 Go inside app bundle
-Remove icon and signature from info plist
+Remove signature from info plist
+I manually added the icon but idk if I always have to do that
+... copy and paste the libsystem.native and name the copy liblibsystem.native idk if this will work

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
@@ -15,6 +15,7 @@
 		<PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
 		<PackageReference Include="Dotnet.Bundle" Version="0.9.13" />
 		<PackageReference Include="ManagedBass" Version="3.0.0" />
+		<PackageReference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing" Version="5.8.64" />
 		<PackageReference Include="ScottPlot.Avalonia" Version="4.1.10-beta" />
 		<PackageReference Include="Spectrogram" Version="1.3.0" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
@@ -37,11 +38,12 @@
 		<CFBundleName>Akorin</CFBundleName>
 		<CFBundleDisplayName>Akorin</CFBundleDisplayName>
 		<CFBundleIdentifier>wtf.tubs.akorin.macos</CFBundleIdentifier>
-		<CFBundleVersion>0.1.0</CFBundleVersion>
-		<CFBundleShortVersionString>0.1.0</CFBundleShortVersionString>
+		<CFBundleVersion>0.2.1</CFBundleVersion>
+		<CFBundleShortVersionString>0.2.1</CFBundleShortVersionString>
 		<CFBundlePackageType>AAPL</CFBundlePackageType>
 		<CFBundleExecutable>Akorin</CFBundleExecutable>
 		<NSPrincipalClass>NSApplication</NSPrincipalClass>
 		<NSHighResolutionCapable>true</NSHighResolutionCapable>
+		<CFBundleIconFile>mic.icns</CFBundleIconFile>
 	</PropertyGroup>
 </Project>
