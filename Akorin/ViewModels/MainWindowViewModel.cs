@@ -129,6 +129,18 @@ namespace Akorin.ViewModels
             }
         }
 
+        public void IndexUp()
+        {
+            if (SelectedLineIndex < RecList.Count - 1)
+                SelectedLineIndex++;
+        }
+
+        public void IndexDown()
+        {
+            if (SelectedLineIndex > 0)
+                SelectedLineIndex--;
+        }
+
         private bool selectedLineInit;
         private int selectedLineIndex;
         public int SelectedLineIndex

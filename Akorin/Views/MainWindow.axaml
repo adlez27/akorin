@@ -13,6 +13,8 @@
 	<Window.KeyBindings>
 		<KeyBinding Gesture="R" Command="{Binding Record}"/>
 		<KeyBinding Gesture="Space" Command="{Binding Play}"/>
+		<KeyBinding Gesture="Up" Command="{Binding IndexDown}"/>
+		<KeyBinding Gesture="Down" Command="{Binding IndexUp}"/>
 	</Window.KeyBindings>
 
 	<DockPanel>
