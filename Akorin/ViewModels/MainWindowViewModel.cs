@@ -12,6 +12,7 @@ using ScottPlot.Avalonia;
 using ScottPlot;
 using System.IO;
 using System.Linq;
+using Spectrogram;
 
 namespace Akorin.ViewModels
 {
@@ -161,6 +162,7 @@ namespace Akorin.ViewModels
                     }
 
                     ShowWaveform();
+                    ShowSpectrogram();
                     playToggle = false;
                     recordToggle = false;
                 }
@@ -298,6 +300,19 @@ namespace Akorin.ViewModels
             }
 
             waveform.Render();
+        }
+
+        public void ShowSpectrogram()
+        {
+            double[] dataDouble;
+            if (SelectedLine.Audio.Data.Length < 1)
+                dataDouble = new double[] { 0.0 };
+            else
+                dataDouble = Array.ConvertAll(SelectedLine.Audio.Data, s => (double)s);
+
+            var sg = new SpectrogramGenerator(sampleRate: 44100, fftSize: 1024, stepSize: 200, minFreq: 3000, fixedWidth: 1000);
+            sg.Add(dataDouble);
+            sg.SaveImage("spectrogram.png");
         }
     }
 }
