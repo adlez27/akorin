@@ -20,8 +20,18 @@ Download latest version from [Releases](https://github.com/adlez27/akorin/releas
 
 ## Installation
 **Windows:** Unzip and place the folder anywhere. Run `Akorin.exe` to start Akorin.  
-**Mac:** (Current app bundle is bugged. Releases will return when this is resolved, but mac users will have to build from source in the meantime.)  
-**Linux:** There is no intention to provide a convenient release to Linux users, who should be capable of building from source.
+**Mac:** (Current app bundle is bugged. Releases will return when this is resolved, but mac users will have to build from source in the meantime.)
+
+## Building from source
+Windows, Mac, and Linux  
+
+Prerequisites
+- [.NET 5.0](https://dotnet.microsoft.com/)
+- [BASS](https://www.un4seen.com/)
+
+Steps
+1. Add the appropriate BASS library file to the Akorin folder
+2. Run `dotnet build` in the Akorin folder
 
 ## Usage
 ### Recording
