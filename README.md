@@ -43,6 +43,7 @@ The currently supported formats are:
 - Plain text reclist (.txt) (Can split lines by all whitespace or by new line only)
 - UTAU sequence text (.ust)
 - Create reclist from files in folder
+
 When you load or create a reclist, you can export it as an ARL to use again later. The exported ARL will include all of the notes you've added to the current project.
 
 ### Writing an Akorin Recording List
