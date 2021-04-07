@@ -19,6 +19,11 @@ namespace Akorin.ViewModels
         private Window window;
         private string tab;
         private ISettings settings { get; set; }
+        public ISettings Settings
+        {
+            get => settings;
+            set => settings = value;
+        }
         private MainWindowViewModel main;
 
         public SettingsWindowViewModel(Window window, string tab, ISettings s, MainWindowViewModel m, bool newProject)
