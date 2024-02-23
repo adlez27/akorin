@@ -1,3 +1,9 @@
+Akorin is no longer in development. Any interested users should use RecStar instead.
+
+https://github.com/sdercolin/recstar/
+
+---
+
 # Akorin
 The OREMO killer: A line-by-line audio recording tool for singing synthesis libraries
 
